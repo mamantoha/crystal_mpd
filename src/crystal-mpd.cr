@@ -2,23 +2,36 @@ require "socket"
 require "./crystal-mpd/version"
 
 class MPD
-  @host : String?
-  @port : Int32?
   @version : String?
 
   HELLO_PREFIX = "OK MPD "
   ERROR_PREFIX = "ACK "
-  SUCCESS = "OK"
-  NEXT = "list_OK"
+  SUCCESS      = "OK"
+  NEXT         = "list_OK"
 
   getter host, port, version
 
-  def initialize
-
+  def initialize(
+    @host : String = "localhost",
+    @port : Int32 = 6600
+  )
+    connect
   end
 
-  def connect(@host = "localhost", @port = 6600)
-    reconnect
+  def connect
+    reconnect unless connected?
+  end
+
+  def disconnect
+    @socket.try do |socket|
+      socket.close
+    end
+
+    reset
+  end
+
+  def connected?
+    @socket.is_a?(Socket)
   end
 
   def reconnect
@@ -26,6 +39,11 @@ class MPD
       @socket = TCPSocket.new(host, port)
       hello
     end
+  end
+
+  def reset
+    @socket = nil
+    @version = nil
   end
 
   def hello
