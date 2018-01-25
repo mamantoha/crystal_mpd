@@ -7,10 +7,11 @@ describe MPD do
 
   it "initialize new MPD client without params" do
     with_server do |host, port, wants_close|
-      client = MPD.new
+      client = MPD::Client.new
 
       client.host.should eq("localhost")
       client.port.should eq(6600)
+      (client.connected?).should eq(true)
     ensure
       wants_close.send(nil)
     end
@@ -18,7 +19,7 @@ describe MPD do
 
   it "initialize new MPD client with params" do
     with_server("localhost", 6661) do |host, port, wants_close|
-      client = MPD.new("localhost", port)
+      client = MPD::Client.new("localhost", port)
       client.host.should eq("localhost")
       client.port.should eq(port)
     ensure
@@ -28,9 +29,34 @@ describe MPD do
 
   it "initialized MPD client should have version" do
     with_server do |host, port, wants_close|
-      client = MPD.new
+      client = MPD::Client.new
 
       (client.version).should eq("0.19.0")
+    ensure
+      wants_close.send(nil)
+    end
+  end
+
+  it "successfully disconnect MPD client" do
+    with_server do |host, port, wants_close|
+      client = MPD::Client.new
+      client.disconnect
+
+      (client.version).should eq(nil)
+      (client.connected?).should eq(false)
+    ensure
+      wants_close.send(nil)
+    end
+  end
+
+  it "disconnect MPD client 2 times should not raise error" do
+    with_server do |host, port, wants_close|
+      client = MPD::Client.new
+      client.disconnect
+      client.disconnect
+
+      (client.version).should eq(nil)
+      (client.connected?).should eq(false)
     ensure
       wants_close.send(nil)
     end
