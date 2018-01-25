@@ -11,11 +11,11 @@ puts "MPD version: #{client.version}"
 # puts client.playlistinfo
 # puts client.listall
 # puts client.commands
-# puts client.search("artist", "Linkin Park")
+puts client.search("artist", "Linkin Park").size
 # puts client.add
 # puts client.repeat(false)
 # puts client.replay_gain_status
-puts client.update
+# puts client.update
 
 client.disconnect
 puts "MPD client status: " + (client.connected? ? "connected" : "disconnected")

@@ -1,5 +1,8 @@
 module MPD
   class Client
+    alias Item = Hash(String, String)
+    alias Items = Array(Item)
+
     @version : String?
 
     HELLO_PREFIX = "OK MPD "
@@ -118,12 +121,14 @@ module MPD
       end
     end
 
-    def search(type : String, query : String)
+    def search(type : String, query : String) : Items
       @socket.try do |socket|
         socket.puts("search \"#{type}\" \"#{query}\"")
 
         return fetch_objects(["file"])
       end
+
+      return Items.new
     end
 
     def replay_gain_status
