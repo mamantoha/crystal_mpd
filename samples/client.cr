@@ -14,7 +14,7 @@ puts "MPD version: #{client.version}"
 puts client.search("artist", "Linkin Park").size
 # puts client.add
 # puts client.repeat(false)
-# puts client.replay_gain_status
+puts client.replay_gain_status
 # puts client.update
 
 client.disconnect

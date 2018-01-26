@@ -1,7 +1,9 @@
 module MPD
   class Client
-    alias Item = Hash(String, String)
-    alias Items = Array(Item)
+    alias Object = Hash(String, String)
+    alias Objects = Array(Object)
+    alias Pair = Array(String)
+    alias Pairs = Array(Pair)
 
     @version : String?
 
@@ -121,14 +123,14 @@ module MPD
       end
     end
 
-    def search(type : String, query : String) : Items
+    def search(type : String, query : String) : Objects
       @socket.try do |socket|
         socket.puts("search \"#{type}\" \"#{query}\"")
 
         return fetch_objects(["file"])
       end
 
-      return Items.new
+      return Objects.new
     end
 
     def replay_gain_status
@@ -202,13 +204,13 @@ module MPD
       return result
     end
 
-    private def fetch_object
+    private def fetch_object : Object
       fetch_objects.first
     end
 
-    private def fetch_objects(delimiters = [] of String) : Array(Hash(String, String))
-      result = [] of Hash(String, String)
-      obj = {} of String => String
+    private def fetch_objects(delimiters = [] of String) : Objects
+      result = Objects.new
+      obj = Object.new
 
       read_pairs.each do |item|
         key = item[0]
@@ -216,7 +218,7 @@ module MPD
 
         if delimiters.includes?(key)
           result << obj unless obj.empty?
-          obj = {} of String => String
+          obj = Object.new
         end
 
         obj[key] = value
@@ -227,17 +229,11 @@ module MPD
       return result
     end
 
-    private def fetch_item
-      pairs = read_pairs
-      return nil if pairs.size != 1
-      return pairs[0][1]
-    end
-
-    private def read_pairs
-      pairs = [] of Array(String)
+    private def read_pairs : Pairs
+      pairs = Pairs.new
 
       pair = read_pair
-      while pair
+      unless pair.empty?
         pairs << pair
         pair = read_pair
       end
@@ -245,11 +241,17 @@ module MPD
       return pairs
     end
 
-    private def read_pair : Array(String)?
+    private def read_pair : Pair
       line = read_line
-      return if line.nil?
+      return Pair.new if line.nil?
       pair = line.split(": ", 2)
       return pair
+    end
+
+    private def fetch_item : String
+      pairs = read_pairs
+      return "" if pairs.size != 1
+      return pairs[0][1]
     end
 
     private def read_line : String?
