@@ -77,17 +77,17 @@ module MPD
       "list", "listallinfo", "listfiles", "listmounts", "listplaylist",
       "listplaylistinfo", "listplaylists", "load", "lsinfo",
       "mixrampdb", "mixrampdelay", "mount", "move", "moveid",
-      "next", "notcommands",
+      "notcommands",
       "outputs",
-      "password", "pause", "ping", "play", "playid", "playlist", "playlistadd",
+      "password", "ping", "playlist", "playlistadd",
       "playlistclear", "playlistdelete", "playlistfind", "playlistid",
       "playlistmove", "playlistsearch", "plchanges", "plchangesposid",
-      "previous", "prio", "prioid",
+      "prio", "prioid",
       "rangeid", "readcomments", "readmessages", "rename",
       "replay_gain_mode", "rescan", "rm",
-      "save", "searchadd", "searchaddpl", "seek", "seekcur", "seekid",
+      "save", "searchadd", "searchaddpl",
       "sendmessage", "setvol", "shuffle",
-      "sticker", "stop", "subscribe", "swap", "swapid",
+      "sticker", "subscribe", "swap", "swapid",
       "tagtypes", "toggleoutput",
       "unmount", "unsubscribe", "urlhandlers",
       "volume",
@@ -100,6 +100,91 @@ module MPD
       end
     {% end %}
 
+    # Plays next song in the playlist.
+    def next
+      @socket.try do |socket|
+        socket.puts("next")
+
+        return fetch_nothing
+      end
+    end
+
+    # Toggles pause/resumes playing, *pause* is `true` or `false`.
+    def pause(pause : Bool)
+      @socket.try do |socket|
+        command = "pause #{pause ? "1" : "0"}"
+        socket.puts(command)
+
+        return fetch_nothing
+      end
+    end
+
+    # Plays previous song in the playlist.
+    def previous
+      @socket.try do |socket|
+        socket.puts("previous")
+
+        return fetch_nothing
+      end
+    end
+
+    # Stops playing.
+    def stop
+      @socket.try do |socket|
+        socket.puts("stop")
+
+        return fetch_nothing
+      end
+    end
+
+    # Begins playing the playlist at song number *songpos*.
+    def play(songpos : Int32? = nil)
+      @socket.try do |socket|
+        command = "play #{songpos}".chomp
+        socket.puts(command)
+
+        return fetch_nothing
+      end
+    end
+
+    # Begins playing the playlist at song *songid*
+    def playid(songid : Int32)
+      @socket.try do |socket|
+        socket.puts("playid #{songid}")
+
+        return fetch_nothing
+      end
+    end
+
+    # Seeks to the position *time* within the current song.
+    # If prefixed by "+"" or "-", then the time is relative to the current playing position.
+    def seekcur(time : String | Int32)
+      @socket.try do |socket|
+        socket.puts("seekcur #{time}")
+
+        return fetch_nothing
+      end
+    end
+
+    # Seeks to the position *time* (in seconds) of song *songid*
+    def seekid(songid : Int32, time : Int32)
+      @socket.try do |socket|
+        socket.puts("seekid #{songid} #{time}")
+
+        return fetch_nothing
+      end
+    end
+
+    # Seeks to the position *time* (in seconds) of entry *songpos* in the playlist.
+    def seek(songpos : Int32, time : Int32)
+      @socket.try do |socket|
+        socket.puts("seek #{songpos} #{time}")
+
+        return fetch_nothing
+      end
+    end
+
+    # Shows which commands the current user has access to.
     def commands
       @socket.try do |socket|
         socket.puts("commands")
@@ -108,17 +193,46 @@ module MPD
       end
     end
 
-    def listall
+    # Lists all songs and directories in *uri*
+    def listall(uri : String?)
       @socket.try do |socket|
-        socket.puts("listall")
+        command = "listall #{uri}".chomp
+        socket.puts(command)
 
         return fetch_objects(["file", "directory", "playlist"])
       end
     end
 
-    def playlistinfo
+    # Displays a list of all songs in the playlist, or if the optional argument is given,
+    # displays information only for the song **songpos** or the range of songs **START:END**.
+    #
+    # Range is done in by using two element array.
+    #
+    # Show info about the first three songs in the playlist:
+    #
+    # ```
+    # client.playlistinfo([1, 3])
+    # ```
+    #
+    # Second element of the `Array` can be omitted. **MPD** will assumes the biggest possible number then:
+    #
+    # ```
+    # client.playlistinfo([10])
+    # ```
+    def playlistinfo(songpos : Int32 | Array(Int32) | Nil = nil)
       @socket.try do |socket|
-        socket.puts("playlistinfo")
+        args =
+          case songpos
+          when Int32
+            "#{songpos}"
+          when Array
+            "#{songpos[0]}:#{songpos[1]?}"
+          else
+            ""
+          end
+
+        command = "playlistinfo #{args}".chomp
+        socket.puts(command)
 
         return fetch_objects(["file"])
       end
@@ -147,12 +261,7 @@ module MPD
     # *uri* is a particular directory or song/file to update. If you do not specify it, everything is updated.
     def update(uri : String? = nil)
       @socket.try do |socket|
-        if uri
-          uri = escape(uri)
-          command = "update \"#{uri}\""
-        else
-          command = "update"
-        end
+        command = "update #{uri}".chomp
 
         socket.puts(command)
 
@@ -163,7 +272,7 @@ module MPD
     # Reports the current status of the player and the volume level.
     #
     # Response:
-    # * **volume: 0-100
+    # * **volume**: 0-100
     # * **repeat**: 0 or 1
     # * **random**: 0 or 1
     # * **single**: 0 or 1
