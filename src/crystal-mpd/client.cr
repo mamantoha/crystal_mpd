@@ -94,6 +94,7 @@ module MPD
     ]
 
     {% for method in UNIMPLEMENTED_METHODS %}
+      # TODO: implement `method`
       def {{method.id}}
         raise  "Method not yet implemented."
       end
@@ -143,8 +144,7 @@ module MPD
 
     # Updates the music database: find new files, remove deleted files, update modified files.
     #
-    # Options:
-    # * **uri**: a particular directory or song/file to update. If you do not specify it, everything is updated.
+    # *uri* is a particular directory or song/file to update. If you do not specify it, everything is updated.
     def update(uri : String? = nil)
       @socket.try do |socket|
         if uri
@@ -160,25 +160,95 @@ module MPD
       end
     end
 
-    {% for method in ["status", "stats"] %}
-      def {{method.id}}
-        @socket.try do |socket|
-          socket.puts({{method}})
+    # Reports the current status of the player and the volume level.
+    #
+    # Response:
+    # * **volume: 0-100
+    # * **repeat**: 0 or 1
+    # * **random**: 0 or 1
+    # * **single**: 0 or 1
+    # * **consume**: 0 or 1
+    # * **playlist**: 31-bit unsigned integer, the playlist version number
+    # * **playlistlength**: integer, the length of the playlist
+    # * **state**: play, stop, or pause
+    # * **song**: playlist song number of the current song stopped on or playing
+    # * **songid**: playlist songid of the current song stopped on or playing
+    # * **nextsong**: playlist song number of the next song to be played
+    # * **nextsongid**: playlist songid of the next song to be played
+    # * **time**: total time elapsed (of current playing/paused song)
+    # * **elapsed**: Total time elapsed within the current song, but with higher resolution.
+    # * **bitrate**: instantaneous bitrate in kbps
+    # * **xfade**: crossfade in seconds
+    # * **mixrampdb**: mixramp threshold in dB
+    # * **mixrampdelay**: mixrampdelay in seconds
+    # * **audio**: sampleRate:bits:channels
+    # * **updating_db**: job id
+    # * **error**: if there is an error, returns message here
+    def status
+      @socket.try do |socket|
+        socket.puts("status")
 
-          return fetch_object
-        end
+        return fetch_object
       end
-    {% end %}
+    end
 
-    {% for method in ["consume", "random", "repeat", "single"] %}
-      def {{method.id}}(state : Bool)
-        @socket.try do |socket|
-          socket.puts("{{method.id}} #{boolean(state)}")
+    # Displays statistics.
+    #
+    # Response:
+    # * **artists**: number of artists
+    # * **songs**: number of albums
+    # * **uptime**: daemon uptime in seconds
+    # * **db_playtime**: sum of all song times in the db
+    # * **db_update**: last db update in UNIX time
+    # * **playtime**: time length of music played
+    def stats
+      @socket.try do |socket|
+        socket.puts("stats")
 
-          return fetch_nothing
-        end
+        return fetch_object
       end
-    {% end %}
+    end
+
+    # Sets consume state to *state*, *state* should be `false` or `true`.
+    #
+    # When consume is activated, each song played is removed from playlist.
+    def consume(state : Bool)
+      @socket.try do |socket|
+        socket.puts("consume #{boolean(state)}")
+
+        return fetch_nothing
+      end
+    end
+
+    # Sets random state to *state*, *state* should be `false` or `true`.
+    def random(state : Bool)
+      @socket.try do |socket|
+        socket.puts("random #{boolean(state)}")
+
+        return fetch_nothing
+      end
+    end
+
+    # Sets repeat state to *state*, *state* should be `false` or `true`.
+    def repeat(state : Bool)
+      @socket.try do |socket|
+        socket.puts("repeat #{boolean(state)}")
+
+        return fetch_nothing
+      end
+    end
+
+    # Sets single state to *state*, *state* should be `false` or `true`.
+    #
+    # When single is activated, playback is stopped after current song,
+    # or song is repeated if the "repeat" mode is enabled.
+    def single(state : Bool)
+      @socket.try do |socket|
+        socket.puts("single #{boolean(state)}")
+
+        return fetch_nothing
+      end
+    end
 
     private def fetch_nothing
       line = read_line
@@ -233,7 +303,7 @@ module MPD
       pairs = Pairs.new
 
       pair = read_pair
-      unless pair.empty?
+      while !pair.empty?
         pairs << pair
         pair = read_pair
       end
