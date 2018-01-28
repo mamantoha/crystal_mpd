@@ -67,28 +67,27 @@ module MPD
 
     UNIMPLEMENTED_METHODS = [
       "add", "addid", "addtagid",
-      "channels", "clear", "clearerror", "cleartagid", "close",
+      "channels", "clearerror", "cleartagid", "close",
       "config", "count", "crossfade", "currentsong",
       "decoders", "delete", "deleteid", "disableoutput",
       "enableoutput",
-      "find", "findadd",
       "idle",
       "kill",
-      "list", "listallinfo", "listfiles", "listmounts", "listplaylist",
+      "listallinfo", "listfiles", "listmounts", "listplaylist",
       "listplaylistinfo", "listplaylists", "load", "lsinfo",
       "mixrampdb", "mixrampdelay", "mount", "move", "moveid",
       "notcommands",
       "outputs",
       "password", "ping", "playlist", "playlistadd",
-      "playlistclear", "playlistdelete", "playlistfind", "playlistid",
-      "playlistmove", "playlistsearch", "plchanges", "plchangesposid",
+      "playlistclear", "playlistdelete", "playlistid",
+      "playlistmove", "plchanges", "plchangesposid",
       "prio", "prioid",
       "rangeid", "readcomments", "readmessages", "rename",
       "replay_gain_mode", "rescan", "rm",
-      "save", "searchadd", "searchaddpl",
+      "save", "searchaddpl",
       "sendmessage", "setvol", "shuffle",
       "sticker", "subscribe", "swap", "swapid",
-      "tagtypes", "toggleoutput",
+      "toggleoutput",
       "unmount", "unsubscribe", "urlhandlers",
       "volume",
     ]
@@ -193,6 +192,29 @@ module MPD
       end
     end
 
+    # Shows a list of available song metadata.
+    def tagtypes
+      @socket.try do |socket|
+        socket.puts("tagtypes")
+
+        return fetch_list
+      end
+    end
+
+    # Lists all tags of the specified *type*. *type* can be any tag supported by MPD or file.
+    #
+    # *artist* is an optional parameter when *type* is "album", this specifies to list albums by an *artist*.
+    def list(type : String, artist : String? = nil)
+      @socket.try do |socket|
+        command = "list #{type}"
+        command = command + (" \"#{artist}\"") if artist
+
+        socket.puts(command)
+
+        return fetch_list
+      end
+    end
+
     # Lists all songs and directories in *uri*
     def listall(uri : String?)
       @socket.try do |socket|
@@ -200,6 +222,15 @@ module MPD
         socket.puts(command)
 
         return fetch_objects(["file", "directory", "playlist"])
+      end
+    end
+
+    # Clears the current playlist.
+    def clear
+      @socket.try do |socket|
+        socket.puts("clear")
+
+        return fetch_nothing
       end
     end
 
@@ -238,6 +269,55 @@ module MPD
       end
     end
 
+    # Searches case-sensitively for partial matches in the current playlist.
+    def playlistsearch(tag : String, needle : String)
+      @socket.try do |socket|
+        socket.puts("playlistsearch \"#{tag}\" \"#{needle}\"")
+
+        return fetch_objects(["file"])
+      end
+    end
+
+    # Finds songs in the current playlist with strict matching.
+    def playlistfind(tag : String, needle : String)
+      @socket.try do |socket|
+        socket.puts("playlistfind \"#{tag}\" \"#{needle}\"")
+
+        return fetch_objects(["file"])
+      end
+    end
+
+    # Finds songs in the db that are exactly *query*.
+    #
+    # *type* can be any tag supported by MPD, or one of the two special parameters:
+    #
+    # * `file` to search by full path (relative to database root)
+    # * `any` to match against all available tags.
+    #
+    # *query* is what to find.
+    def find(type : String, query : String) : Objects
+      @socket.try do |socket|
+        socket.puts("find \"#{type}\" \"#{query}\"")
+
+        return fetch_objects(["file"])
+      end
+
+      return Objects.new
+    end
+
+    # Finds songs in the db that are exactly *query* and adds them to current playlist.
+    # Parameters have the same meaning as for **find**.
+    def findadd(type : String, query : String)
+      @socket.try do |socket|
+        socket.puts("findadd \"#{type}\" \"#{query}\"")
+
+        return fetch_nothing
+      end
+    end
+
+    # Searches for any song that contains *query*.
+    #
+    # Parameters have the same meaning as for **find**, except that search is not case sensitive.
     def search(type : String, query : String) : Objects
       @socket.try do |socket|
         socket.puts("search \"#{type}\" \"#{query}\"")
@@ -246,6 +326,17 @@ module MPD
       end
 
       return Objects.new
+    end
+
+    # Searches for any song that contains *query* in tag *type* and adds them to current playlist.
+    #
+    # Parameters have the same meaning as for **find**, except that search is not case sensitive.
+    def searchadd(type : String, query : String)
+      @socket.try do |socket|
+        socket.puts("searchadd \"#{type}\" \"#{query}\"")
+
+        return fetch_nothing
+      end
     end
 
     def replay_gain_status
