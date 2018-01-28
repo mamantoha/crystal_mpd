@@ -19,8 +19,8 @@ puts "MPD version: #{client.version}"
 # puts client.tagtypes
 # puts client.search("artist", "Linkin Park").size
 # puts client.find("artist", "Порнофильмы")
-# puts client.clear
-# puts client.findadd("genre", "Alternative Rock")
+puts client.clear
+puts client.findadd("genre", "Alternative Rock")
 # puts client.add
 # puts client.repeat(false)
 # puts client.replay_gain_status

@@ -207,7 +207,7 @@ module MPD
     def list(type : String, artist : String? = nil)
       @socket.try do |socket|
         command = "list #{type}"
-        command = command + (" \"#{artist}\"") if artist
+        command = command + %{ "#{artist}"} if artist
 
         socket.puts(command)
 
@@ -272,7 +272,7 @@ module MPD
     # Searches case-sensitively for partial matches in the current playlist.
     def playlistsearch(tag : String, needle : String)
       @socket.try do |socket|
-        socket.puts("playlistsearch \"#{tag}\" \"#{needle}\"")
+        socket.puts(%{playlistsearch "#{tag}" "#{needle}"})
 
         return fetch_objects(["file"])
       end
@@ -281,7 +281,7 @@ module MPD
     # Finds songs in the current playlist with strict matching.
     def playlistfind(tag : String, needle : String)
       @socket.try do |socket|
-        socket.puts("playlistfind \"#{tag}\" \"#{needle}\"")
+        socket.puts(%{playlistfind "#{tag}" "#{needle}"})
 
         return fetch_objects(["file"])
       end
@@ -297,7 +297,7 @@ module MPD
     # *query* is what to find.
     def find(type : String, query : String) : Objects
       @socket.try do |socket|
-        socket.puts("find \"#{type}\" \"#{query}\"")
+        socket.puts(%{find "#{type}" "#{query}"})
 
         return fetch_objects(["file"])
       end
@@ -309,7 +309,7 @@ module MPD
     # Parameters have the same meaning as for **find**.
     def findadd(type : String, query : String)
       @socket.try do |socket|
-        socket.puts("findadd \"#{type}\" \"#{query}\"")
+        socket.puts(%{findadd "#{type}" "#{query}"})
 
         return fetch_nothing
       end
@@ -320,7 +320,7 @@ module MPD
     # Parameters have the same meaning as for **find**, except that search is not case sensitive.
     def search(type : String, query : String) : Objects
       @socket.try do |socket|
-        socket.puts("search \"#{type}\" \"#{query}\"")
+        socket.puts(%{search "#{type}" "#{query}"})
 
         return fetch_objects(["file"])
       end
@@ -333,7 +333,7 @@ module MPD
     # Parameters have the same meaning as for **find**, except that search is not case sensitive.
     def searchadd(type : String, query : String)
       @socket.try do |socket|
-        socket.puts("searchadd \"#{type}\" \"#{query}\"")
+        socket.puts(%{searchadd "#{type}" "#{query}"})
 
         return fetch_nothing
       end
@@ -549,7 +549,7 @@ module MPD
     end
 
     private def escape(str : String)
-      str.gsub(%(\\), %(\\\\)).gsub(%("), %{\\"})
+      str.gsub(%{\\}, %{\\\\}).gsub(%{"}, %{\\"})
     end
   end
 end
