@@ -93,9 +93,9 @@ module MPD
     ]
 
     {% for method in UNIMPLEMENTED_METHODS %}
-      # TODO: implement `method`
+      # :nodoc:
       def {{method.id}}
-        raise  "Method not yet implemented."
+        raise NotImplementedError.new("Method {{method.id}} not yet implemented.")
       end
     {% end %}
 
