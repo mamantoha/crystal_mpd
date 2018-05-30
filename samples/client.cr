@@ -1,4 +1,4 @@
-require "../src/crystal-mpd"
+require "../src/crystal_mpd"
 
 client = MPD::Client.new
 

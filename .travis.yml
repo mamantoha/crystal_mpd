@@ -9,7 +9,7 @@ deploy:
   provider: pages
   skip_cleanup: true
   github_token: $GITHUB_TOKEN
-  project_name: crystal-mpd
+  project_name: crystal_mpd
   on:
     branch: master
   local_dir: docs

@@ -1,9 +1,9 @@
-name: crystal-mpd
+name: crystal_mpd
 version: 0.1.0
 
 authors:
-  - Anton Maminov <anton.linux@gmail.com>
+  - Anton Maminov <anton.maminov@gmail.com>
 
-crystal: 0.24.1
+crystal: 0.24.2
 
 license: MIT
