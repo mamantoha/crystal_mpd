@@ -14,9 +14,9 @@ module MPD
 
     getter host, port, version
 
-    # Creates a new MPD client. Parses the *host*, *port*.
+    # Creates a new MPD client. Parses the `host`, `port`.
     #
-    # ```
+    # ```crystal
     # client = MPD::Client.new("localhost", 6600)
     # puts client.version
     # puts client.status
@@ -76,8 +76,6 @@ module MPD
       "listallinfo", "listfiles", "listmounts", "listplaylist",
       "listplaylistinfo", "listplaylists", "load", "lsinfo",
       "mixrampdb", "mixrampdelay", "mount", "move", "moveid",
-      "notcommands",
-      "outputs",
       "password", "ping", "playlist", "playlistadd",
       "playlistclear", "playlistdelete", "playlistid",
       "playlistmove", "plchanges", "plchangesposid",
@@ -92,6 +90,15 @@ module MPD
       "volume",
     ]
 
+    # Shows information about all outputs.
+    def outputs
+      @socket.try do |socket|
+        socket.puts("outputs")
+
+        return fetch_outputs
+      end
+    end
+
     # Plays next song in the playlist.
     def next
       @socket.try do |socket|
@@ -101,7 +108,7 @@ module MPD
       end
     end
 
-    # Toggles pause/resumes playing, *pause* is `true` or `false`.
+    # Toggles pause/resumes playing, `pause` is `true` or `false`.
     def pause(pause : Bool)
       @socket.try do |socket|
         command = "pause #{pause ? "1" : "0"}"
@@ -129,7 +136,7 @@ module MPD
       end
     end
 
-    # Begins playing the playlist at song number *songpos*.
+    # Begins playing the playlist at song number `songpos`.
     def play(songpos : Int32? = nil)
       @socket.try do |socket|
         command = "play #{songpos}".chomp
@@ -139,7 +146,7 @@ module MPD
       end
     end
 
-    # Begins playing the playlist at song *songid*
+    # Begins playing the playlist at song `songid`
     def playid(songid : Int32)
       @socket.try do |socket|
         socket.puts("playid #{songid}")
@@ -148,8 +155,8 @@ module MPD
       end
     end
 
-    # Seeks to the position *time* within the current song.
-    # If prefixed by "+"" or "-", then the time is relative to the current playing position.
+    # Seeks to the position `time` within the current song.
+    # If prefixed by `+` or `-`, then the time is relative to the current playing position.
     def seekcur(time : String | Int32)
       @socket.try do |socket|
         socket.puts("seekcur #{time}")
@@ -158,7 +165,7 @@ module MPD
       end
     end
 
-    # Seeks to the position *time* (in seconds) of song *songid*
+    # Seeks to the position `time` (in seconds) of song `songid`
     def seekid(songid : Int32, time : Int32)
       @socket.try do |socket|
         socket.puts("seekid #{songid} #{time}")
@@ -167,7 +174,7 @@ module MPD
       end
     end
 
-    # Seeks to the position *time* (in seconds) of entry *songpos* in the playlist.
+    # Seeks to the position `time` (in seconds) of entry `songpos` in the playlist.
     def seek(songpos : Int32, time : Int32)
       @socket.try do |socket|
         socket.puts("seek #{songpos} #{time}")
@@ -185,6 +192,15 @@ module MPD
       end
     end
 
+    # Shows which commands the current user does not have access to.
+    def notcommands
+      @socket.try do |socket|
+        socket.puts("notcommands")
+
+        return fetch_list
+      end
+    end
+
     # Shows a list of available song metadata.
     def tagtypes
       @socket.try do |socket|
@@ -194,9 +210,9 @@ module MPD
       end
     end
 
-    # Lists all tags of the specified *type*. *type* can be any tag supported by MPD or file.
+    # Lists all tags of the specified `type`. `type` can be any tag supported by MPD or file.
     #
-    # *artist* is an optional parameter when *type* is "album", this specifies to list albums by an *artist*.
+    # `artist` is an optional parameter when `type` is "album", this specifies to list albums by an `artist`.
     def list(type : String, artist : String? = nil)
       @socket.try do |socket|
         command = "list #{type}"
@@ -208,7 +224,7 @@ module MPD
       end
     end
 
-    # Lists all songs and directories in *uri*
+    # Lists all songs and directories in `uri`
     def listall(uri : String?)
       @socket.try do |socket|
         command = "listall #{uri}".chomp
@@ -228,19 +244,19 @@ module MPD
     end
 
     # Displays a list of all songs in the playlist, or if the optional argument is given,
-    # displays information only for the song **songpos** or the range of songs **START:END**.
+    # displays information only for the song `songpos` or the range of songs `START:END`.
     #
     # Range is done in by using two element array.
     #
     # Show info about the first three songs in the playlist:
     #
-    # ```
+    # ```crystal
     # client.playlistinfo([1, 3])
     # ```
     #
-    # Second element of the `Array` can be omitted. **MPD** will assumes the biggest possible number then:
+    # Second element of the `Array` can be omitted. `MPD` will assumes the biggest possible number then:
     #
-    # ```
+    # ```crystal
     # client.playlistinfo([10])
     # ```
     def playlistinfo(songpos : Int32 | Array(Int32) | Nil = nil)
@@ -280,14 +296,14 @@ module MPD
       end
     end
 
-    # Finds songs in the db that are exactly *query*.
+    # Finds songs in the db that are exactly `query`.
     #
-    # *type* can be any tag supported by MPD, or one of the two special parameters:
+    # `type` can be any tag supported by MPD, or one of the two special parameters:
     #
     # * `file` to search by full path (relative to database root)
     # * `any` to match against all available tags.
     #
-    # *query* is what to find.
+    # `query` is what to find.
     def find(type : String, query : String) : Objects
       @socket.try do |socket|
         socket.puts(%{find "#{type}" "#{query}"})
@@ -298,8 +314,8 @@ module MPD
       return Objects.new
     end
 
-    # Finds songs in the db that are exactly *query* and adds them to current playlist.
-    # Parameters have the same meaning as for **find**.
+    # Finds songs in the db that are exactly `query` and adds them to current playlist.
+    # Parameters have the same meaning as for `find`.
     def findadd(type : String, query : String)
       @socket.try do |socket|
         socket.puts(%{findadd "#{type}" "#{query}"})
@@ -308,9 +324,9 @@ module MPD
       end
     end
 
-    # Searches for any song that contains *query*.
+    # Searches for any song that contains `query`.
     #
-    # Parameters have the same meaning as for **find**, except that search is not case sensitive.
+    # Parameters have the same meaning as for `find`, except that search is not case sensitive.
     def search(type : String, query : String) : Objects
       @socket.try do |socket|
         socket.puts(%{search "#{type}" "#{query}"})
@@ -321,9 +337,9 @@ module MPD
       return Objects.new
     end
 
-    # Searches for any song that contains *query* in tag *type* and adds them to current playlist.
+    # Searches for any song that contains `query` in tag `type` and adds them to current playlist.
     #
-    # Parameters have the same meaning as for **find**, except that search is not case sensitive.
+    # Parameters have the same meaning as for `find`, except that search is not case sensitive.
     def searchadd(type : String, query : String)
       @socket.try do |socket|
         socket.puts(%{searchadd "#{type}" "#{query}"})
@@ -342,7 +358,7 @@ module MPD
 
     # Updates the music database: find new files, remove deleted files, update modified files.
     #
-    # *uri* is a particular directory or song/file to update. If you do not specify it, everything is updated.
+    # `uri` is a particular directory or song/file to update. If you do not specify it, everything is updated.
     def update(uri : String? = nil)
       @socket.try do |socket|
         command = "update #{uri}".chomp
@@ -356,27 +372,27 @@ module MPD
     # Reports the current status of the player and the volume level.
     #
     # Response:
-    # * **volume**: 0-100
-    # * **repeat**: 0 or 1
-    # * **random**: 0 or 1
-    # * **single**: 0 or 1
-    # * **consume**: 0 or 1
-    # * **playlist**: 31-bit unsigned integer, the playlist version number
-    # * **playlistlength**: integer, the length of the playlist
-    # * **state**: play, stop, or pause
-    # * **song**: playlist song number of the current song stopped on or playing
-    # * **songid**: playlist songid of the current song stopped on or playing
-    # * **nextsong**: playlist song number of the next song to be played
-    # * **nextsongid**: playlist songid of the next song to be played
-    # * **time**: total time elapsed (of current playing/paused song)
-    # * **elapsed**: Total time elapsed within the current song, but with higher resolution.
-    # * **bitrate**: instantaneous bitrate in kbps
-    # * **xfade**: crossfade in seconds
-    # * **mixrampdb**: mixramp threshold in dB
-    # * **mixrampdelay**: mixrampdelay in seconds
-    # * **audio**: sampleRate:bits:channels
-    # * **updating_db**: job id
-    # * **error**: if there is an error, returns message here
+    # * `volume`: 0-100
+    # * `repeat`: 0 or 1
+    # * `random`: 0 or 1
+    # * `single`: 0 or 1
+    # * `consume`: 0 or 1
+    # * `playlist`: 31-bit unsigned integer, the playlist version number
+    # * `playlistlength`: integer, the length of the playlist
+    # * `state`: play, stop, or pause
+    # * `song`: playlist song number of the current song stopped on or playing
+    # * `songid`: playlist songid of the current song stopped on or playing
+    # * `nextsong`: playlist song number of the next song to be played
+    # * `nextsongid`: playlist songid of the next song to be played
+    # * `time`: total time elapsed (of current playing/paused song)
+    # * `elapsed`: Total time elapsed within the current song, but with higher resolution.
+    # * `bitrate`: instantaneous bitrate in kbps
+    # * `xfade`: crossfade in seconds
+    # * `mixrampdb`: mixramp threshold in dB
+    # * `mixrampdelay`: mixrampdelay in seconds
+    # * `audio`: sampleRate:bits:channels
+    # * `updating_db`: job id
+    # * `error`: if there is an error, returns message here
     def status
       @socket.try do |socket|
         socket.puts("status")
@@ -385,7 +401,7 @@ module MPD
       end
     end
 
-    # Displays the song info of the current song (same song that is identified in status).
+    # Displays the song info of the current song (same song that is identified in `status`).
     def currentsong
       @socket.try do |socket|
         socket.puts("currentsong")
@@ -397,12 +413,12 @@ module MPD
     # Displays statistics.
     #
     # Response:
-    # * **artists**: number of artists
-    # * **songs**: number of albums
-    # * **uptime**: daemon uptime in seconds
-    # * **db_playtime**: sum of all song times in the db
-    # * **db_update**: last db update in UNIX time
-    # * **playtime**: time length of music played
+    # * `artists`: number of artists
+    # * `songs`: number of albums
+    # * `uptime`: daemon uptime in seconds
+    # * `db_playtime`: sum of all song times in the db
+    # * `db_update`: last db update in UNIX time
+    # * `playtime`: time length of music played
     def stats
       @socket.try do |socket|
         socket.puts("stats")
@@ -411,7 +427,7 @@ module MPD
       end
     end
 
-    # Sets consume state to *state*, *state* should be `false` or `true`.
+    # Sets consume state to `state`, `state` should be `false` or `true`.
     #
     # When consume is activated, each song played is removed from playlist.
     def consume(state : Bool)
@@ -422,7 +438,7 @@ module MPD
       end
     end
 
-    # Sets random state to *state*, *state* should be `false` or `true`.
+    # Sets random state to `state`, `state` should be `false` or `true`.
     def random(state : Bool)
       @socket.try do |socket|
         socket.puts("random #{boolean(state)}")
@@ -431,7 +447,7 @@ module MPD
       end
     end
 
-    # Sets repeat state to *state*, *state* should be `false` or `true`.
+    # Sets repeat state to `state`, `state` should be `false` or `true`.
     def repeat(state : Bool)
       @socket.try do |socket|
         socket.puts("repeat #{boolean(state)}")
@@ -440,7 +456,7 @@ module MPD
       end
     end
 
-    # Sets single state to *state*, *state* should be `false` or `true`.
+    # Sets single state to `state`, `state` should be `false` or `true`.
     #
     # When single is activated, playback is stopped after current song,
     # or song is repeated if the "repeat" mode is enabled.
@@ -499,6 +515,10 @@ module MPD
       result << obj unless obj.empty?
 
       return result
+    end
+
+    private def fetch_outputs
+      fetch_objects(["outputid"])
     end
 
     private def read_pairs : Pairs
