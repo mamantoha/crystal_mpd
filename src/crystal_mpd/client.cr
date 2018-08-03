@@ -67,7 +67,7 @@ module MPD
 
     UNIMPLEMENTED_METHODS = [
       "add", "addid", "addtagid",
-      "channels", "clearerror", "cleartagid", "close",
+      "channels", "clearerror", "cleartagid",
       "config", "count", "crossfade",
       "decoders", "delete", "deleteid", "disableoutput",
       "enableoutput",
@@ -90,157 +90,124 @@ module MPD
       "volume",
     ]
 
+    # Closes the connection to MPD.
+    def close
+      write_command("close")
+    end
+
     # Shows information about all outputs.
     def outputs
-      @socket.try do |socket|
-        socket.puts("outputs")
+      write_command("outputs")
 
-        return fetch_outputs
-      end
+      return fetch_outputs
     end
 
     # Plays next song in the playlist.
     def next
-      @socket.try do |socket|
-        socket.puts("next")
+      write_command("next")
 
-        return fetch_nothing
-      end
+      return fetch_nothing
     end
 
     # Toggles pause/resumes playing, `pause` is `true` or `false`.
     def pause(pause : Bool)
-      @socket.try do |socket|
-        command = "pause #{pause ? "1" : "0"}"
-        socket.puts(command)
+      write_command("pause", boolean(pause))
 
-        return fetch_nothing
-      end
+      return fetch_nothing
     end
 
     # Plays previous song in the playlist.
     def previous
-      @socket.try do |socket|
-        socket.puts("previous")
+      write_command("previous")
 
-        return fetch_nothing
-      end
+      return fetch_nothing
     end
 
     # Stops playing.
     def stop
-      @socket.try do |socket|
-        socket.puts("stop")
+      write_command("stop")
 
-        return fetch_nothing
-      end
+      return fetch_nothing
     end
 
     # Begins playing the playlist at song number `songpos`.
     def play(songpos : Int32? = nil)
-      @socket.try do |socket|
-        command = "play #{songpos}".chomp
-        socket.puts(command)
+      write_command("play", songpos)
 
-        return fetch_nothing
-      end
+      return fetch_nothing
     end
 
     # Begins playing the playlist at song `songid`
     def playid(songid : Int32)
-      @socket.try do |socket|
-        socket.puts("playid #{songid}")
+      write_command("playid", songid)
 
-        return fetch_nothing
-      end
+      return fetch_nothing
     end
 
     # Seeks to the position `time` within the current song.
     # If prefixed by `+` or `-`, then the time is relative to the current playing position.
     def seekcur(time : String | Int32)
-      @socket.try do |socket|
-        socket.puts("seekcur #{time}")
+      write_command("seekcur", time)
 
-        return fetch_nothing
-      end
+      return fetch_nothing
     end
 
     # Seeks to the position `time` (in seconds) of song `songid`
     def seekid(songid : Int32, time : Int32)
-      @socket.try do |socket|
-        socket.puts("seekid #{songid} #{time}")
+      write_command("seekid", songid, time)
 
-        return fetch_nothing
-      end
+      return fetch_nothing
     end
 
     # Seeks to the position `time` (in seconds) of entry `songpos` in the playlist.
     def seek(songpos : Int32, time : Int32)
-      @socket.try do |socket|
-        socket.puts("seek #{songpos} #{time}")
+      write_command("seek", songpos, time)
 
-        return fetch_nothing
-      end
+      return fetch_nothing
     end
 
     # Shows which commands the current user has access to.
     def commands
-      @socket.try do |socket|
-        socket.puts("commands")
+      write_command("commands")
 
-        return fetch_list
-      end
+      return fetch_list
     end
 
     # Shows which commands the current user does not have access to.
     def notcommands
-      @socket.try do |socket|
-        socket.puts("notcommands")
+      write_command("notcommands")
 
-        return fetch_list
-      end
+      return fetch_list
     end
 
     # Shows a list of available song metadata.
     def tagtypes
-      @socket.try do |socket|
-        socket.puts("tagtypes")
+      write_command("tagtypes")
 
-        return fetch_list
-      end
+      return fetch_list
     end
 
     # Lists all tags of the specified `type`. `type` can be any tag supported by MPD or file.
     #
     # `artist` is an optional parameter when `type` is "album", this specifies to list albums by an `artist`.
     def list(type : String, artist : String? = nil)
-      @socket.try do |socket|
-        command = "list #{type}"
-        command = command + %{ "#{artist}"} if artist
+      write_command("list", type, artist)
 
-        socket.puts(command)
-
-        return fetch_list
-      end
+      return fetch_list
     end
 
     # Lists all songs and directories in `uri`
     def listall(uri : String?)
-      @socket.try do |socket|
-        command = "listall #{uri}".chomp
-        socket.puts(command)
+      write_command("listall", uri)
 
-        return fetch_objects(["file", "directory", "playlist"])
-      end
+      return fetch_objects(["file", "directory", "playlist"])
     end
 
     # Clears the current playlist.
     def clear
-      @socket.try do |socket|
-        socket.puts("clear")
+      write_command("clear")
 
-        return fetch_nothing
-      end
+      return fetch_nothing
     end
 
     # Displays a list of all songs in the playlist, or if the optional argument is given,
@@ -260,40 +227,23 @@ module MPD
     # client.playlistinfo([10])
     # ```
     def playlistinfo(songpos : Int32 | Array(Int32) | Nil = nil)
-      @socket.try do |socket|
-        args =
-          case songpos
-          when Int32
-            "#{songpos}"
-          when Array
-            "#{songpos[0]}:#{songpos[1]?}"
-          else
-            ""
-          end
+      write_command("playlistinfo", songpos)
 
-        command = "playlistinfo #{args}".chomp
-        socket.puts(command)
-
-        return fetch_objects(["file"])
-      end
+      return fetch_objects(["file"])
     end
 
     # Searches case-sensitively for partial matches in the current playlist.
     def playlistsearch(tag : String, needle : String)
-      @socket.try do |socket|
-        socket.puts(%{playlistsearch "#{tag}" "#{needle}"})
+      write_command("playlistsearch", tag, needle)
 
-        return fetch_objects(["file"])
-      end
+      return fetch_objects(["file"])
     end
 
     # Finds songs in the current playlist with strict matching.
     def playlistfind(tag : String, needle : String)
-      @socket.try do |socket|
-        socket.puts(%{playlistfind "#{tag}" "#{needle}"})
+      write_command("playlistfind", tag, needle)
 
-        return fetch_objects(["file"])
-      end
+      return fetch_objects(["file"])
     end
 
     # Finds songs in the db that are exactly `query`.
@@ -304,69 +254,51 @@ module MPD
     # * `any` to match against all available tags.
     #
     # `query` is what to find.
-    def find(type : String, query : String) : Objects
-      @socket.try do |socket|
-        socket.puts(%{find "#{type}" "#{query}"})
+    def find(type : String, query : String)
+      write_command("find", type, query)
 
-        return fetch_objects(["file"])
-      end
-
-      return Objects.new
+      return fetch_objects(["file"])
     end
 
     # Finds songs in the db that are exactly `query` and adds them to current playlist.
     # Parameters have the same meaning as for `find`.
     def findadd(type : String, query : String)
-      @socket.try do |socket|
-        socket.puts(%{findadd "#{type}" "#{query}"})
+      write_command("findadd", type, query)
 
-        return fetch_nothing
-      end
+      return fetch_nothing
     end
 
     # Searches for any song that contains `query`.
     #
     # Parameters have the same meaning as for `find`, except that search is not case sensitive.
-    def search(type : String, query : String) : Objects
-      @socket.try do |socket|
-        socket.puts(%{search "#{type}" "#{query}"})
+    def search(type : String, query : String)
+      write_command("search", type, query)
 
-        return fetch_objects(["file"])
-      end
-
-      return Objects.new
+      return fetch_objects(["file"])
     end
 
     # Searches for any song that contains `query` in tag `type` and adds them to current playlist.
     #
     # Parameters have the same meaning as for `find`, except that search is not case sensitive.
     def searchadd(type : String, query : String)
-      @socket.try do |socket|
-        socket.puts(%{searchadd "#{type}" "#{query}"})
+      write_command("searchadd", type, query)
 
-        return fetch_nothing
-      end
+      return fetch_nothing
     end
 
     def replay_gain_status
-      @socket.try do |socket|
-        socket.puts("replay_gain_status")
+      write_command("replay_gain_status")
 
-        return fetch_item
-      end
+      return fetch_item
     end
 
     # Updates the music database: find new files, remove deleted files, update modified files.
     #
     # `uri` is a particular directory or song/file to update. If you do not specify it, everything is updated.
     def update(uri : String? = nil)
-      @socket.try do |socket|
-        command = "update #{uri}".chomp
+      write_command("update", uri)
 
-        socket.puts(command)
-
-        return fetch_item
-      end
+      return fetch_item
     end
 
     # Reports the current status of the player and the volume level.
@@ -394,19 +326,55 @@ module MPD
     # * `updating_db`: job id
     # * `error`: if there is an error, returns message here
     def status
-      @socket.try do |socket|
-        socket.puts("status")
+      write_command("status")
 
-        return fetch_object
-      end
+      return fetch_object
     end
 
     # Displays the song info of the current song (same song that is identified in `status`).
     def currentsong
-      @socket.try do |socket|
-        socket.puts("currentsong")
+      write_command("currentsong")
 
-        return fetch_object
+      return fetch_object
+    end
+
+    # Adds the file `uri` to the playlist (directories add recursively).
+    #
+    # `uri` can also be a single file.
+    def add(uri : String)
+      write_command("add", uri)
+
+      return fetch_nothing
+    end
+
+    private def write_command(command : String, *args)
+      parts = [command]
+
+      args.each do |arg|
+        line = parse_arg(arg)
+
+        parts << line
+      end
+
+      write_line(parts.join(' '))
+    end
+
+    private def parse_arg(arg) : String
+      case arg
+      when Array
+        arg.size == 1 ? %{"#{arg[0]}:"} : %{"#{arg[0]}:#{arg[1]}"}
+      when String
+        %{"#{escape(arg)}"}
+      when Int32
+        %{"#{escape(arg.to_s)}"}
+      else
+        ""
+      end
+    end
+
+    private def write_line(line : String)
+      @socket.try do |socket|
+        socket.puts(line)
       end
     end
 
@@ -420,40 +388,32 @@ module MPD
     # * `db_update`: last db update in UNIX time
     # * `playtime`: time length of music played
     def stats
-      @socket.try do |socket|
-        socket.puts("stats")
+      write_command("stats")
 
-        return fetch_object
-      end
+      return fetch_object
     end
 
     # Sets consume state to `state`, `state` should be `false` or `true`.
     #
     # When consume is activated, each song played is removed from playlist.
     def consume(state : Bool)
-      @socket.try do |socket|
-        socket.puts("consume #{boolean(state)}")
+      write_command("consume", boolean(state))
 
-        return fetch_nothing
-      end
+      return fetch_nothing
     end
 
     # Sets random state to `state`, `state` should be `false` or `true`.
     def random(state : Bool)
-      @socket.try do |socket|
-        socket.puts("random #{boolean(state)}")
+      write_command("random", boolean(state))
 
-        return fetch_nothing
-      end
+      return fetch_nothing
     end
 
     # Sets repeat state to `state`, `state` should be `false` or `true`.
     def repeat(state : Bool)
-      @socket.try do |socket|
-        socket.puts("repeat #{boolean(state)}")
+      write_command("repeat", boolean(state))
 
-        return fetch_nothing
-      end
+      return fetch_nothing
     end
 
     # Sets single state to `state`, `state` should be `false` or `true`.
@@ -461,11 +421,9 @@ module MPD
     # When single is activated, playback is stopped after current song,
     # or song is repeated if the "repeat" mode is enabled.
     def single(state : Bool)
-      @socket.try do |socket|
-        socket.puts("single #{boolean(state)}")
+      write_command("single", boolean(state))
 
-        return fetch_nothing
-      end
+      return fetch_nothing
     end
 
     private def fetch_nothing
