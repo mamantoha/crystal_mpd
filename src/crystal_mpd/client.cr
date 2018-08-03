@@ -68,7 +68,7 @@ module MPD
     UNIMPLEMENTED_METHODS = [
       "add", "addid", "addtagid",
       "channels", "clearerror", "cleartagid", "close",
-      "config", "count", "crossfade", "currentsong",
+      "config", "count", "crossfade",
       "decoders", "delete", "deleteid", "disableoutput",
       "enableoutput",
       "idle",
@@ -91,13 +91,6 @@ module MPD
       "unmount", "unsubscribe", "urlhandlers",
       "volume",
     ]
-
-    {% for method in UNIMPLEMENTED_METHODS %}
-      # :nodoc:
-      def {{method.id}}
-        raise NotImplementedError.new("Method {{method.id}} not yet implemented.")
-      end
-    {% end %}
 
     # Plays next song in the playlist.
     def next
@@ -392,6 +385,15 @@ module MPD
       end
     end
 
+    # Displays the song info of the current song (same song that is identified in status).
+    def currentsong
+      @socket.try do |socket|
+        socket.puts("currentsong")
+
+        return fetch_object
+      end
+    end
+
     # Displays statistics.
     #
     # Response:
@@ -551,5 +553,12 @@ module MPD
     private def escape(str : String)
       str.gsub(%{\\}, %{\\\\}).gsub(%{"}, %{\\"})
     end
+
+    {% for method in UNIMPLEMENTED_METHODS %}
+      # :nodoc:
+      def {{method.id}}
+        raise NotImplementedError.new("Method {{method.id}} not yet implemented.")
+      end
+    {% end %}
   end
 end
