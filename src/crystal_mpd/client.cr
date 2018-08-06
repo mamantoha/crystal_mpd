@@ -1,4 +1,26 @@
 module MPD
+  struct CommandList
+    property commands = [] of String
+    property active : Bool = false
+
+    def add(command : String)
+      @commands << command
+    end
+
+    def begin
+      @active = true
+    end
+
+    def reset
+      @commands.clear
+      @active = false
+    end
+
+    def active? : Bool
+      @active
+    end
+  end
+
   class Client
     alias Object = Hash(String, String)
     alias Objects = Array(Object)
@@ -29,11 +51,18 @@ module MPD
       @host : String = "localhost",
       @port : Int32 = 6600
     )
+      @command_list = CommandList.new
+
       connect
     end
 
     def connect
       reconnect unless connected?
+    end
+
+    def reconnect
+      @socket = TCPSocket.new(host, port)
+      hello
     end
 
     def disconnect
@@ -48,12 +77,7 @@ module MPD
       @socket.is_a?(Socket)
     end
 
-    def reconnect
-      @socket = TCPSocket.new(host.not_nil!, port)
-      hello
-    end
-
-    def hello
+    private def hello
       @socket.try do |socket|
         response = socket.gets(chomp: false)
         if response
@@ -63,6 +87,44 @@ module MPD
           @version = response[/#{HELLO_PREFIX}(.*)/, 1]
         end
       end
+    end
+
+    # https://www.musicpd.org/doc/protocol/command_lists.html
+    def command_list_ok_begin
+      write_command("command_list_ok_begin")
+
+      @command_list.begin
+    end
+
+    def command_list_end
+      write_command("command_list_end")
+
+      process_command_list
+      @command_list.reset
+    end
+
+    def process_command_list
+      @command_list.commands.each do |command|
+        process_command_in_command_list(command)
+      end
+    end
+
+    def process_command_in_command_list(command : String)
+      read_line
+    end
+
+    # Adds the file `uri` to the playlist (directories add recursively).
+    #
+    # `uri` can also be a single file.
+    def add(uri : String)
+      write_command("add", uri)
+
+      if @command_list.active?
+        @command_list.add("fetch_nothing")
+        return
+      end
+
+      fetch_nothing
     end
 
     UNIMPLEMENTED_METHODS = [
@@ -99,49 +161,49 @@ module MPD
     def outputs
       write_command("outputs")
 
-      return fetch_outputs
+      fetch_outputs
     end
 
     # Plays next song in the playlist.
     def next
       write_command("next")
 
-      return fetch_nothing
+      fetch_nothing
     end
 
     # Toggles pause/resumes playing, `pause` is `true` or `false`.
     def pause(pause : Bool)
       write_command("pause", boolean(pause))
 
-      return fetch_nothing
+      fetch_nothing
     end
 
     # Plays previous song in the playlist.
     def previous
       write_command("previous")
 
-      return fetch_nothing
+      fetch_nothing
     end
 
     # Stops playing.
     def stop
       write_command("stop")
 
-      return fetch_nothing
+      fetch_nothing
     end
 
     # Begins playing the playlist at song number `songpos`.
     def play(songpos : Int32? = nil)
       write_command("play", songpos)
 
-      return fetch_nothing
+      fetch_nothing
     end
 
     # Begins playing the playlist at song `songid`
     def playid(songid : Int32)
       write_command("playid", songid)
 
-      return fetch_nothing
+      fetch_nothing
     end
 
     # Seeks to the position `time` within the current song.
@@ -149,42 +211,42 @@ module MPD
     def seekcur(time : String | Int32)
       write_command("seekcur", time)
 
-      return fetch_nothing
+      fetch_nothing
     end
 
     # Seeks to the position `time` (in seconds) of song `songid`
     def seekid(songid : Int32, time : Int32)
       write_command("seekid", songid, time)
 
-      return fetch_nothing
+      fetch_nothing
     end
 
     # Seeks to the position `time` (in seconds) of entry `songpos` in the playlist.
     def seek(songpos : Int32, time : Int32)
       write_command("seek", songpos, time)
 
-      return fetch_nothing
+      fetch_nothing
     end
 
     # Shows which commands the current user has access to.
     def commands
       write_command("commands")
 
-      return fetch_list
+      fetch_list
     end
 
     # Shows which commands the current user does not have access to.
     def notcommands
       write_command("notcommands")
 
-      return fetch_list
+      fetch_list
     end
 
     # Shows a list of available song metadata.
     def tagtypes
       write_command("tagtypes")
 
-      return fetch_list
+      fetch_list
     end
 
     # Lists all tags of the specified `type`. `type` can be any tag supported by MPD or file.
@@ -193,21 +255,21 @@ module MPD
     def list(type : String, artist : String? = nil)
       write_command("list", type, artist)
 
-      return fetch_list
+      fetch_list
     end
 
     # Lists all songs and directories in `uri`
     def listall(uri : String?)
       write_command("listall", uri)
 
-      return fetch_objects(["file", "directory", "playlist"])
+      fetch_objects(["file", "directory", "playlist"])
     end
 
     # Clears the current playlist.
     def clear
       write_command("clear")
 
-      return fetch_nothing
+      fetch_nothing
     end
 
     # Displays a list of all songs in the playlist, or if the optional argument is given,
@@ -229,21 +291,21 @@ module MPD
     def playlistinfo(songpos : Int32 | Array(Int32) | Nil = nil)
       write_command("playlistinfo", songpos)
 
-      return fetch_objects(["file"])
+      fetch_objects(["file"])
     end
 
     # Searches case-sensitively for partial matches in the current playlist.
     def playlistsearch(tag : String, needle : String)
       write_command("playlistsearch", tag, needle)
 
-      return fetch_objects(["file"])
+      fetch_objects(["file"])
     end
 
     # Finds songs in the current playlist with strict matching.
     def playlistfind(tag : String, needle : String)
       write_command("playlistfind", tag, needle)
 
-      return fetch_objects(["file"])
+      fetch_objects(["file"])
     end
 
     # Finds songs in the db that are exactly `query`.
@@ -257,7 +319,7 @@ module MPD
     def find(type : String, query : String)
       write_command("find", type, query)
 
-      return fetch_objects(["file"])
+      fetch_objects(["file"])
     end
 
     # Finds songs in the db that are exactly `query` and adds them to current playlist.
@@ -265,7 +327,7 @@ module MPD
     def findadd(type : String, query : String)
       write_command("findadd", type, query)
 
-      return fetch_nothing
+      fetch_nothing
     end
 
     # Searches for any song that contains `query`.
@@ -274,7 +336,7 @@ module MPD
     def search(type : String, query : String)
       write_command("search", type, query)
 
-      return fetch_objects(["file"])
+      fetch_objects(["file"])
     end
 
     # Searches for any song that contains `query` in tag `type` and adds them to current playlist.
@@ -283,13 +345,13 @@ module MPD
     def searchadd(type : String, query : String)
       write_command("searchadd", type, query)
 
-      return fetch_nothing
+      fetch_nothing
     end
 
     def replay_gain_status
       write_command("replay_gain_status")
 
-      return fetch_item
+      fetch_item
     end
 
     # Updates the music database: find new files, remove deleted files, update modified files.
@@ -298,7 +360,7 @@ module MPD
     def update(uri : String? = nil)
       write_command("update", uri)
 
-      return fetch_item
+      fetch_item
     end
 
     # Reports the current status of the player and the volume level.
@@ -328,23 +390,14 @@ module MPD
     def status
       write_command("status")
 
-      return fetch_object
+      fetch_object
     end
 
     # Displays the song info of the current song (same song that is identified in `status`).
     def currentsong
       write_command("currentsong")
 
-      return fetch_object
-    end
-
-    # Adds the file `uri` to the playlist (directories add recursively).
-    #
-    # `uri` can also be a single file.
-    def add(uri : String)
-      write_command("add", uri)
-
-      return fetch_nothing
+      fetch_object
     end
 
     private def write_command(command : String, *args)
@@ -390,7 +443,7 @@ module MPD
     def stats
       write_command("stats")
 
-      return fetch_object
+      fetch_object
     end
 
     # Sets consume state to `state`, `state` should be `false` or `true`.
@@ -399,21 +452,21 @@ module MPD
     def consume(state : Bool)
       write_command("consume", boolean(state))
 
-      return fetch_nothing
+      fetch_nothing
     end
 
     # Sets random state to `state`, `state` should be `false` or `true`.
     def random(state : Bool)
       write_command("random", boolean(state))
 
-      return fetch_nothing
+      fetch_nothing
     end
 
     # Sets repeat state to `state`, `state` should be `false` or `true`.
     def repeat(state : Bool)
       write_command("repeat", boolean(state))
 
-      return fetch_nothing
+      fetch_nothing
     end
 
     # Sets single state to `state`, `state` should be `false` or `true`.
@@ -423,7 +476,7 @@ module MPD
     def single(state : Bool)
       write_command("single", boolean(state))
 
-      return fetch_nothing
+      fetch_nothing
     end
 
     private def fetch_nothing
@@ -447,7 +500,7 @@ module MPD
         result << value
       end
 
-      return result
+      result
     end
 
     private def fetch_object : Object
@@ -472,7 +525,7 @@ module MPD
 
       result << obj unless obj.empty?
 
-      return result
+      result
     end
 
     private def fetch_outputs
@@ -488,34 +541,42 @@ module MPD
         pair = read_pair
       end
 
-      return pairs
+      pairs
     end
 
     private def read_pair : Pair
       line = read_line
       return Pair.new if line.nil?
       pair = line.split(": ", 2)
-      return pair
+
+      pair
     end
 
     private def fetch_item : String
       pairs = read_pairs
       return "" if pairs.size != 1
-      return pairs[0][1]
+
+      pairs[0][1]
     end
 
     private def read_line : String?
       @socket.try do |socket|
         line = socket.gets(chomp: true)
+        puts line
 
         if line.not_nil!.starts_with?(ERROR_PREFIX)
           error = line.not_nil![/#{ERROR_PREFIX}(.*)/, 1].strip
           raise MPD::Error.new(error)
         end
 
+        if @command_list.active?
+          return if line == NEXT
+          raise "Got unexpected '#{SUCCESS}' in command list" if line == SUCCESS
+        end
+
         return if line == SUCCESS
 
-        return line
+        line
       end
     end
 
