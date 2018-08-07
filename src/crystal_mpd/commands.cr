@@ -297,12 +297,7 @@ module MPD
       "name"    => "stop",
       "retval"  => "fetch_nothing",
       "comment" => "Stops playing.",
-      "args"    => [
-        {
-          "name" => "state",
-          "type" => "Bool",
-        },
-      ],
+      "args"    => [] of Nil,
     },
     {
       "name"    => "next",
