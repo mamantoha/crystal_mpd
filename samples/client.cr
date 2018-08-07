@@ -9,6 +9,13 @@ puts "MPD version: #{client.version}"
 # puts client.status
 # puts client.stats
 # puts client.config
+# puts client.subscribe("test")
+# puts client.sendmessage("test", "Hello from Crystal!")
+# puts client.readmessages
+# puts client.unsubscribe("test")
+# puts client.channels
+# puts client.decoders
+# puts client.urlhandlers
 # puts client.delete([0, 2])
 # puts client.playlistinfo(1)
 # puts client.playlistsearch("title", "All Around Me")

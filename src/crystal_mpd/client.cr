@@ -221,6 +221,14 @@ module MPD
       fetch_objects(["file", "directory", "playlist"])
     end
 
+    def fetch_plugins
+      fetch_objects(["plugin"])
+    end
+
+    def fetch_messages
+      fetch_objects("channel")
+    end
+
     private def fetch_item : String
       pairs = read_pairs
       return "" if pairs.size != 1

@@ -2,15 +2,15 @@ module MPD
   # :nodoc:
   RETVALS = [
     "fetch_nothing", "fetch_list", "fetch_object", "fetch_objects",
-    "fetch_songs", "fetch_outputs", "fetch_database",
+    "fetch_songs", "fetch_outputs", "fetch_database", "fetch_plugins",
   ]
 
   # :nodoc:
   UNIMPLEMENTED_COMMANDS = [
     "addid", "addtagid",
-    "channels", "clearerror", "cleartagid",
+    "clearerror", "cleartagid",
     "count", "crossfade",
-    "decoders", "deleteid", "disableoutput",
+    "deleteid", "disableoutput",
     "enableoutput",
     "idle",
     "kill",
@@ -21,13 +21,13 @@ module MPD
     "playlistclear", "playlistdelete", "playlistid",
     "playlistmove", "plchanges", "plchangesposid",
     "prio", "prioid",
-    "rangeid", "readcomments", "readmessages", "rename",
+    "rangeid", "readcomments", "rename",
     "replay_gain_mode", "rescan", "rm",
     "save", "searchaddpl",
-    "sendmessage", "setvol", "shuffle",
-    "sticker", "subscribe", "swap", "swapid",
+    "setvol", "shuffle",
+    "sticker", "swap", "swapid",
     "toggleoutput",
-    "unmount", "unsubscribe", "urlhandlers",
+    "unmount",
     "volume",
   ]
 
@@ -52,7 +52,7 @@ module MPD
       "name"    => "delete",
       "retval"  => "fetch_nothing",
       "comment" => "Deletes a song from the playlist.",
-      "args" => [
+      "args"    => [
         {
           "name" => "songpos",
           "type" => "Int32 | Array(Int32)",
@@ -66,7 +66,7 @@ module MPD
         Dumps configuration values that may be interesting for the client.
 
         This command is only permitted to `local` clients (connected via UNIX domain socket).",
-      "args"    => [] of Nil,
+      "args" => [] of Nil,
     },
     {
       "name"    => "close",
@@ -93,23 +93,76 @@ module MPD
       "args"    => [] of Nil,
     },
     {
-      "name"    => "list",
+      "name"    => "decoders",
+      "retval"  => "fetch_plugins",
+      "comment" => "Print a list of decoder plugins, followed by their supported suffixes and MIME types.",
+      "args"    => [] of Nil,
+    },
+    {
+      "name"    => "urlhandlers",
       "retval"  => "fetch_list",
+      "comment" => "Gets a list of available URL handlers.",
+      "args"    => [] of Nil,
+    },
+    {
+      "name"    => "channels",
+      "retval"  => "fetch_list",
+      "comment" => "Obtain a list of all channels. The response is a list of `channel:` lines.",
+      "args"    => [] of Nil,
+    },
+    {
+      "name"    => "channels",
+      "retval"  => "fetch_list",
+      "comment" => "Obtain a list of all channels. The response is a list of `channel:` lines.",
+      "args"    => [] of Nil,
+    },
+    {
+      "name"    => "subscribe",
+      "retval"  => "fetch_nothing",
       "comment" => "
-        Lists all tags of the specified `type`. `type` can be any tag supported by MPD or file.
+        Subscribe to a channel.
 
-        `artist` is an optional parameter when `type` is `album`, this specifies to list albums by an `artist`.
+        The channel is created if it does not exist already.
+        The `name` may consist of alphanumeric ASCII characters plus underscore, dash, dot and colon.
       ",
       "args" => [
         {
-          "name" => "type",
+          "name" => "name",
+          "type" => "String",
+        },
+      ],
+    },
+    {
+      "name"    => "unsubscribe",
+      "retval"  => "fetch_nothing",
+      "comment" => "Unsubscribe from a channel.",
+      "args"    => [
+        {
+          "name" => "name",
+          "type" => "String",
+        },
+      ],
+    },
+    {
+      "name"    => "sendmessage",
+      "retval"  => "fetch_nothing",
+      "comment" => "Send a message to the specified channel.",
+      "args"    => [
+        {
+          "name" => "channel",
           "type" => "String",
         },
         {
-          "name" => "artist",
-          "type" => "String? = nil",
+          "name" => "text",
+          "type" => "String",
         },
       ],
+    },
+    {
+      "name"    => "readmessages",
+      "retval"  => "fetch_messages",
+      "comment" => "Reads messages for this client. The response is a list of `channel:` and `message:` lines.",
+      "args"    => [] of Nil,
     },
     {
       "name"    => "listall",
