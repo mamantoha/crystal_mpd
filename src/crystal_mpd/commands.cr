@@ -303,28 +303,22 @@ module MPD
       "name"    => "next",
       "retval"  => "fetch_nothing",
       "comment" => "Plays next song in the playlist.",
-      "args"    => [
-        {
-          "name" => "state",
-          "type" => "Bool",
-        },
-      ],
+      "args"    => [] of Nil,
     },
     {
       "name"    => "previous",
       "retval"  => "fetch_nothing",
       "comment" => "Plays previous song in the playlist.",
-      "args"    => [
-        {
-          "name" => "state",
-          "type" => "Bool",
-        },
-      ],
+      "args"    => [] of Nil,
     },
     {
       "name"    => "pause",
       "retval"  => "fetch_nothing",
-      "comment" => "Toggles pause/resumes playing, `pause` is `true` or `false`.",
+      "comment" => "
+        Toggles pause/resumes playing, `pause` is `true` or `false`.
+
+        **Note**. The use of pause command w/o the `state` argument is deprecated.
+      ",
       "args"    => [
         {
           "name" => "state",
