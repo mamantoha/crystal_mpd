@@ -20,7 +20,6 @@ module MPD
     "plchanges", "plchangesposid",
     "prio", "prioid",
     "rangeid", "readcomments",
-    "rescan",
     "setvol", "shuffle",
     "sticker", "swap", "swapid",
     "toggleoutput",
@@ -808,6 +807,17 @@ module MPD
         `uri` is a particular directory or song/file to update. If you do not specify it, everything is updated.
       ",
       "args" => [
+        {
+          "name" => "uri",
+          "type" => "String? = nil",
+        },
+      ],
+    },
+    {
+      "name"    => "rescan",
+      "retval"  => "fetch_item",
+      "comment" => "Same as `update`, but also rescans unmodified files.",
+      "args"    => [
         {
           "name" => "uri",
           "type" => "String? = nil",
