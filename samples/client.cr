@@ -25,6 +25,12 @@ puts "MPD version: #{client.version}"
 # puts client.listall("world/z")
 # puts client.update("world/z")
 # puts client.listall
+# puts client.listallinfo
+# puts client.listallinfo("world/z")
+# puts client.lsinfo
+# puts client.lsinfo("world/z")
+# puts client.listfiles
+# puts client.listfiles("world/z")
 # puts client.commands
 # puts client.rename("test", "new_test")
 # puts client.save("test")

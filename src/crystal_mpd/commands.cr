@@ -14,14 +14,13 @@ module MPD
     "enableoutput",
     "idle",
     "kill",
-    "listallinfo", "listfiles", "listmounts",
-    "lsinfo",
+    "listmounts",
     "mixrampdb", "mixrampdelay", "mount", "move", "moveid",
     "password", "ping",
     "plchanges", "plchangesposid",
     "prio", "prioid",
     "rangeid", "readcomments",
-    "replay_gain_mode", "rescan",
+    "rescan",
     "searchaddpl",
     "setvol", "shuffle",
     "sticker", "swap", "swapid",
@@ -170,7 +169,57 @@ module MPD
       "args"    => [
         {
           "name" => "uri",
-          "type" => "String?",
+          "type" => "String? = nil",
+        },
+      ],
+    },
+    {
+      "name"    => "listallinfo",
+      "retval"  => "fetch_database",
+      "comment" => "Same as `listall`, except it also returns metadata info in the same format as `lsinfo`.",
+      "args"    => [
+        {
+          "name" => "uri",
+          "type" => "String? = nil",
+        },
+      ],
+    },
+    {
+      "name"    => "listfiles",
+      "retval"  => "fetch_database",
+      "comment" => "
+        Lists the contents of the directory `URI`, including files are not recognized by `MPD`.
+
+        `uri` can be a path relative to the music directory or an `uri` understood by one of the storage plugins.
+        The response contains at least one line for each directory entry with the prefix `file: ` or  `directory: `,
+        and may be followed by file attributes such as `Last-Modified` and `size`.
+
+        For example, `smb://SERVER` returns a list of all shares on the given SMB/CIFS server;
+        `nfs://servername/path` obtains a directory listing from the NFS server.
+      ",
+      "args" => [
+        {
+          "name" => "uri",
+          "type" => "String? = nil",
+        },
+      ],
+    },
+    {
+      "name"    => "lsinfo",
+      "retval"  => "fetch_database",
+      "comment" => "
+        Lists the contents of the directory `uri`.
+
+        When listing the root directory, this currently returns the list of stored playlists.
+        This behavior is deprecated; use `listplaylists` instead.
+
+        Clients that are connected via UNIX domain socket may use this command
+        to read the tags of an arbitrary local file (`uri` beginning with `file:///`).
+      ",
+      "args" => [
+        {
+          "name" => "uri",
+          "type" => "String? = nil",
         },
       ],
     },
