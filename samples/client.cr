@@ -36,7 +36,8 @@ puts "MPD version: #{client.version}"
 # puts client.save("test")
 # puts client.rm("test")
 # puts client.listplaylists
-# client.playlistclear("new_test")
+# client.playlistclear("test")
+# client.searchaddpl("test", "Artist", "Otep")
 # puts client.listplaylist("test")
 # puts client.playlistdelete("test", 0)
 # puts client.listplaylistinfo("test")
@@ -69,6 +70,7 @@ puts "MPD version: #{client.version}"
 # puts client.seek(3, 45)
 # puts client.list("album", "Linkin Park")
 # puts client.list("Genre")
+# client.searchadd("Artist", "Otep")
 
 puts "MPD client status: " + (client.connected? ? "connected" : "disconnected")
 puts "MPD version: #{client.version}"

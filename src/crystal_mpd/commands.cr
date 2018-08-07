@@ -21,7 +21,6 @@ module MPD
     "prio", "prioid",
     "rangeid", "readcomments",
     "rescan",
-    "searchaddpl",
     "setvol", "shuffle",
     "sticker", "swap", "swapid",
     "toggleoutput",
@@ -446,6 +445,30 @@ module MPD
         Parameters have the same meaning as for `find`, except that search is not case sensitive.
       ",
       "args" => [
+        {
+          "name" => "type",
+          "type" => "String",
+        },
+        {
+          "name" => "query",
+          "type" => "String",
+        },
+      ],
+    },
+    {
+      "name"    => "searchaddpl",
+      "retval"  => "fetch_nothing",
+      "comment" => "
+        Searches for any song that contains `what` in tag `type` and adds them to the playlist named `name`.
+
+        If a playlist by that name doesn't exist it is created.
+        Parameters have the same meaning as for `find`, except that search is not case sensitive.
+      ",
+      "args" => [
+        {
+          "name" => "name",
+          "type" => "String",
+        },
         {
           "name" => "type",
           "type" => "String",
