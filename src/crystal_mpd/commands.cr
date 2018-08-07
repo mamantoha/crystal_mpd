@@ -319,7 +319,7 @@ module MPD
 
         **Note**. The use of pause command w/o the `state` argument is deprecated.
       ",
-      "args"    => [
+      "args" => [
         {
           "name" => "state",
           "type" => "Bool",
@@ -485,7 +485,7 @@ module MPD
         Playlist plugins are supported.
         A range `songpos` may be specified to load only a part of the playlist.
       ",
-      "args"    => [
+      "args" => [
         {
           "name" => "name",
           "type" => "String",
@@ -515,7 +515,7 @@ module MPD
       "name"    => "rm",
       "retval"  => "fetch_nothing",
       "comment" => "Removes the playlist `name`.m3u from the playlist directory.",
-      "args" => [
+      "args"    => [
         {
           "name" => "name",
           "type" => "String",
@@ -526,7 +526,7 @@ module MPD
       "name"    => "save",
       "retval"  => "fetch_nothing",
       "comment" => "Saves the current playlist to `name`.m3u in the playlist directory",
-      "args" => [
+      "args"    => [
         {
           "name" => "name",
           "type" => "String",
