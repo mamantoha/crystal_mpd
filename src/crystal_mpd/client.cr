@@ -221,6 +221,10 @@ module MPD
       fetch_objects(["file", "directory", "playlist"])
     end
 
+    def fetch_playlists
+      fetch_objects(["playlist"])
+    end
+
     def fetch_plugins
       fetch_objects(["plugin"])
     end

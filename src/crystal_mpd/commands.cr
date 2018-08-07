@@ -14,16 +14,15 @@ module MPD
     "enableoutput",
     "idle",
     "kill",
-    "listallinfo", "listfiles", "listmounts", "listplaylist",
-    "listplaylistinfo", "listplaylists", "load", "lsinfo",
+    "listallinfo", "listfiles", "listmounts",
+    "lsinfo",
     "mixrampdb", "mixrampdelay", "mount", "move", "moveid",
-    "password", "ping", "playlist", "playlistadd",
-    "playlistclear", "playlistdelete", "playlistid",
-    "playlistmove", "plchanges", "plchangesposid",
+    "password", "ping",
+    "plchanges", "plchangesposid",
     "prio", "prioid",
-    "rangeid", "readcomments", "rename",
-    "replay_gain_mode", "rescan", "rm",
-    "save", "searchaddpl",
+    "rangeid", "readcomments",
+    "replay_gain_mode", "rescan",
+    "searchaddpl",
     "setvol", "shuffle",
     "sticker", "swap", "swapid",
     "toggleoutput",
@@ -69,14 +68,14 @@ module MPD
       "args" => [] of Nil,
     },
     {
-      "name"    => "close",
-      "retval"  => "",
+      "name"    => "clear",
+      "retval"  => "fetch_nothing",
       "comment" => "Clears the current playlist.",
       "args"    => [] of Nil,
     },
     {
-      "name"    => "clear",
-      "retval"  => "fetch_nothing",
+      "name"    => "close",
+      "retval"  => "",
       "comment" => "Closes the connection to MPD.",
       "args"    => [] of Nil,
     },
@@ -474,6 +473,194 @@ module MPD
         {
           "name" => "songpos",
           "type" => "Int32 | Array(Int32) | Nil = nil",
+        },
+      ],
+    },
+    {
+      "name"    => "playlistclear",
+      "retval"  => "fetch_nothing",
+      "comment" => "Clears the playlist `name`.m3u.",
+      "args"    => [
+        {
+          "name" => "name",
+          "type" => "String",
+        },
+      ],
+    },
+    {
+      "name"    => "load",
+      "retval"  => "fetch_nothing",
+      "comment" => "
+        Loads the playlist `name` into the current queue.
+
+        Playlist plugins are supported.
+        A range `songpos` may be specified to load only a part of the playlist.
+      ",
+      "args"    => [
+        {
+          "name" => "name",
+          "type" => "String",
+        },
+        {
+          "name" => "songpos",
+          "type" => "Int32 | Array(Int32) | Nil = nil",
+        },
+      ],
+    },
+    {
+      "name"    => "rename",
+      "retval"  => "fetch_nothing",
+      "comment" => "Renames the playlist `name`.m3u to `new_name`.m3u",
+      "args"    => [
+        {
+          "name" => "name",
+          "type" => "String",
+        },
+        {
+          "name" => "new_name",
+          "type" => "String",
+        },
+      ],
+    },
+    {
+      "name"    => "rm",
+      "retval"  => "fetch_nothing",
+      "comment" => "Removes the playlist `name`.m3u from the playlist directory.",
+      "args" => [
+        {
+          "name" => "name",
+          "type" => "String",
+        },
+      ],
+    },
+    {
+      "name"    => "save",
+      "retval"  => "fetch_nothing",
+      "comment" => "Saves the current playlist to `name`.m3u in the playlist directory",
+      "args" => [
+        {
+          "name" => "name",
+          "type" => "String",
+        },
+      ],
+    },
+    {
+      "name"    => "playlist",
+      "retval"  => "fetch_songs",
+      "comment" => "Get current playlist",
+      "args"    => [] of Nil,
+    },
+    {
+      "name"    => "playlistid",
+      "retval"  => "fetch_songs",
+      "comment" => "
+        Displays a list of songs in the playlist.
+
+        `songid` is optional and specifies a single song to display info for.
+      ",
+      "args" => [
+        {
+          "name" => "songid",
+          "type" => "Int32? = nil",
+        },
+      ],
+    },
+    {
+      "name"    => "listplaylists",
+      "retval"  => "fetch_playlists",
+      "comment" => "
+        Prints a list of the playlist directory.
+
+        After each playlist name the server sends its last modification time
+        as attribute `Last-Modified` in ISO 8601 format.
+        To avoid problems due to clock differences between clients and the server,
+        clients should not compare this value with their local clock.
+      ",
+      "args" => [] of Nil,
+    },
+    {
+      "name"    => "playlistadd",
+      "retval"  => "fetch_nothing",
+      "comment" => "
+        Adds `uri` to the playlist `name`.m3u.
+
+        `name`.m3u will be created if it does not exist.
+      ",
+      "args" => [
+        {
+          "name" => "name",
+          "type" => "String",
+        },
+        {
+          "name" => "uri",
+          "type" => "String",
+        },
+
+      ],
+    },
+    {
+      "name"    => "playlistdelete",
+      "retval"  => "fetch_nothing",
+      "comment" => "Deletes `songpos` from the playlist `name`.m3u.",
+      "args"    => [
+        {
+          "name" => "name",
+          "type" => "String",
+        },
+        {
+          "name" => "songpos",
+          "type" => "Int32",
+        },
+
+      ],
+    },
+    {
+      "name"    => "playlistmove",
+      "retval"  => "fetch_nothing",
+      "comment" => "Moves `songid` in the playlist `name`.m3u to the position `songpos`",
+      "args"    => [
+        {
+          "name" => "name",
+          "type" => "String",
+        },
+        {
+          "name" => "songid",
+          "type" => "Int32",
+        },
+        {
+          "name" => "songpos",
+          "type" => "Int32",
+        },
+
+      ],
+    },
+    {
+      "name"    => "listplaylist",
+      "retval"  => "fetch_list",
+      "comment" => "
+        Lists the songs in the playlist.
+
+        Playlist plugins are supported.
+      ",
+      "args" => [
+        {
+          "name" => "name",
+          "type" => "String",
+        },
+      ],
+    },
+    {
+      "name"    => "listplaylistinfo",
+      "retval"  => "fetch_songs",
+      "comment" => "
+        Lists the songs with metadata in the playlist.
+
+        Playlist plugins are supported.
+      ",
+      "args" => [
+        {
+          "name" => "name",
+          "type" => "String",
         },
       ],
     },

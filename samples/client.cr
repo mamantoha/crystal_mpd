@@ -26,6 +26,18 @@ puts "MPD version: #{client.version}"
 # puts client.update("world/z")
 # puts client.listall
 # puts client.commands
+# puts client.rename("test", "new_test")
+# puts client.save("test")
+# puts client.rm("test")
+# puts client.listplaylists
+# client.playlistclear("new_test")
+# puts client.listplaylist("test")
+# puts client.playlistdelete("test", 0)
+# puts client.listplaylistinfo("test")
+# puts client.playlist
+# puts client.playlistid
+# puts client.playlistid(158)
+# client.playlistadd("test", "world/0-9/5Diez/2009.Пандемия/03 Спрут.ogg")
 # puts client.outputs
 # puts client.tagtypes
 # puts client.search("artist", "Linkin Park").size
