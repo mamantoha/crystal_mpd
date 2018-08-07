@@ -6,8 +6,9 @@ puts "MPD host: #{client.host}"
 puts "MPD port: #{client.port}"
 puts "MPD version: #{client.version}"
 
-puts client.status
-puts client.stats
+# puts client.status
+# puts client.stats
+# puts client.config
 # puts client.delete([0, 2])
 # puts client.playlistinfo(1)
 # puts client.playlistsearch("title", "All Around Me")

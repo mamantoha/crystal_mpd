@@ -9,7 +9,7 @@ module MPD
   UNIMPLEMENTED_COMMANDS = [
     "addid", "addtagid",
     "channels", "clearerror", "cleartagid",
-    "config", "count", "crossfade",
+    "count", "crossfade",
     "decoders", "deleteid", "disableoutput",
     "enableoutput",
     "idle",
@@ -58,6 +58,15 @@ module MPD
           "type" => "Int32 | Array(Int32)",
         },
       ],
+    },
+    {
+      "name"    => "config",
+      "retval"  => "fetch_item",
+      "comment" => "
+        Dumps configuration values that may be interesting for the client.
+
+        This command is only permitted to `local` clients (connected via UNIX domain socket).",
+      "args"    => [] of Nil,
     },
     {
       "name"    => "close",
