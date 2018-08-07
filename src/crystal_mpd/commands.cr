@@ -701,10 +701,31 @@ module MPD
       "args" => [] of Nil,
     },
     {
+      "name"    => "replay_gain_mode",
+      "retval"  => "fetch_nothing",
+      "comment" => "
+        Sets the replay gain mode.
+
+        One of `off`, `track`, `album`, `auto`.
+        Changing the mode during playback may take several seconds, because the new settings does not affect the buffered data.
+        This command triggers the options idle event.
+      ",
+      "args" => [
+        {
+          "name" => "mode",
+          "type" => "String",
+        },
+      ],
+    },
+    {
       "name"    => "replay_gain_status",
       "retval"  => "fetch_item",
-      "comment" => "",
-      "args"    => [] of Nil,
+      "comment" => "
+        Prints replay gain options.
+
+        Currently, only the variable `replay_gain_mode` is returned.
+      ",
+      "args" => [] of Nil,
     },
     {
       "name"    => "update",
