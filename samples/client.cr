@@ -8,6 +8,7 @@ puts "MPD version: #{client.version}"
 
 puts client.status
 puts client.stats
+# puts client.delete([0, 2])
 # puts client.playlistinfo(1)
 # puts client.playlistsearch("title", "All Around Me")
 # puts client.playlistfind("title", "All Around Me")

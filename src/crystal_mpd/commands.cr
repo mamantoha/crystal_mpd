@@ -10,7 +10,7 @@ module MPD
     "addid", "addtagid",
     "channels", "clearerror", "cleartagid",
     "config", "count", "crossfade",
-    "decoders", "delete", "deleteid", "disableoutput",
+    "decoders", "deleteid", "disableoutput",
     "enableoutput",
     "idle",
     "kill",
@@ -45,6 +45,17 @@ module MPD
         {
           "name" => "uri",
           "type" => "String",
+        },
+      ],
+    },
+    {
+      "name"    => "delete",
+      "retval"  => "fetch_nothing",
+      "comment" => "Deletes a song from the playlist.",
+      "args" => [
+        {
+          "name" => "songpos",
+          "type" => "Int32 | Array(Int32)",
         },
       ],
     },
