@@ -10,7 +10,7 @@ module MPD
     "addid", "addtagid",
     "clearerror", "cleartagid",
     "count", "crossfade",
-    "deleteid", "disableoutput",
+    "disableoutput",
     "enableoutput",
     "idle",
     "kill",
@@ -52,6 +52,17 @@ module MPD
         {
           "name" => "songpos",
           "type" => "Int32 | Array(Int32)",
+        },
+      ],
+    },
+    {
+      "name"    => "deleteid",
+      "retval"  => "fetch_nothing",
+      "comment" => "Deletes the song `singid` from the playlist.",
+      "args"    => [
+        {
+          "name" => "songid",
+          "type" => "Int32",
         },
       ],
     },
