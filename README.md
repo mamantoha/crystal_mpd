@@ -39,6 +39,10 @@ client.close                           # send the close command
 client.disconect                       # disconnect from the server
 ```
 
+Check `MPD::Client` [source](https://mamantoha.github.io/crystal_mpd/MPD/Client.html) for supported commands.
+
+Tested with mpd `0.20`.
+
 ### Command lists
 
 To facilitate faster adding of files etc. you can pass a list of commands all at once using a command list.
