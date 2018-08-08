@@ -1,4 +1,5 @@
 require "socket"
+require "logger"
 require "./crystal_mpd/version"
 require "./crystal_mpd/command_list"
 require "./crystal_mpd/commands"

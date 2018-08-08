@@ -1,6 +1,11 @@
 require "../src/crystal_mpd"
+require "logger"
+
+log = Logger.new(STDOUT)
+log.level = Logger::DEBUG
 
 client = MPD::Client.new
+client.log = log
 
 puts "MPD host: #{client.host}"
 puts "MPD port: #{client.port}"

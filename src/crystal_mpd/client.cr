@@ -17,6 +17,7 @@ module MPD
     NEXT         = "list_OK"
 
     getter host, port, version
+    property log : Logger?
 
     # Creates a new MPD client. Parses the `host`, `port`.
     #
@@ -156,6 +157,10 @@ module MPD
 
     private def write_line(line : String)
       @socket.try do |socket|
+        @log.try do |log|
+          log.debug("MPD request: `#{line}`")
+        end
+
         socket.puts(line)
       end
     end
@@ -263,6 +268,10 @@ module MPD
     private def read_line : String?
       @socket.try do |socket|
         line = socket.gets(chomp: true)
+
+        @log.try do |log|
+          log.debug("MPD response: `#{line}`")
+        end
 
         if line.not_nil!.starts_with?(ERROR_PREFIX)
           error = line.not_nil![/#{ERROR_PREFIX}(.*)/, 1].strip
