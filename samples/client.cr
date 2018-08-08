@@ -52,7 +52,7 @@ puts "MPD version: #{client.version}"
 # client.playlistadd("test", "world/0-9/5Diez/2009.Пандемия/03 Спрут.ogg")
 # puts client.outputs
 # puts client.tagtypes
-# puts client.search("artist", "Linkin Park").size
+# puts client.search("title", "crystal")
 # puts client.find("artist", "Порнофильмы")
 # puts client.clear
 # puts client.findadd("genre", "Alternative Rock")
