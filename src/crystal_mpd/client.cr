@@ -1,3 +1,6 @@
+require "logger"
+require "./commands"
+
 module MPD
   class Client
     # :nodoc:
@@ -101,7 +104,7 @@ module MPD
       {% end %}
     end
 
-    {% for command in COMMANDS %}
+    {% for command in MPD::COMMANDS %}
       {% for line in command["comment"].lines %}
         # {{line.strip.id}}
       {% end %}
@@ -146,6 +149,10 @@ module MPD
       case arg
       when Array
         arg.size == 1 ? %{"#{arg[0]}:"} : %{"#{arg[0]}:#{arg[1]}"}
+      when Hash
+        arg.reduce([] of String) do |acc, (key, value)|
+          acc << "#{key} \"#{escape(value)}\""
+        end.join(" ")
       when String
         %{"#{escape(arg)}"}
       when Int32

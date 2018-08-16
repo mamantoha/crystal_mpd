@@ -45,6 +45,31 @@ module MPD
       ],
     },
     {
+      "name"    => "list",
+      "retval"  => "fetch_list",
+      "comment" => %{
+        Lists unique tags values of the specified `type`.
+
+        `type` can be any tag supported by MPD or file.
+
+        ```crystal
+        client.list("Album", {"Artist" => "Linkin Park", "Date" => "2003"})
+        # => ["Live In Texas", "Meteora", "Underground v3.0"]
+        ```
+      },
+      "args" => [
+        {
+          "name" => "type",
+          "type" => "String",
+        },
+        {
+          "name" => "filter",
+          "type" => "Hash(String, String)? = nil",
+        },
+
+      ],
+    },
+    {
       "name"    => "delete",
       "retval"  => "fetch_nothing",
       "comment" => "Deletes a song from the playlist.",
