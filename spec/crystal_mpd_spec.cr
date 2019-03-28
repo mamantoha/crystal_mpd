@@ -18,7 +18,7 @@ describe MPD do
   end
 
   it "initialize new MPD client with params" do
-    with_server("localhost", 6661) do |_host, port, wants_close|
+    with_server("localhost", 6601) do |_host, port, wants_close|
       client = MPD::Client.new("localhost", port)
       client.host.should eq("localhost")
       client.port.should eq(port)
@@ -31,7 +31,7 @@ describe MPD do
     with_server do |_host, _port, wants_close|
       client = MPD::Client.new
 
-      (client.version).should eq("0.19.0")
+      (client.version).should eq("0.21.4")
     ensure
       wants_close.send(nil)
     end

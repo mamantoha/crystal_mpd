@@ -2,7 +2,7 @@ require "spec"
 require "../src/crystal_mpd"
 
 def handle_client(client)
-  client.puts("OK MPD 0.19.0")
+  client.puts("OK MPD 0.21.4")
 ensure
   client.close
 end
