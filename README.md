@@ -1,6 +1,7 @@
 # crystal_mpd
 
-[![Build Status](http://img.shields.io/travis/mamantoha/crystal_mpd.svg?style=flat)](https://travis-ci.org/mamantoha/crystal_mpd)
+[![Build Status](
+https://travis-ci.org/mamantoha/crystal_mpd.svg?branch=master)](https://travis-ci.org/mamantoha/crystal_mpd)
 [![GitHub release](https://img.shields.io/github/release/mamantoha/crystal_mpd.svg)](https://github.com/mamantoha/crystal_mpd/releases)
 [![Docs](https://img.shields.io/badge/docs-available-brightgreen.svg)](https://mamantoha.github.io/crystal_mpd/)
 [![License](https://img.shields.io/github/license/mamantoha/crystal_mpd.svg)](https://github.com/mamantoha/crystal_mpd/blob/master/LICENSE)
