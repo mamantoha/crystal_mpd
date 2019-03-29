@@ -415,6 +415,18 @@ module MPD
       fetch_nothing
     end
 
+    # Moves the song at `from` or range of songs at `from` to `to` in the playlist.
+    def move(from : Int32 | MPD::Range, to : Int32)
+      write_command("move", from, to)
+
+      if @command_list.active?
+        @command_list.add("fetch_nothing")
+        return
+      end
+
+      fetch_nothing
+    end
+
     # Loads the playlist `name` into the current queue.
     #
     # Playlist plugins are supported.

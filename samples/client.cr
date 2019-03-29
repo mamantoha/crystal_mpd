@@ -58,6 +58,9 @@ puts "MPD version: #{client.version}"
 # client.playlistadd("test", "world/0-9/5Diez/2009.Пандемия/03 Спрут.ogg")
 # puts client.shuffle({1, 10})
 # puts client.shuffle
+# puts client.move({0, 2}, 5)
+# puts client.move({10, 11}, 1)
+# puts client.move(10, 0)
 # puts client.outputs
 # puts client.tagtypes
 # puts client.search("title", "crystal")
