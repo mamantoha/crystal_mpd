@@ -729,6 +729,37 @@ module MPD
       fetch_list
     end
 
+    # Count the number of songs and their total playtime in the database
+    # that `type` is `query`
+    #
+    # The following prints the number of songs whose title matches "Echoes"
+    #
+    # ```crystal
+    # client.count("title", "Echoes")
+    # ```
+    def count(type : String, query : String)
+      write_command("count", type, query)
+
+      if @command_list.active?
+        @command_list.add("fetch_object")
+        return
+      end
+
+      fetch_object
+    end
+
+    # Count the number of songs and their total playtime in the database matching `filter`
+    def count(filter : String)
+      write_command("count", filter)
+
+      if @command_list.active?
+        @command_list.add("fetch_object")
+        return
+      end
+
+      fetch_object
+    end
+
     # Sets random state to `state`, `state` should be `false` or `true`.
     def random(state : Bool)
       write_command("random", boolean(state))
