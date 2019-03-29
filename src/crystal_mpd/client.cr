@@ -1,6 +1,10 @@
 require "logger"
 
 module MPD
+  # Some commands (e.g. `delete`) allow specifying a range in the form `{START, END}`.
+  # If `END` is omitted, then the maximum possible value is assumed.
+  alias Range = Tuple(Int32) | Tuple(Int32, Int32)
+
   class Client
     # :nodoc:
     alias Object = Hash(String, String)
@@ -10,10 +14,6 @@ module MPD
     alias Pair = Array(String)
     # :nodoc:
     alias Pairs = Array(Pair)
-
-    # Some commands (e.g. `delete`) allow specifying a range in the form `{START, END}`.
-    # If `END` is omitted, then the maximum possible value is assumed.
-    alias Range = Tuple(Int32) | Tuple(Int32, Int32)
 
     @version : String?
 
@@ -1023,7 +1023,7 @@ module MPD
     private def parse_arg(arg) : String
       case arg
       when MPD::Range
-        arg.size == 1 ? %{"#{arg[0]}:"} : %{"#{arg[0]}:#{arg[1]}"}
+        arg.size == 1 ? %{"#{arg[0]}:"} : %{"#{arg[0]}:#{arg[1]?}"}
       when Hash
         arg.reduce([] of String) do |acc, (key, value)|
           acc << "#{key} \"#{escape(value)}\""
