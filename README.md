@@ -28,6 +28,13 @@ All functionality is contained in the `MPD::Client` class.
 Creating an instance of this class is as simple as:
 
 ```crystal
+client = MPD::Client.new("localhost", 6600)
+```
+
+You can also omit the `host` and `post`, and it will use the defaults.
+
+```crystal
+client = MPD::Client.new("localhost")
 client = MPD::Client.new
 ```
 
@@ -42,7 +49,7 @@ client.disconect                       # disconnect from the server
 
 Check `MPD::Client` [source](https://mamantoha.github.io/crystal_mpd/MPD/Client.html) for supported commands.
 
-Tested with mpd `0.20`.
+Tested with mpd `0.21`.
 
 ### Command lists
 
@@ -111,7 +118,7 @@ crystal spec
 
 ## Contributing
 
-1. Fork it ( https://github.com/mamantoha/crystal_mpd/fork )
+1. Fork it (<https://github.com/mamantoha/crystal_mpd/fork>)
 2. Create your feature branch (git checkout -b my-new-feature)
 3. Commit your changes (git commit -am 'Add some feature')
 4. Push to the branch (git push origin my-new-feature)
@@ -119,10 +126,10 @@ crystal spec
 
 ## Contributors
 
-- [mamantoha](https://github.com/mamantoha) Anton Maminov - creator, maintainer
+- [mamantoha](<https://github.com/mamantoha>) Anton Maminov - creator, maintainer
 
 ## License
 
-Copyright: 2018 Anton Maminov (anton.maminov@gmail.com)
+Copyright: 2018-2019 Anton Maminov (<anton.maminov@gmail.com>)
 
 This library is distributed under the MIT license. Please see the LICENSE file.
