@@ -430,6 +430,18 @@ module MPD
       fetch_nothing
     end
 
+    # Shuffles the current playlist. `range` is optional and specifies a range of songs.
+    def shuffle(range : MPD::Range | Nil = nil)
+      write_command("shuffle", range)
+
+      if @command_list.active?
+        @command_list.add("fetch_nothing")
+        return
+      end
+
+      fetch_nothing
+    end
+
     # Saves the current playlist to `name`.m3u in the playlist directory.
     def save(name : String)
       write_command("save", name)
