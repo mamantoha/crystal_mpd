@@ -96,7 +96,7 @@ puts "MPD version: #{client.version}"
 # puts client.list("Genre")
 # client.searchadd("Artist", "Otep")
 # puts client.list("Artist")
-# puts client.list("filename", {"Artist" => "Linkin Park", "Date" => "2003"})
+# puts client.list("filename", "((artist == 'Linkin Park') AND (date == '2003'))")
 
 puts "MPD client status: " + (client.connected? ? "connected" : "disconnected")
 puts "MPD version: #{client.version}"

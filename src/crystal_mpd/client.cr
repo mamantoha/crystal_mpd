@@ -703,7 +703,6 @@ module MPD
       fetch_nothing
     end
 
-    # TODO: FILTER
     # Lists unique tags values of the specified `type`.
     #
     # `type` can be any tag supported by MPD or file.
@@ -711,8 +710,16 @@ module MPD
     # ```crystal
     # client.list("Artist")
     # ```
-    def list(type : String)
-      write_command("list", type)
+    #
+    # Additional arguments may specify a `filter`.
+    # The following example lists all file names by their respective artist and date:
+    #
+    # ```crystal
+    # client.list("Artist")
+    # client.list("filename", "((artist == 'Linkin Park') AND (date == '2003'))")
+    # ```
+    def list(type : String, filter : String | Nil = nil)
+      write_command("list", type, filter)
 
       if @command_list.active?
         @command_list.add("fetch_list")
