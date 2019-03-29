@@ -11,6 +11,10 @@ module MPD
     # :nodoc:
     alias Pairs = Array(Pair)
 
+    # Some commands (e.g. `delete`) allow specifying a range in the form `{START, END}`.
+    # If `END` is omitted, then the maximum possible value is assumed.
+    alias Range = Tuple(Int32) | Tuple(Int32, Int32)
+
     @version : String?
 
     HELLO_PREFIX = "OK MPD "
@@ -339,20 +343,20 @@ module MPD
     # or if the optional argument is given, displays information only for
     # the song `songpos` or the range of songs `START:END`.
     #
-    # Range is done in by using two element array.
+    # Range is done in by using `MPD::Range`.
     #
     #  Show info about the first three songs in the playlist:
     #
     #  ```crystal
-    # client.playlistinfo([1, 3])
+    # client.playlistinfo({1, 3})
     #  ```
     #
-    #  Second element of the `Array` can be omitted. `MPD` will assumes the biggest possible number then:
+    #  Second element of the `Tuple` can be omitted. `MPD` will assumes the biggest possible number then:
     #
     #  ```crystal
-    # client.playlistinfo([10])
+    # client.playlistinfo({10})
     #  ```
-    def playlistinfo(songpos : Int32 | Array(Int32) | Nil = nil)
+    def playlistinfo(songpos : Int32 | MPD::Range | Nil = nil)
       write_command("playlistinfo", songpos)
 
       if @command_list.active?
@@ -388,7 +392,7 @@ module MPD
     end
 
     # Deletes a song from the playlist.
-    def delete(songpos : Int32 | Array(Int32))
+    def delete(songpos : Int32 | MPD::Range)
       write_command("delete", songpos)
 
       if @command_list.active?
@@ -415,7 +419,7 @@ module MPD
     #
     # Playlist plugins are supported.
     # A range `songpos` may be specified to load only a part of the playlist.
-    def load(name : String, songpos : Int32 | Array(Int32) | Nil = nil)
+    def load(name : String, songpos : Int32 | MPD::Range | Nil = nil)
       write_command("load", name, songpos)
 
       if @command_list.active?
@@ -1018,7 +1022,7 @@ module MPD
 
     private def parse_arg(arg) : String
       case arg
-      when Array
+      when MPD::Range
         arg.size == 1 ? %{"#{arg[0]}:"} : %{"#{arg[0]}:#{arg[1]}"}
       when Hash
         arg.reduce([] of String) do |acc, (key, value)|
