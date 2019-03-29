@@ -72,19 +72,25 @@ client.command_list_end      # result will be a Array with the results
 
 ### Ranges
 
-Some commands(e.g. `move`, `delete`, `load`, `shuffle`, `playlistinfo`) support integer ranges(`START:END`) as argument. This is done in `crystal_mpd` by using `Tuple(Int32)` or `Tuple(Int32, Int32)`
-:
+Some commands(e.g. `move`, `delete`, `load`, `shuffle`, `playlistinfo`) allow integer ranges(`START:END`) instead of numbers, specifying a range of songs.
+This is done by using `Range(Int32, Int32)`. `crystal_mpd` correctly handles inclusive and exclusive ranges (`1..10` vs `1...10`). Negative range end means that we want the range to span until the end of the list.
 
 ```crystal
-# move the first three songs after the fifth number in the playlist
-client.move({0, 3}, 5)
+# move songs 1, 2 and 3 to position 10 (and 11 and 12)
+client.move(1..3, 10)
+
+# deleve songs 1, 2 and 3 from playlist
+client.delete(0..2)
+
+# deleve songs 1 and 2
+client.delete(0...2)
 ```
 
-Second element can be omitted. MPD will assumes the biggest possible number then:
+With negative range end MPD will assumes the biggest possible number then:
 
 ```crystal
 # delete all songs from the current playlist, except for the firts ten
-client.delete({10})
+client.delete(10..-1)
 ```
 
 ### Logging

@@ -1,10 +1,6 @@
 require "logger"
 
 module MPD
-  # Some commands (e.g. `delete`) allow specifying a range in the form `{START, END}`.
-  # If `END` is omitted, then the maximum possible value is assumed.
-  alias Range = Tuple(Int32) | Tuple(Int32, Int32)
-
   class Client
     # :nodoc:
     alias Object = Hash(String, String)
@@ -343,20 +339,20 @@ module MPD
     # or if the optional argument is given, displays information only for
     # the song `songpos` or the range of songs `START:END`.
     #
-    # Range is done in by using `MPD::Range`.
+    # Range is done in by using `Range`.
     #
-    #  Show info about the first three songs in the playlist:
+    # Show info about the first three songs in the playlist:
     #
-    #  ```crystal
-    # client.playlistinfo({1, 3})
-    #  ```
+    # ```crystal
+    # client.playlistinfo(1..3)
+    # ```
     #
-    #  Second element of the `Tuple` can be omitted. `MPD` will assumes the biggest possible number then:
+    # With negative range end MPD will assumes the biggest possible number then
     #
-    #  ```crystal
-    # client.playlistinfo({10})
-    #  ```
-    def playlistinfo(songpos : Int32 | MPD::Range | Nil = nil)
+    # ```crystal
+    # client.playlistinfo(10..-1)
+    # ```
+    def playlistinfo(songpos : Int32 | Range(Int32, Int32) | Nil = nil)
       write_command("playlistinfo", songpos)
 
       if @command_list.active?
@@ -392,7 +388,7 @@ module MPD
     end
 
     # Deletes a song from the playlist.
-    def delete(songpos : Int32 | MPD::Range)
+    def delete(songpos : Int32 | Range(Int32, Int32))
       write_command("delete", songpos)
 
       if @command_list.active?
@@ -416,7 +412,7 @@ module MPD
     end
 
     # Moves the song at `from` or range of songs at `from` to `to` in the playlist.
-    def move(from : Int32 | MPD::Range, to : Int32)
+    def move(from : Int32 | Range(Int32, Int32), to : Int32)
       write_command("move", from, to)
 
       if @command_list.active?
@@ -431,7 +427,7 @@ module MPD
     #
     # Playlist plugins are supported.
     # A range `songpos` may be specified to load only a part of the playlist.
-    def load(name : String, songpos : Int32 | MPD::Range | Nil = nil)
+    def load(name : String, songpos : Int32 | Range(Int32, Int32) | Nil = nil)
       write_command("load", name, songpos)
 
       if @command_list.active?
@@ -443,7 +439,7 @@ module MPD
     end
 
     # Shuffles the current playlist. `range` is optional and specifies a range of songs.
-    def shuffle(range : MPD::Range | Nil = nil)
+    def shuffle(range : Range(Int32, Int32) | Nil = nil)
       write_command("shuffle", range)
 
       if @command_list.active?
@@ -1046,8 +1042,8 @@ module MPD
 
     private def parse_arg(arg) : String
       case arg
-      when MPD::Range
-        arg.size == 1 ? %{"#{arg[0]}:"} : %{"#{arg[0]}:#{arg[1]?}"}
+      when Range
+        parse_range(arg)
       when Hash
         arg.reduce([] of String) do |acc, (key, value)|
           acc << "#{key} \"#{escape(value)}\""
@@ -1059,6 +1055,17 @@ module MPD
       else
         ""
       end
+    end
+
+    private def parse_range(range) : String
+      range_start = range.begin
+      range_end = range.end
+
+      range_start = 0 if range_start < 0
+      range_end += 1 unless range.exclusive?
+      range_end = nil if range_end <= 0
+
+      "#{range_start}:#{range_end}"
     end
 
     private def write_line(line : String)
