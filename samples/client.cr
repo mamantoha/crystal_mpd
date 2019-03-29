@@ -26,12 +26,12 @@ puts "MPD version: #{client.version}"
 
 # puts client.decoders
 # puts client.urlhandlers
-# puts client.delete([0, 2])
+# puts client.delete({0, 2})
 # puts client.playlistinfo(1)
 # puts client.playlistsearch("title", "All Around Me")
 # puts client.playlistfind("title", "All Around Me")
-# puts client.playlistinfo([10,])
-# puts client.playlistinfo([1,3])
+# puts client.playlistinfo({10})
+# puts client.playlistinfo({1, 3})
 # puts client.playlistinfo(1)
 # puts client.listall("world/z")
 # puts client.listall
@@ -56,6 +56,11 @@ puts "MPD version: #{client.version}"
 # puts client.playlistid
 # puts client.playlistid(2121)
 # client.playlistadd("test", "world/0-9/5Diez/2009.Пандемия/03 Спрут.ogg")
+# puts client.shuffle({1, 10})
+# puts client.shuffle
+# puts client.move({0, 2}, 5)
+# puts client.move({10, 11}, 1)
+# puts client.move(10, 0)
 # puts client.outputs
 # puts client.tagtypes
 # puts client.search("title", "crystal")
