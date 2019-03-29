@@ -41,15 +41,20 @@ module MPD
       connect
     end
 
+    # Connect to the MPD daemon unless conected.
+    #
+    # Connect using the `#reconnect` method.
     def connect
       reconnect unless connected?
     end
 
+    # Attempts to reconnect to the MPD daemon.
     def reconnect
       @socket = TCPSocket.new(host, port)
       hello
     end
 
+    # Disconnect from the MPD daemon.
     def disconnect
       @socket.try do |socket|
         socket.close
@@ -58,10 +63,12 @@ module MPD
       reset
     end
 
+    # Check if the client is connected.
     def connected?
       @socket.is_a?(Socket)
     end
 
+    # Ping the server.
     private def hello
       @socket.try do |socket|
         response = socket.gets(chomp: false)
@@ -1066,6 +1073,7 @@ module MPD
       fetch_messages
     end
 
+    # :nodoc:
     private def write_command(command : String, *args)
       parts = [command]
 
@@ -1078,6 +1086,7 @@ module MPD
       write_line(parts.join(' '))
     end
 
+    # :nodoc:
     private def parse_arg(arg) : String
       case arg
       when Range
@@ -1095,6 +1104,7 @@ module MPD
       end
     end
 
+    # :nodoc:
     private def parse_range(range) : String
       range_start = range.begin
       range_end = range.end
@@ -1106,6 +1116,7 @@ module MPD
       "#{range_start}:#{range_end}"
     end
 
+    # :nodoc:
     private def write_line(line : String)
       @socket.try do |socket|
         @log.try do |log|
@@ -1116,11 +1127,13 @@ module MPD
       end
     end
 
+    # :nodoc:
     private def fetch_nothing
       line = read_line
       raise MPD::Error.new("Got unexpected return value: #{line}") unless line.nil?
     end
 
+    # :nodoc:
     private def fetch_list
       result = [] of String
       seen = nil
@@ -1140,10 +1153,12 @@ module MPD
       result
     end
 
+    # :nodoc:
     private def fetch_object : Object
       fetch_objects.first
     end
 
+    # :nodoc:
     private def fetch_objects(delimiters = [] of String) : Objects
       result = Objects.new
       obj = Object.new
@@ -1165,30 +1180,37 @@ module MPD
       result
     end
 
+    # :nodoc:
     private def fetch_outputs
       fetch_objects(["outputid"])
     end
 
+    # :nodoc:
     private def fetch_songs
       fetch_objects(["file"])
     end
 
+    # :nodoc:
     private def fetch_database
       fetch_objects(["file", "directory", "playlist"])
     end
 
+    # :nodoc:
     def fetch_playlists
       fetch_objects(["playlist"])
     end
 
+    # :nodoc:
     def fetch_plugins
       fetch_objects(["plugin"])
     end
 
+    # :nodoc:
     def fetch_messages
       fetch_objects("channel")
     end
 
+    # :nodoc:
     private def fetch_item : String
       pairs = read_pairs
       return "" if pairs.size != 1
@@ -1196,6 +1218,7 @@ module MPD
       pairs[0][1]
     end
 
+    # :nodoc:
     private def read_pairs : Pairs
       pairs = Pairs.new
 
@@ -1208,6 +1231,7 @@ module MPD
       pairs
     end
 
+    # :nodoc:
     private def read_pair : Pair
       line = read_line
       return Pair.new if line.nil?
@@ -1216,6 +1240,7 @@ module MPD
       pair
     end
 
+    # :nodoc:
     private def read_line : String?
       @socket.try do |socket|
         line = socket.gets(chomp: true)
@@ -1240,15 +1265,18 @@ module MPD
       end
     end
 
+    # :nodoc:
     private def reset
       @socket = nil
       @version = nil
     end
 
+    # :nodoc:
     private def boolean(value : Bool)
       value ? "1" : "0"
     end
 
+    # :nodoc:
     private def escape(str : String)
       str.gsub(%{\\}, %{\\\\}).gsub(%{"}, %{\\"})
     end
