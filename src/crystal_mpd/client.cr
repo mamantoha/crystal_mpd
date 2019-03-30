@@ -146,13 +146,7 @@ module MPD
     # * `error`: if there is an error, returns message here
     def status
       write_command("status")
-
-      if @command_list.active?
-        @command_list.add("fetch_object")
-        return
-      end
-
-      fetch_object
+      execute("fetch_object")
     end
 
     # Displays statistics.
@@ -166,13 +160,7 @@ module MPD
     # * `playtime`: time length of music played
     def stats
       write_command("stats")
-
-      if @command_list.active?
-        @command_list.add("fetch_object")
-        return
-      end
-
-      fetch_object
+      execute("fetch_object")
     end
 
     # Dumps configuration values that may be interesting for the client.
@@ -180,97 +168,49 @@ module MPD
     # This command is only permitted to `local` clients (connected via UNIX domain socket).
     def config
       write_command("stats")
-
-      if @command_list.active?
-        @command_list.add("fetch_item")
-        return
-      end
-
-      fetch_item
+      execute("fetch_item")
     end
 
     # "Shows which commands the current user has access to.
     def commands
       write_command("commands")
-
-      if @command_list.active?
-        @command_list.add("fetch_list")
-        return
-      end
-
-      fetch_list
+      execute("fetch_list")
     end
 
     # Shows which commands the current user does not have access to.
     def notcommands
       write_command("notcommands")
-
-      if @command_list.active?
-        @command_list.add("fetch_list")
-        return
-      end
-
-      fetch_list
+      execute("fetch_list")
     end
 
     # Shows a list of available song metadata.
     def tagtypes
       write_command("tagtypes")
-
-      if @command_list.active?
-        @command_list.add("tagtypes")
-        return
-      end
-
-      fetch_list
+      execute("fetch_list")
     end
 
     # Obtain a list of all channels. The response is a list of `channel:` lines.
     def channels
       write_command("channels")
-
-      if @command_list.active?
-        @command_list.add("fetch_list")
-        return
-      end
-
-      fetch_list
+      execute("fetch_list")
     end
 
     # Gets a list of available URL handlers.
     def urlhandlers
       write_command("urlhandlers")
-
-      if @command_list.active?
-        @command_list.add("fetch_list")
-        return
-      end
-
-      fetch_list
+      execute("fetch_list")
     end
 
     # Print a list of decoder plugins, followed by their supported suffixes and MIME types.
     def decoders
       write_command("decoders")
-
-      if @command_list.active?
-        @command_list.add("fetch_plugins")
-        return
-      end
-
-      fetch_plugins
+      execute("fetch_plugins")
     end
 
     # Shows information about all outputs.
     def outputs
       write_command("outputs")
-
-      if @command_list.active?
-        @command_list.add("fetch_outputs")
-        return
-      end
-
-      fetch_outputs
+      execute("fetch_outputs")
     end
 
     # Updates the music database: find new files, remove deleted files, update modified files.
@@ -279,37 +219,19 @@ module MPD
     # If you do not specify it, everything is updated.
     def update(uri : String? = nil)
       write_command("update", uri)
-
-      if @command_list.active?
-        @command_list.add("fetch_item")
-        return
-      end
-
-      fetch_item
+      execute("fetch_list")
     end
 
     # Displays the song info of the current song (same song that is identified in `status`).
     def currentsong
       write_command("currentsong")
-
-      if @command_list.active?
-        @command_list.add("fetch_object")
-        return
-      end
-
-      fetch_object
+      execute("fetch_object")
     end
 
     # Same as `update`, but also rescans unmodified files.
     def rescan(uri : String? = nil)
       write_command("rescan", uri)
-
-      if @command_list.active?
-        @command_list.add("fetch_item")
-        return
-      end
-
-      fetch_item
+      execute("fetch_item")
     end
 
     # Prints a list of the playlist directory.
@@ -320,25 +242,13 @@ module MPD
     # clients should not compare this value with their local clock.
     def listplaylists
       write_command("listplaylists")
-
-      if @command_list.active?
-        @command_list.add("fetch_playlists")
-        return
-      end
-
-      fetch_playlists
+      execute("fetch_playlists")
     end
 
     # Get current playlist
     def playlist
       write_command("playlist")
-
-      if @command_list.active?
-        @command_list.add("fetch_songs")
-        return
-      end
-
-      fetch_songs
+      execute("fetch_songs")
     end
 
     # Displays a list of all songs in the playlist,
@@ -361,73 +271,37 @@ module MPD
     # ```
     def playlistinfo(songpos : Int32 | Range(Int32, Int32) | Nil = nil)
       write_command("playlistinfo", songpos)
-
-      if @command_list.active?
-        @command_list.add("fetch_songs")
-        return
-      end
-
-      fetch_songs
+      execute("fetch_songs")
     end
 
     # Searches case-sensitively for partial matches in the current playlist.
     def playlistsearch(tag : String, needle : String)
       write_command("playlistsearch", tag, needle)
-
-      if @command_list.active?
-        @command_list.add("fetch_songs")
-        return
-      end
-
-      fetch_songs
+      execute("fetch_songs")
     end
 
     # Finds songs in the current playlist with strict matching.
     def playlistfind(tag : String, needle : String)
       write_command("playlistfind", tag, needle)
-
-      if @command_list.active?
-        @command_list.add("fetch_songs")
-        return
-      end
-
-      fetch_songs
+      execute("fetch_songs")
     end
 
     # Deletes a song from the playlist.
     def delete(songpos : Int32 | Range(Int32, Int32))
       write_command("delete", songpos)
-
-      if @command_list.active?
-        @command_list.add("fetch_nothing")
-        return
-      end
-
-      fetch_nothing
+      execute("fetch_nothing")
     end
 
     # Deletes the song `singid` from the playlist.
     def deleteid(songid : Int32)
       write_command("deleteid", songid)
-
-      if @command_list.active?
-        @command_list.add("fetch_nothing")
-        return
-      end
-
-      fetch_nothing
+      execute("fetch_nothing")
     end
 
     # Moves the song at `from` or range of songs at `from` to `to` in the playlist.
     def move(from : Int32 | Range(Int32, Int32), to : Int32)
       write_command("move", from, to)
-
-      if @command_list.active?
-        @command_list.add("fetch_nothing")
-        return
-      end
-
-      fetch_nothing
+      execute("fetch_nothing")
     end
 
     # Loads the playlist `name` into the current queue.
@@ -436,73 +310,37 @@ module MPD
     # A range `songpos` may be specified to load only a part of the playlist.
     def load(name : String, songpos : Int32 | Range(Int32, Int32) | Nil = nil)
       write_command("load", name, songpos)
-
-      if @command_list.active?
-        @command_list.add("fetch_nothing")
-        return
-      end
-
-      fetch_nothing
+      execute("fetch_nothing")
     end
 
     # Shuffles the current playlist. `range` is optional and specifies a range of songs.
     def shuffle(range : Range(Int32, Int32) | Nil = nil)
       write_command("shuffle", range)
-
-      if @command_list.active?
-        @command_list.add("fetch_nothing")
-        return
-      end
-
-      fetch_nothing
+      execute("fetch_nothing")
     end
 
     # Saves the current playlist to `name`.m3u in the playlist directory.
     def save(name : String)
       write_command("save", name)
-
-      if @command_list.active?
-        @command_list.add("fetch_nothing")
-        return
-      end
-
-      fetch_nothing
+      execute("fetch_nothing")
     end
 
     # Clears the playlist `name`.m3u.
     def playlistclear(name : String)
       write_command("playlistclear", name)
-
-      if @command_list.active?
-        @command_list.add("fetch_nothing")
-        return
-      end
-
-      fetch_nothing
+      execute("fetch_nothing")
     end
 
     # Removes the playlist `name`.m3u from the playlist directory.
     def rm(name : String)
       write_command("rm", name)
-
-      if @command_list.active?
-        @command_list.add("fetch_nothing")
-        return
-      end
-
-      fetch_nothing
+      execute("fetch_nothing")
     end
 
     # Renames the playlist `name`.m3u to `new_name`.m3u.
     def rename(name : String, new_name : String)
       write_command("rename", name, new_name)
-
-      if @command_list.active?
-        @command_list.add("fetch_nothing")
-        return
-      end
-
-      fetch_nothing
+      execute("fetch_nothing")
     end
 
     # Displays a list of songs in the playlist.
@@ -510,13 +348,7 @@ module MPD
     # `songid` is optional and specifies a single song to display info for.
     def playlistid(songid : Int32? = nil)
       write_command("playlistid", songid)
-
-      if @command_list.active?
-        @command_list.add("fetch_songs")
-        return
-      end
-
-      fetch_songs
+      execute("fetch_songs")
     end
 
     # Searches for any song that contains `what` in tag `type` and adds them to the playlist named `name`.
@@ -525,13 +357,7 @@ module MPD
     # Parameters have the same meaning as for `find`, except that search is not case sensitive.
     def searchaddpl(name : String, type : String, query : String)
       write_command("searchaddpl", name, type, query)
-
-      if @command_list.active?
-        @command_list.add("fetch_nothing")
-        return
-      end
-
-      fetch_nothing
+      execute("fetch_nothing")
     end
 
     # Lists the songs in the playlist `name`.
@@ -539,13 +365,7 @@ module MPD
     # Playlist plugins are supported.
     def listplaylist(name : String)
       write_command("listplaylist", name)
-
-      if @command_list.active?
-        @command_list.add("fetch_list")
-        return
-      end
-
-      fetch_list
+      execute("fetch_list")
     end
 
     # Lists the songs with metadata in the playlist.
@@ -553,13 +373,7 @@ module MPD
     # Playlist plugins are supported.
     def listplaylistinfo(name : String)
       write_command("listplaylistinfo", name)
-
-      if @command_list.active?
-        @command_list.add("fetch_songs")
-        return
-      end
-
-      fetch_songs
+      execute("fetch_songs")
     end
 
     # Adds `uri` to the playlist `name`.m3u.
@@ -567,73 +381,37 @@ module MPD
     # `name`.m3u will be created if it does not exist.
     def playlistadd(name : String, uri : String)
       write_command("playlistadd", name, uri)
-
-      if @command_list.active?
-        @command_list.add("fetch_nothing")
-        return
-      end
-
-      fetch_nothing
+      execute("fetch_nothing")
     end
 
     # Moves `songid` in the playlist `name`.m3u to the position `songpos`
     def playlistmove(name : String, songid : Int32, songpos : Int32)
       write_command("playlistmove", name, songid, songpos)
-
-      if @command_list.active?
-        @command_list.add("fetch_nothing")
-        return
-      end
-
-      fetch_nothing
+      execute("fetch_nothing")
     end
 
     # Deletes `songpos` from the playlist `name`.m3u.
     def playlistdelete(name : String, songpos : Int32)
       write_command("playlistdelete", name, songpos)
-
-      if @command_list.active?
-        @command_list.add("fetch_nothing")
-        return
-      end
-
-      fetch_nothing
+      execute("fetch_nothing")
     end
 
     # Begins playing the playlist at song number `songpos`.
     def play(songpos : Int32? = nil)
       write_command("play", songpos)
-
-      if @command_list.active?
-        @command_list.add("fetch_nothing")
-        return
-      end
-
-      fetch_nothing
+      execute("fetch_nothing")
     end
 
     # Toggles pause/resumes playing.
     def pause
       write_command("pause")
-
-      if @command_list.active?
-        @command_list.add("fetch_nothing")
-        return
-      end
-
-      fetch_nothing
+      execute("fetch_nothing")
     end
 
     # Stops playing.
     def stop
       write_command("stop")
-
-      if @command_list.active?
-        @command_list.add("fetch_nothing")
-        return
-      end
-
-      fetch_nothing
+      execute("fetch_nothing")
     end
 
     # Seeks to the position `time` within the current song.
@@ -641,73 +419,37 @@ module MPD
     # If prefixed by `+` or `-`, then the time is relative to the current playing position.
     def seekcur(time : String | Int32)
       write_command("seekcur", time)
-
-      if @command_list.active?
-        @command_list.add("fetch_nothing")
-        return
-      end
-
-      fetch_nothing
+      execute("fetch_nothing")
     end
 
     # Seeks to the position `time` (in seconds) of song `songid`.
     def seekid(songid : Int32, time : String | Int32)
       write_command("seekid", songid, time)
-
-      if @command_list.active?
-        @command_list.add("fetch_nothing")
-        return
-      end
-
-      fetch_nothing
+      execute("fetch_nothing")
     end
 
     # Seeks to the position `time` (in seconds) of entry `songpos` in the playlist.
     def seek(songid : Int32, time : Int32)
       write_command("seek", songid, time)
-
-      if @command_list.active?
-        @command_list.add("fetch_nothing")
-        return
-      end
-
-      fetch_nothing
+      execute("fetch_nothing")
     end
 
     # Plays next song in the playlist.
     def next
       write_command("next")
-
-      if @command_list.active?
-        @command_list.add("fetch_nothing")
-        return
-      end
-
-      fetch_nothing
+      execute("fetch_nothing")
     end
 
     # Plays previous song in the playlist.
     def previous
       write_command("previous")
-
-      if @command_list.active?
-        @command_list.add("fetch_nothing")
-        return
-      end
-
-      fetch_nothing
+      execute("fetch_nothing")
     end
 
     # Begins playing the playlist at song `songid`.
     def playid(songnid : Int32? = nil)
       write_command("playid", songnid)
-
-      if @command_list.active?
-        @command_list.add("fetch_nothing")
-        return
-      end
-
-      fetch_nothing
+      execute("fetch_nothing")
     end
 
     # Lists unique tags values of the specified `type`.
@@ -727,13 +469,7 @@ module MPD
     # ```
     def list(type : String, filter : String | Nil = nil)
       write_command("list", type, filter)
-
-      if @command_list.active?
-        @command_list.add("fetch_list")
-        return
-      end
-
-      fetch_list
+      execute("fetch_list")
     end
 
     # Count the number of songs and their total playtime in the database
@@ -746,49 +482,25 @@ module MPD
     # ```
     def count(type : String, query : String)
       write_command("count", type, query)
-
-      if @command_list.active?
-        @command_list.add("fetch_object")
-        return
-      end
-
-      fetch_object
+      execute("fetch_object")
     end
 
     # Count the number of songs and their total playtime in the database matching `filter`
     def count(filter : String)
       write_command("count", filter)
-
-      if @command_list.active?
-        @command_list.add("fetch_object")
-        return
-      end
-
-      fetch_object
+      execute("fetch_object")
     end
 
     # Sets random state to `state`, `state` should be `false` or `true`.
     def random(state : Bool)
       write_command("random", boolean(state))
-
-      if @command_list.active?
-        @command_list.add("fetch_nothing")
-        return
-      end
-
-      fetch_nothing
+      execute("fetch_nothing")
     end
 
     # Sets repeat state to `state`, `state` should be `false` or `true`.
     def repeat(state : Bool)
       write_command("repeat", boolean(state))
-
-      if @command_list.active?
-        @command_list.add("fetch_nothing")
-        return
-      end
-
-      fetch_nothing
+      execute("fetch_nothing")
     end
 
     # Sets single state to `state`, `state` should be `false` or `true`.
@@ -797,13 +509,7 @@ module MPD
     # or song is repeated if the `repeat` mode is enabled.
     def single(state : Bool)
       write_command("single", boolean(state))
-
-      if @command_list.active?
-        @command_list.add("fetch_nothing")
-        return
-      end
-
-      fetch_nothing
+      execute("fetch_nothing")
     end
 
     # Sets consume state to `state`, `state` should be `false` or `true`.
@@ -811,13 +517,7 @@ module MPD
     # When consume is activated, each song played is removed from playlist.
     def consume(state : Bool)
       write_command("consume", boolean(state))
-
-      if @command_list.active?
-        @command_list.add("fetch_nothing")
-        return
-      end
-
-      fetch_nothing
+      execute("fetch_nothing")
     end
 
     # Sets the replay gain mode.
@@ -827,13 +527,7 @@ module MPD
     # This command triggers the options idle event.
     def replay_gain_mode(mode : String)
       write_command("replay_gain_mode", mode)
-
-      if @command_list.active?
-        @command_list.add("fetch_nothing")
-        return
-      end
-
-      fetch_nothing
+      execute("fetch_nothing")
     end
 
     # Prints replay gain options.
@@ -841,25 +535,13 @@ module MPD
     # Currently, only the variable `replay_gain_mode` is returned.
     def replay_gain_status
       write_command("replay_gain_status")
-
-      if @command_list.active?
-        @command_list.add("fetch_item")
-        return
-      end
-
-      fetch_item
+      execute("fetch_item")
     end
 
     # Clears the current playlist.
     def clear
       write_command("clear")
-
-      if @command_list.active?
-        @command_list.add("fetch_nothing")
-        return
-      end
-
-      fetch_nothing
+      execute("fetch_nothing")
     end
 
     # Adds the file `uri` to the playlist (directories add recursively).
@@ -867,13 +549,7 @@ module MPD
     # `uri` can also be a single file.
     def add(uri : String)
       write_command("add", uri)
-
-      if @command_list.active?
-        @command_list.add("fetch_nothing")
-        return
-      end
-
-      fetch_nothing
+      execute("fetch_nothing")
     end
 
     # Finds songs in the db that are exactly `query`.
@@ -886,25 +562,13 @@ module MPD
     # `query` is what to find.
     def find(type : String, query : String)
       write_command("find", type, query)
-
-      if @command_list.active?
-        @command_list.add("fetch_songs")
-        return
-      end
-
-      fetch_songs
+      execute("fetch_songs")
     end
 
     # Search the database for songs matching `filter`
     def find(filter : String)
       write_command("find", filter)
-
-      if @command_list.active?
-        @command_list.add("fetch_songs")
-        return
-      end
-
-      fetch_songs
+      execute("fetch_songs")
     end
 
     # Searches for any song that contains `query`.
@@ -916,13 +580,7 @@ module MPD
     # ```
     def search(type : String, query : String)
       write_command("search", type, query)
-
-      if @command_list.active?
-        @command_list.add("fetch_songs")
-        return
-      end
-
-      fetch_songs
+      execute("fetch_songs")
     end
 
     # Search the database for songs matching `filter` (see Filters).
@@ -934,13 +592,7 @@ module MPD
     # ```
     def search(filter : String)
       write_command("search", filter)
-
-      if @command_list.active?
-        @command_list.add("fetch_songs")
-        return
-      end
-
-      fetch_songs
+      execute("fetch_songs")
     end
 
     # Search the database for songs matching `filter` and add them to the queue.
@@ -952,25 +604,13 @@ module MPD
     # ```
     def findadd(filter : String)
       write_command("findadd", filter)
-
-      if @command_list.active?
-        @command_list.add("fetch_nothing")
-        return
-      end
-
-      fetch_nothing
+      execute("fetch_nothing")
     end
 
     # Lists all songs and directories in `uri`.
     def listall(uri : String? = nil)
       write_command("listall", uri)
-
-      if @command_list.active?
-        @command_list.add("fetch_database")
-        return
-      end
-
-      fetch_database
+      execute("fetch_database")
     end
 
     # Lists the contents of the directory `uri`.
@@ -982,25 +622,13 @@ module MPD
     # to read the tags of an arbitrary local file (`uri` beginning with `file:///`).
     def lsinfo(uri : String? = nil)
       write_command("lsinfo", uri)
-
-      if @command_list.active?
-        @command_list.add("fetch_database")
-        return
-      end
-
-      fetch_database
+      execute("fetch_database")
     end
 
     # Same as `listall`, except it also returns metadata info in the same format as `lsinfo`.
     def listallinfo(uri : String? = nil)
       write_command("listallinfo", uri)
-
-      if @command_list.active?
-        @command_list.add("fetch_database")
-        return
-      end
-
-      fetch_database
+      execute("fetch_database")
     end
 
     # Lists the contents of the directory `URI`, including files are not recognized by `MPD`.
@@ -1013,13 +641,7 @@ module MPD
     # `nfs://servername/path` obtains a directory listing from the NFS server.
     def listfiles(uri : String? = nil)
       write_command("listfiles", uri)
-
-      if @command_list.active?
-        @command_list.add("fetch_database")
-        return
-      end
-
-      fetch_database
+      execute("fetch_database")
     end
 
     # Subscribe to a channel `name`.
@@ -1028,49 +650,25 @@ module MPD
     # The `name` may consist of alphanumeric ASCII characters plus underscore, dash, dot and colon.
     def subscribe(name : String)
       write_command("subscribe", name)
-
-      if @command_list.active?
-        @command_list.add("fetch_nothing")
-        return
-      end
-
-      fetch_nothing
+      execute("fetch_nothing")
     end
 
     # Unsubscribe from a channel `name`.
     def unsubscribe(name : String)
       write_command("unsubscribe", name)
-
-      if @command_list.active?
-        @command_list.add("fetch_nothing")
-        return
-      end
-
-      fetch_nothing
+      execute("fetch_nothing")
     end
 
     # Send a `message` to the specified `channel`.
     def sendmessage(channel : String, message : String)
       write_command("sendmessage", channel, message)
-
-      if @command_list.active?
-        @command_list.add("fetch_nothing")
-        return
-      end
-
-      fetch_nothing
+      execute("fetch_nothing")
     end
 
     # Reads messages for this client. The response is a list of `channel:` and `message:` lines.
     def readmessages
       write_command("readmessages")
-
-      if @command_list.active?
-        @command_list.add("fetch_messages")
-        return
-      end
-
-      fetch_messages
+      execute("fetch_messages")
     end
 
     # :nodoc:
@@ -1084,6 +682,16 @@ module MPD
       end
 
       write_line(parts.join(' '))
+    end
+
+    # :nodoc:
+    macro execute(retval)
+      if @command_list.active?
+        @command_list.add({{retval}})
+        return
+      end
+
+      {{retval.id}}
     end
 
     # :nodoc:
