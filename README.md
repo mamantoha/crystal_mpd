@@ -53,6 +53,8 @@ Tested with mpd `0.21`.
 
 ### Command lists
 
+Command lists [documentation](https://www.musicpd.org/doc/html/protocol.html#command-lists).
+
 To facilitate faster adding of files etc. you can pass a list of commands all at once using a command list.
 The command list begins with `command_list_ok_begin` and ends with `command_list_end`.
 
@@ -71,6 +73,8 @@ client.command_list_end      # result will be a Array with the results
 ```
 
 ### Ranges
+
+Ranges [documentation](https://www.musicpd.org/doc/html/protocol.html#ranges).
 
 Some commands(e.g. `move`, `delete`, `load`, `shuffle`, `playlistinfo`) allow integer ranges(`START:END`) instead of numbers, specifying a range of songs.
 This is done by using `Range(Int32, Int32)`. `crystal_mpd` correctly handles inclusive and exclusive ranges (`1..10` vs `1...10`). Negative range end means that we want the range to span until the end of the list.
@@ -91,6 +95,20 @@ With negative range end MPD will assumes the biggest possible number then:
 ```crystal
 # delete all songs from the current playlist, except for the firts ten
 client.delete(10..-1)
+```
+
+### Filters
+
+Filters [documentation](https://www.musicpd.org/doc/html/protocol.html#filters).
+
+All commands which search for songs (`find`, `search`, `searchadd`, `searchaddpl`, `findadd`, `list`, and `count`) share a common filter syntax.
+
+The `find` commands are case sensitive, which `search` and related commands ignore case.
+
+```crystal
+client.search("(any =~ 'crystal')")
+client.findaddpl("alt_rock", "(genre == 'Alternative Rock')")
+client.list("filename", "((artist == 'Linkin Park') AND (date == '2003'))")
 ```
 
 ### Logging

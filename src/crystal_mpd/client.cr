@@ -81,7 +81,7 @@ module MPD
       end
     end
 
-    # https://www.musicpd.org/doc/protocol/command_lists.html
+    # https://www.musicpd.org/doc/html/protocol.html#command-lists
     def command_list_ok_begin
       write_command("command_list_ok_begin")
 
@@ -360,6 +360,15 @@ module MPD
       execute("fetch_nothing")
     end
 
+    # Search the database for songs matching `filter` and add them to the playlist named `name`.
+    #
+    # If a playlist by that name doesn’t exist it is created.
+    # Parameters have the same meaning as for `search `.
+    def searchaddpl(name : String, filler : String)
+      write_command("searchaddpl", name, type, query)
+      execute("fetch_nothing")
+    end
+
     # Lists the songs in the playlist `name`.
     #
     # Playlist plugins are supported.
@@ -604,6 +613,14 @@ module MPD
     # ```
     def findadd(filter : String)
       write_command("findadd", filter)
+      execute("fetch_nothing")
+    end
+
+    # Search the database for songs matching `filter` and add them to the queue.
+    #
+    # Parameters have the same meaning as for `search`.
+    def searchadd(filter : String)
+      write_command("searchadd", filter)
       execute("fetch_nothing")
     end
 
