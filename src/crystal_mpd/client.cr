@@ -1,16 +1,13 @@
 require "logger"
 
 module MPD
-  class Client
-    # :nodoc:
-    alias Object = Hash(String, String)
-    # :nodoc:
-    alias Objects = Array(Object)
-    # :nodoc:
-    alias Pair = Array(String)
-    # :nodoc:
-    alias Pairs = Array(Pair)
+  alias Object = Hash(String, String)
+  alias Objects = Array(MPD::Object)
+  alias Pair = Array(String)
+  alias Pairs = Array(MPD::Pair)
+  alias Range = ::Range(Int32, Int32) | ::Range(Nil, Int32) | ::Range(Int32, Nil)
 
+  class Client
     @version : String?
 
     HELLO_PREFIX = "OK MPD "
@@ -256,12 +253,14 @@ module MPD
     # or if the optional argument is given, displays information only for
     # the song `songpos` or the range of songs `START:END`.
     #
-    # Range is done in by using `Range`.
+    # Range is done in by using `MPD::Range`.
     #
     # Show info about the first three songs in the playlist:
     #
     # ```crystal
     # client.playlistinfo(1..3)
+    # client.playlistinfo(..3)
+    # client.playlistinfo(10..)
     # ```
     #
     # With negative range end MPD will assumes the biggest possible number then
@@ -269,7 +268,7 @@ module MPD
     # ```crystal
     # client.playlistinfo(10..-1)
     # ```
-    def playlistinfo(songpos : Int32 | Range(Int32, Int32) | Nil = nil)
+    def playlistinfo(songpos : Int32 | MPD::Range | Nil = nil)
       write_command("playlistinfo", songpos)
       execute("fetch_songs")
     end
@@ -287,7 +286,7 @@ module MPD
     end
 
     # Deletes a song from the playlist.
-    def delete(songpos : Int32 | Range(Int32, Int32))
+    def delete(songpos : Int32 | MPD::Range)
       write_command("delete", songpos)
       execute("fetch_nothing")
     end
@@ -299,7 +298,7 @@ module MPD
     end
 
     # Moves the song at `from` or range of songs at `from` to `to` in the playlist.
-    def move(from : Int32 | Range(Int32, Int32), to : Int32)
+    def move(from : Int32 | MPD::Range, to : Int32)
       write_command("move", from, to)
       execute("fetch_nothing")
     end
@@ -308,13 +307,13 @@ module MPD
     #
     # Playlist plugins are supported.
     # A range `songpos` may be specified to load only a part of the playlist.
-    def load(name : String, songpos : Int32 | Range(Int32, Int32) | Nil = nil)
+    def load(name : String, songpos : Int32 | MPD::Range | Nil = nil)
       write_command("load", name, songpos)
       execute("fetch_nothing")
     end
 
     # Shuffles the current playlist. `range` is optional and specifies a range of songs.
-    def shuffle(range : Range(Int32, Int32) | Nil = nil)
+    def shuffle(range : MPD::Range | Nil = nil)
       write_command("shuffle", range)
       execute("fetch_nothing")
     end
@@ -714,7 +713,7 @@ module MPD
     # :nodoc:
     private def parse_arg(arg) : String
       case arg
-      when Range
+      when MPD::Range
         parse_range(arg)
       when Hash
         arg.reduce([] of String) do |acc, (key, value)|
@@ -730,11 +729,12 @@ module MPD
     end
 
     # :nodoc:
-    private def parse_range(range) : String
+    private def parse_range(range : MPD::Range) : String
       range_start = range.begin
       range_end = range.end
 
-      range_start = 0 if range_start < 0
+      range_start = 0 if range_start.nil? || range_start < 0
+      range_end = -1 if range_end.nil?
       range_end += 1 unless range.exclusive?
       range_end = nil if range_end <= 0
 
@@ -779,14 +779,14 @@ module MPD
     end
 
     # :nodoc:
-    private def fetch_object : Object
+    private def fetch_object : MPD::Object
       fetch_objects.first
     end
 
     # :nodoc:
     private def fetch_objects(delimiters = [] of String) : Objects
-      result = Objects.new
-      obj = Object.new
+      result = MPD::Objects.new
+      obj = MPD::Object.new
 
       read_pairs.each do |item|
         key = item[0]
@@ -794,7 +794,7 @@ module MPD
 
         if delimiters.includes?(key)
           result << obj unless obj.empty?
-          obj = Object.new
+          obj = MPD::Object.new
         end
 
         obj[key] = value
@@ -844,8 +844,8 @@ module MPD
     end
 
     # :nodoc:
-    private def read_pairs : Pairs
-      pairs = Pairs.new
+    private def read_pairs : MPD::Pairs
+      pairs = MPD::Pairs.new
 
       pair = read_pair
       while !pair.empty?
@@ -857,9 +857,9 @@ module MPD
     end
 
     # :nodoc:
-    private def read_pair : Pair
+    private def read_pair : MPD::Pair
       line = read_line
-      return Pair.new if line.nil?
+      return MPD::Pair.new if line.nil?
       pair = line.split(": ", 2)
 
       pair

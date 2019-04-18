@@ -27,8 +27,11 @@ puts "MPD version: #{client.version}"
 # puts client.decoders
 # puts client.urlhandlers
 # puts client.delete(0..2)
-# puts client.delete(0...2)
-# puts client.delete(10..-1)
+# puts client.delete(..2) # 0:3
+# puts client.delete(0...2) # 0:2
+# puts client.delete(10..-1) # 10:
+# puts client.delete(10..) # 10:
+# puts client.delete(10...) # 10:
 # puts client.playlistinfo(1)
 # puts client.playlistsearch("title", "All Around Me")
 # puts client.playlistfind("title", "All Around Me")
