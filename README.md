@@ -77,7 +77,7 @@ client.command_list_end      # result will be a Array with the results
 Ranges [documentation](https://www.musicpd.org/doc/html/protocol.html#ranges).
 
 Some commands(e.g. `move`, `delete`, `load`, `shuffle`, `playlistinfo`) allow integer ranges(`START:END`) instead of numbers, specifying a range of songs.
-This is done by using `Range(Int32, Int32)`. `crystal_mpd` correctly handles inclusive and exclusive ranges (`1..10` vs `1...10`). Negative range end means that we want the range to span until the end of the list.
+This is done by using `MPD::Range`. `crystal_mpd` correctly handles inclusive and exclusive ranges (`1..10` vs `1...10`). Negative range end means that we want the range to span until the end of the list.
 
 ```crystal
 # move songs 1, 2 and 3 to position 10 (and 11 and 12)
@@ -95,6 +95,25 @@ With negative range end MPD will assumes the biggest possible number then:
 ```crystal
 # delete all songs from the current playlist, except for the firts ten
 client.delete(10..-1)
+```
+
+End-less range end MPD will also assumes the biggest possible number then:
+
+```crystal
+# delete all songs from the current playlist, except for the firts ten
+client.delete(10..)
+# or
+client.delete(10...)
+```
+
+With begin-less range begin is equal to `0`:
+
+```crystal
+# delete first 1, 2 and 3 songs from the current playlist
+client.delete(..2)
+
+# delete first 1 and 2 songs from the current playlist
+client.delete(...2)
 ```
 
 ### Filters
