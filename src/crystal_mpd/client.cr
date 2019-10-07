@@ -34,8 +34,21 @@ module MPD
       @port : Int32 = 6600
     )
       @command_list = CommandList.new
+      @mutex = Mutex.new
 
       connect
+    end
+
+    private def synchronize
+      @mutex.synchronize do
+        begin
+          yield
+        ensure
+          if socket = @socket
+            socket.flush
+          end
+        end
+      end
     end
 
     # Connect to the MPD daemon unless conected.
@@ -142,8 +155,10 @@ module MPD
     # * `updating_db`: job id
     # * `error`: if there is an error, returns message here
     def status
-      write_command("status")
-      execute("fetch_object")
+      synchronize do
+        write_command("status")
+        execute("fetch_object")
+      end
     end
 
     # Displays statistics.
@@ -156,58 +171,76 @@ module MPD
     # * `db_update`: last db update in UNIX time
     # * `playtime`: time length of music played
     def stats
-      write_command("stats")
-      execute("fetch_object")
+      synchronize do
+        write_command("stats")
+        execute("fetch_object")
+      end
     end
 
     # Dumps configuration values that may be interesting for the client.
     #
     # This command is only permitted to `local` clients (connected via UNIX domain socket).
     def config
-      write_command("stats")
-      execute("fetch_item")
+      synchronize do
+        write_command("stats")
+        execute("fetch_item")
+      end
     end
 
     # "Shows which commands the current user has access to.
     def commands
-      write_command("commands")
-      execute("fetch_list")
+      synchronize do
+        write_command("commands")
+        execute("fetch_list")
+      end
     end
 
     # Shows which commands the current user does not have access to.
     def notcommands
-      write_command("notcommands")
-      execute("fetch_list")
+      synchronize do
+        write_command("notcommands")
+        execute("fetch_list")
+      end
     end
 
     # Shows a list of available song metadata.
     def tagtypes
-      write_command("tagtypes")
-      execute("fetch_list")
+      synchronize do
+        write_command("tagtypes")
+        execute("fetch_list")
+      end
     end
 
     # Obtain a list of all channels. The response is a list of `channel:` lines.
     def channels
-      write_command("channels")
-      execute("fetch_list")
+      synchronize do
+        write_command("channels")
+        execute("fetch_list")
+      end
     end
 
     # Gets a list of available URL handlers.
     def urlhandlers
-      write_command("urlhandlers")
-      execute("fetch_list")
+      synchronize do
+        write_command("urlhandlers")
+        execute("fetch_list")
+      end
     end
 
     # Print a list of decoder plugins, followed by their supported suffixes and MIME types.
     def decoders
-      write_command("decoders")
-      execute("fetch_plugins")
+      synchronize do
+        write_command("decoders")
+        execute("fetch_plugins")
+      end
     end
 
     # Shows information about all outputs.
     def outputs
-      write_command("outputs")
-      execute("fetch_outputs")
+      synchronize do
+        write_command("outputs")
+        execute("fetch_outputs")
+      end
     end
 
     # Updates the music database: find new files, remove deleted files, update modified files.
@@ -215,20 +248,26 @@ module MPD
     # `uri` is a particular directory or song/file to update.
     # If you do not specify it, everything is updated.
     def update(uri : String? = nil)
-      write_command("update", uri)
-      execute("fetch_list")
+      synchronize do
+        write_command("update", uri)
+        execute("fetch_list")
+      end
     end
 
     # Displays the song info of the current song (same song that is identified in `status`).
     def currentsong
-      write_command("currentsong")
-      execute("fetch_object")
+      synchronize do
+        write_command("currentsong")
+        execute("fetch_object")
+      end
     end
 
     # Same as `update`, but also rescans unmodified files.
     def rescan(uri : String? = nil)
-      write_command("rescan", uri)
-      execute("fetch_item")
+      synchronize do
+        write_command("rescan", uri)
+        execute("fetch_item")
+      end
     end
 
     # Prints a list of the playlist directory.
@@ -238,14 +277,18 @@ module MPD
     # To avoid problems due to clock differences between clients and the server,
     # clients should not compare this value with their local clock.
     def listplaylists
-      write_command("listplaylists")
-      execute("fetch_playlists")
+      synchronize do
+        write_command("listplaylists")
+        execute("fetch_playlists")
+      end
     end
 
     # Get current playlist
     def playlist
-      write_command("playlist")
-      execute("fetch_songs")
+      synchronize do
+        write_command("playlist")
+        execute("fetch_songs")
+      end
     end
 
     # Displays a list of all songs in the playlist,
@@ -269,38 +312,50 @@ module MPD
     # client.playlistinfo(10..-1)
     # ```
     def playlistinfo(songpos : Int32 | MPD::Range | Nil = nil)
-      write_command("playlistinfo", songpos)
-      execute("fetch_songs")
+      synchronize do
+        write_command("playlistinfo", songpos)
+        execute("fetch_songs")
+      end
     end
 
     # Searches case-sensitively for partial matches in the current playlist.
     def playlistsearch(tag : String, needle : String)
-      write_command("playlistsearch", tag, needle)
-      execute("fetch_songs")
+      synchronize do
+        write_command("playlistsearch", tag, needle)
+        execute("fetch_songs")
+      end
     end
 
     # Finds songs in the current playlist with strict matching.
     def playlistfind(tag : String, needle : String)
-      write_command("playlistfind", tag, needle)
-      execute("fetch_songs")
+      synchronize do
+        write_command("playlistfind", tag, needle)
+        execute("fetch_songs")
+      end
     end
 
     # Deletes a song from the playlist.
     def delete(songpos : Int32 | MPD::Range)
-      write_command("delete", songpos)
-      execute("fetch_nothing")
+      synchronize do
+        write_command("delete", songpos)
+        execute("fetch_nothing")
+      end
     end
 
     # Deletes the song `singid` from the playlist.
     def deleteid(songid : Int32)
-      write_command("deleteid", songid)
-      execute("fetch_nothing")
+      synchronize do
+        write_command("deleteid", songid)
+        execute("fetch_nothing")
+      end
     end
 
     # Moves the song at `from` or range of songs at `from` to `to` in the playlist.
     def move(from : Int32 | MPD::Range, to : Int32)
-      write_command("move", from, to)
-      execute("fetch_nothing")
+      synchronize do
+        write_command("move", from, to)
+        execute("fetch_nothing")
+      end
     end
 
     # Loads the playlist `name` into the current queue.
@@ -308,46 +363,60 @@ module MPD
     # Playlist plugins are supported.
     # A range `songpos` may be specified to load only a part of the playlist.
     def load(name : String, songpos : Int32 | MPD::Range | Nil = nil)
-      write_command("load", name, songpos)
-      execute("fetch_nothing")
+      synchronize do
+        write_command("load", name, songpos)
+        execute("fetch_nothing")
+      end
     end
 
     # Shuffles the current playlist. `range` is optional and specifies a range of songs.
     def shuffle(range : MPD::Range | Nil = nil)
-      write_command("shuffle", range)
-      execute("fetch_nothing")
+      synchronize do
+        write_command("shuffle", range)
+        execute("fetch_nothing")
+      end
     end
 
     # Saves the current playlist to `name`.m3u in the playlist directory.
     def save(name : String)
-      write_command("save", name)
-      execute("fetch_nothing")
+      synchronize do
+        write_command("save", name)
+        execute("fetch_nothing")
+      end
     end
 
     # Clears the playlist `name`.m3u.
     def playlistclear(name : String)
-      write_command("playlistclear", name)
-      execute("fetch_nothing")
+      synchronize do
+        write_command("playlistclear", name)
+        execute("fetch_nothing")
+      end
     end
 
     # Removes the playlist `name`.m3u from the playlist directory.
     def rm(name : String)
-      write_command("rm", name)
-      execute("fetch_nothing")
+      synchronize do
+        write_command("rm", name)
+        execute("fetch_nothing")
+      end
     end
 
     # Renames the playlist `name`.m3u to `new_name`.m3u.
     def rename(name : String, new_name : String)
-      write_command("rename", name, new_name)
-      execute("fetch_nothing")
+      synchronize do
+        write_command("rename", name, new_name)
+        execute("fetch_nothing")
+      end
     end
 
     # Displays a list of songs in the playlist.
     #
     # `songid` is optional and specifies a single song to display info for.
     def playlistid(songid : Int32? = nil)
-      write_command("playlistid", songid)
-      execute("fetch_songs")
+      synchronize do
+        write_command("playlistid", songid)
+        execute("fetch_songs")
+      end
     end
 
     # Searches for any song that contains `what` in tag `type` and adds them to the playlist named `name`.
@@ -355,8 +424,10 @@ module MPD
     # If a playlist by that name doesn't exist it is created.
     # Parameters have the same meaning as for `find`, except that search is not case sensitive.
     def searchaddpl(name : String, type : String, query : String)
-      write_command("searchaddpl", name, type, query)
-      execute("fetch_nothing")
+      synchronize do
+        write_command("searchaddpl", name, type, query)
+        execute("fetch_nothing")
+      end
     end
 
     # Search the database for songs matching `filter` and add them to the playlist named `name`.
@@ -364,100 +435,130 @@ module MPD
     # If a playlist by that name doesn’t exist it is created.
     # Parameters have the same meaning as for `search `.
     def searchaddpl(name : String, filler : String)
-      write_command("searchaddpl", name, type, query)
-      execute("fetch_nothing")
+      synchronize do
+        write_command("searchaddpl", name, type, query)
+        execute("fetch_nothing")
+      end
     end
 
     # Lists the songs in the playlist `name`.
     #
     # Playlist plugins are supported.
     def listplaylist(name : String)
-      write_command("listplaylist", name)
-      execute("fetch_list")
+      synchronize do
+        write_command("listplaylist", name)
+        execute("fetch_list")
+      end
     end
 
     # Lists the songs with metadata in the playlist.
     #
     # Playlist plugins are supported.
     def listplaylistinfo(name : String)
-      write_command("listplaylistinfo", name)
-      execute("fetch_songs")
+      synchronize do
+        write_command("listplaylistinfo", name)
+        execute("fetch_songs")
+      end
     end
 
     # Adds `uri` to the playlist `name`.m3u.
     #
     # `name`.m3u will be created if it does not exist.
     def playlistadd(name : String, uri : String)
-      write_command("playlistadd", name, uri)
-      execute("fetch_nothing")
+      synchronize do
+        write_command("playlistadd", name, uri)
+        execute("fetch_nothing")
+      end
     end
 
     # Moves `songid` in the playlist `name`.m3u to the position `songpos`
     def playlistmove(name : String, songid : Int32, songpos : Int32)
-      write_command("playlistmove", name, songid, songpos)
-      execute("fetch_nothing")
+      synchronize do
+        write_command("playlistmove", name, songid, songpos)
+        execute("fetch_nothing")
+      end
     end
 
     # Deletes `songpos` from the playlist `name`.m3u.
     def playlistdelete(name : String, songpos : Int32)
-      write_command("playlistdelete", name, songpos)
-      execute("fetch_nothing")
+      synchronize do
+        write_command("playlistdelete", name, songpos)
+        execute("fetch_nothing")
+      end
     end
 
     # Begins playing the playlist at song number `songpos`.
     def play(songpos : Int32? = nil)
-      write_command("play", songpos)
-      execute("fetch_nothing")
+      synchronize do
+        write_command("play", songpos)
+        execute("fetch_nothing")
+      end
     end
 
     # Toggles pause/resumes playing.
     def pause
-      write_command("pause")
-      execute("fetch_nothing")
+      synchronize do
+        write_command("pause")
+        execute("fetch_nothing")
+      end
     end
 
     # Stops playing.
     def stop
-      write_command("stop")
-      execute("fetch_nothing")
+      synchronize do
+        write_command("stop")
+        execute("fetch_nothing")
+      end
     end
 
     # Seeks to the position `time` within the current song.
     #
     # If prefixed by `+` or `-`, then the time is relative to the current playing position.
     def seekcur(time : String | Int32)
-      write_command("seekcur", time)
-      execute("fetch_nothing")
+      synchronize do
+        write_command("seekcur", time)
+        execute("fetch_nothing")
+      end
     end
 
     # Seeks to the position `time` (in seconds) of song `songid`.
     def seekid(songid : Int32, time : String | Int32)
-      write_command("seekid", songid, time)
-      execute("fetch_nothing")
+      synchronize do
+        write_command("seekid", songid, time)
+        execute("fetch_nothing")
+      end
     end
 
     # Seeks to the position `time` (in seconds) of entry `songpos` in the playlist.
     def seek(songid : Int32, time : Int32)
-      write_command("seek", songid, time)
-      execute("fetch_nothing")
+      synchronize do
+        write_command("seek", songid, time)
+        execute("fetch_nothing")
+      end
     end
 
     # Plays next song in the playlist.
     def next
-      write_command("next")
-      execute("fetch_nothing")
+      synchronize do
+        write_command("next")
+        execute("fetch_nothing")
+      end
     end
 
     # Plays previous song in the playlist.
     def previous
-      write_command("previous")
-      execute("fetch_nothing")
+      synchronize do
+        write_command("previous")
+        execute("fetch_nothing")
+      end
     end
 
     # Begins playing the playlist at song `songid`.
     def playid(songnid : Int32? = nil)
-      write_command("playid", songnid)
-      execute("fetch_nothing")
+      synchronize do
+        write_command("playid", songnid)
+        execute("fetch_nothing")
+      end
     end
 
     # Lists unique tags values of the specified `type`.
@@ -476,8 +577,10 @@ module MPD
     # client.list("filename", "((artist == 'Linkin Park') AND (date == '2003'))")
     # ```
     def list(type : String, filter : String | Nil = nil)
-      write_command("list", type, filter)
-      execute("fetch_list")
+      synchronize do
+        write_command("list", type, filter)
+        execute("fetch_list")
+      end
     end
 
     # Count the number of songs and their total playtime in the database
@@ -489,26 +592,34 @@ module MPD
     # client.count("title", "Echoes")
     # ```
     def count(type : String, query : String)
-      write_command("count", type, query)
-      execute("fetch_object")
+      synchronize do
+        write_command("count", type, query)
+        execute("fetch_object")
+      end
     end
 
     # Count the number of songs and their total playtime in the database matching `filter`
     def count(filter : String)
-      write_command("count", filter)
-      execute("fetch_object")
+      synchronize do
+        write_command("count", filter)
+        execute("fetch_object")
+      end
     end
 
     # Sets random state to `state`, `state` should be `false` or `true`.
     def random(state : Bool)
-      write_command("random", boolean(state))
-      execute("fetch_nothing")
+      synchronize do
+        write_command("random", boolean(state))
+        execute("fetch_nothing")
+      end
     end
 
     # Sets repeat state to `state`, `state` should be `false` or `true`.
     def repeat(state : Bool)
-      write_command("repeat", boolean(state))
-      execute("fetch_nothing")
+      synchronize do
+        write_command("repeat", boolean(state))
+        execute("fetch_nothing")
+      end
     end
 
     # Sets single state to `state`, `state` should be `false` or `true`.
@@ -516,16 +627,20 @@ module MPD
     # When single is activated, playback is stopped after current song,
     # or song is repeated if the `repeat` mode is enabled.
     def single(state : Bool)
-      write_command("single", boolean(state))
-      execute("fetch_nothing")
+      synchronize do
+        write_command("single", boolean(state))
+        execute("fetch_nothing")
+      end
     end
 
     # Sets consume state to `state`, `state` should be `false` or `true`.
     #
     # When consume is activated, each song played is removed from playlist.
     def consume(state : Bool)
-      write_command("consume", boolean(state))
-      execute("fetch_nothing")
+      synchronize do
+        write_command("consume", boolean(state))
+        execute("fetch_nothing")
+      end
     end
 
     # Sets the replay gain mode.
@@ -534,30 +649,38 @@ module MPD
     # Changing the mode during playback may take several seconds, because the new settings does not affect the buffered data.
     # This command triggers the options idle event.
     def replay_gain_mode(mode : String)
-      write_command("replay_gain_mode", mode)
-      execute("fetch_nothing")
+      synchronize do
+        write_command("replay_gain_mode", mode)
+        execute("fetch_nothing")
+      end
     end
 
     # Prints replay gain options.
     #
     # Currently, only the variable `replay_gain_mode` is returned.
     def replay_gain_status
-      write_command("replay_gain_status")
-      execute("fetch_item")
+      synchronize do
+        write_command("replay_gain_status")
+        execute("fetch_item")
+      end
     end
 
     # Clears the current playlist.
     def clear
-      write_command("clear")
-      execute("fetch_nothing")
+      synchronize do
+        write_command("clear")
+        execute("fetch_nothing")
+      end
     end
 
     # Adds the file `uri` to the playlist (directories add recursively).
     #
     # `uri` can also be a single file.
     def add(uri : String)
-      write_command("add", uri)
-      execute("fetch_nothing")
+      synchronize do
+        write_command("add", uri)
+        execute("fetch_nothing")
+      end
     end
 
     # Finds songs in the db that are exactly `query`.
@@ -569,14 +692,18 @@ module MPD
     #
     # `query` is what to find.
     def find(type : String, query : String)
-      write_command("find", type, query)
-      execute("fetch_songs")
+      synchronize do
+        write_command("find", type, query)
+        execute("fetch_songs")
+      end
     end
 
     # Search the database for songs matching `filter`
     def find(filter : String)
-      write_command("find", filter)
-      execute("fetch_songs")
+      synchronize do
+        write_command("find", filter)
+        execute("fetch_songs")
+      end
     end
 
     # Searches for any song that contains `query`.
@@ -587,8 +714,10 @@ module MPD
     # client.search("title", "crystal")
     # ```
     def search(type : String, query : String)
-      write_command("search", type, query)
-      execute("fetch_songs")
+      synchronize do
+        write_command("search", type, query)
+        execute("fetch_songs")
+      end
     end
 
     # Search the database for songs matching `filter` (see Filters).
@@ -599,8 +728,10 @@ module MPD
     # client.search("(any =~ 'crystal')")
     # ```
     def search(filter : String)
-      write_command("search", filter)
-      execute("fetch_songs")
+      synchronize do
+        write_command("search", filter)
+        execute("fetch_songs")
+      end
     end
 
     # Search the database for songs matching `filter` and add them to the queue.
@@ -611,22 +742,28 @@ module MPD
     # client.findadd("(genre == 'Alternative Rock')")
     # ```
     def findadd(filter : String)
-      write_command("findadd", filter)
-      execute("fetch_nothing")
+      synchronize do
+        write_command("findadd", filter)
+        execute("fetch_nothing")
+      end
     end
 
     # Search the database for songs matching `filter` and add them to the queue.
     #
     # Parameters have the same meaning as for `search`.
     def searchadd(filter : String)
-      write_command("searchadd", filter)
-      execute("fetch_nothing")
+      synchronize do
+        write_command("searchadd", filter)
+        execute("fetch_nothing")
+      end
     end
 
     # Lists all songs and directories in `uri`.
     def listall(uri : String? = nil)
-      write_command("listall", uri)
-      execute("fetch_database")
+      synchronize do
+        write_command("listall", uri)
+        execute("fetch_database")
+      end
     end
 
     # Lists the contents of the directory `uri`.
@@ -637,14 +774,18 @@ module MPD
     # Clients that are connected via UNIX domain socket may use this command
     # to read the tags of an arbitrary local file (`uri` beginning with `file:///`).
     def lsinfo(uri : String? = nil)
-      write_command("lsinfo", uri)
-      execute("fetch_database")
+      synchronize do
+        write_command("lsinfo", uri)
+        execute("fetch_database")
+      end
     end
 
     # Same as `listall`, except it also returns metadata info in the same format as `lsinfo`.
     def listallinfo(uri : String? = nil)
-      write_command("listallinfo", uri)
-      execute("fetch_database")
+      synchronize do
+        write_command("listallinfo", uri)
+        execute("fetch_database")
+      end
     end
 
     # Lists the contents of the directory `URI`, including files are not recognized by `MPD`.
@@ -656,8 +797,10 @@ module MPD
     # For example, `smb://SERVER` returns a list of all shares on the given SMB/CIFS server;
     # `nfs://servername/path` obtains a directory listing from the NFS server.
     def listfiles(uri : String? = nil)
-      write_command("listfiles", uri)
-      execute("fetch_database")
+      synchronize do
+        write_command("listfiles", uri)
+        execute("fetch_database")
+      end
     end
 
     # Subscribe to a channel `name`.
@@ -665,26 +808,34 @@ module MPD
     # The channel is created if it does not exist already.
     # The `name` may consist of alphanumeric ASCII characters plus underscore, dash, dot and colon.
     def subscribe(name : String)
-      write_command("subscribe", name)
-      execute("fetch_nothing")
+      synchronize do
+        write_command("subscribe", name)
+        execute("fetch_nothing")
+      end
     end
 
     # Unsubscribe from a channel `name`.
     def unsubscribe(name : String)
-      write_command("unsubscribe", name)
-      execute("fetch_nothing")
+      synchronize do
+        write_command("unsubscribe", name)
+        execute("fetch_nothing")
+      end
     end
 
     # Send a `message` to the specified `channel`.
     def sendmessage(channel : String, message : String)
-      write_command("sendmessage", channel, message)
-      execute("fetch_nothing")
+      synchronize do
+        write_command("sendmessage", channel, message)
+        execute("fetch_nothing")
+      end
     end
 
     # Reads messages for this client. The response is a list of `channel:` and `message:` lines.
     def readmessages
-      write_command("readmessages")
-      execute("fetch_messages")
+      synchronize do
+        write_command("readmessages")
+        execute("fetch_messages")
+      end
     end
 
     # :nodoc:
