@@ -26,7 +26,7 @@ optparse = OptionParser.new do |parser|
 end
 
 begin
-  optparse.parse!
+  optparse.parse
   mandatory = ["type", "query"]
   missing = mandatory.select { |param| options[param]?.nil? }
   unless missing.empty?
