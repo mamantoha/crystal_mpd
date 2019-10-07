@@ -901,6 +901,12 @@ module MPD
 
         socket.puts(line)
       end
+    rescue Errno
+      reconnect
+
+      @socket.try do |socket|
+        socket.puts(line)
+      end
     end
 
     # :nodoc:
