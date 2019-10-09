@@ -17,38 +17,29 @@ module MPD
 
     getter host, port, version
     property log : Logger?
+    property callbacks_timeout : Time::Span | Int32 = 1.second
 
     # Creates a new MPD client. Parses the `host`, `port`.
     #
     # ```crystal
-    # client = MPD::Client.new("localhost", 6600)
-    # puts client.version
-    # puts client.status
-    # puts client.stats
-    # client.disconnect
+    # mpd = MPD::Client.new("localhost", 6600)
+    # puts mpd.version
+    # puts mpd.status
+    # puts mpd.stats
+    # mpd.disconnect
     # ```
     #
     # This constructor will raise an exception if could not connect to MPD
     def initialize(
       @host : String = "localhost",
-      @port : Int32 = 6600
+      @port : Int32 = 6600,
+      @with_callbacks = false
     )
       @command_list = CommandList.new
       @mutex = Mutex.new
+      @callbacks = {} of Symbol => Array(String -> Nil)
 
       connect
-    end
-
-    private def synchronize
-      @mutex.synchronize do
-        begin
-          yield
-        ensure
-          if socket = @socket
-            socket.flush
-          end
-        end
-      end
     end
 
     # Connect to the MPD daemon unless conected.
@@ -62,6 +53,7 @@ module MPD
     def reconnect
       @socket = TCPSocket.new(host, port)
       hello
+      callback_thread if @with_callbacks
     end
 
     # Disconnect from the MPD daemon.
@@ -71,6 +63,69 @@ module MPD
       end
 
       reset
+    end
+
+    # This will register a block callback that will trigger whenever
+    # that specific event happens.
+    #
+    # ```crystal
+    # mpd.on :state do |state|
+    #   puts "State was change to #{state}"
+    # end
+    # ```
+    def on(event : Symbol, &block : String -> _)
+      (@callbacks[event] ||= [] of Proc(String, Nil)).push(block)
+    end
+
+    # Triggers an event, running it's callbacks.
+    private def emit(event : Symbol, arg : String)
+      return unless @callbacks[event]?
+
+      @callbacks[event].each { |handle| handle.call(arg) }
+    end
+
+    # Constructs a callback loop
+    private def callback_thread
+      spawn do
+        old_status = {} of Symbol => String
+
+        if status = self.status
+          old_status = get_status(status)
+        end
+
+        loop do
+          sleep @callbacks_timeout
+
+          if status = self.status
+            new_status = get_status(status)
+
+            new_status.each do |key, val|
+              next unless val
+              next if val == old_status[key]?
+              emit(key, val)
+            end
+
+            old_status = new_status
+          end
+        end
+      end
+
+      Fiber.yield
+    end
+
+    def events_list
+      @events_list ||= [
+        :volume, :repeat, :random, :single, :consume,
+        :playlist, :playlistlength, :mixrampdb, :state,
+        :song, :songid, :time, :elapsed, :bitrate,
+        :duration, :audio, :nextsong, :nextsongid,
+      ]
+    end
+
+    private def get_status(status : Hash(String, String)) : Hash(Symbol, String?)
+      events_list.each_with_object({} of Symbol => String | Nil) do |event, hash|
+        hash[event] = status[event.to_s]?
+      end
     end
 
     # Check if the client is connected.
@@ -91,24 +146,42 @@ module MPD
       end
     end
 
+    private def synchronize
+      @mutex.synchronize do
+        begin
+          yield
+        ensure
+          if socket = @socket
+            socket.flush
+          end
+        end
+      end
+    end
+
     # https://www.musicpd.org/doc/html/protocol.html#command-lists
     def command_list_ok_begin
-      write_command("command_list_ok_begin")
+      synchronize do
+        write_command("command_list_ok_begin")
 
-      @command_list.begin
+        @command_list.begin
+      end
     end
 
     def command_list_end
-      write_command("command_list_end")
+      synchronize do
+        write_command("command_list_end")
 
-      process_command_list
-      @command_list.reset
-      read_line
+        process_command_list
+        @command_list.reset
+        read_line
+      end
     end
 
     private def process_command_list
-      @command_list.commands.each do |command|
-        process_command_in_command_list(command)
+      synchronize do
+        @command_list.commands.each do |command|
+          process_command_in_command_list(command)
+        end
       end
     end
 
@@ -127,7 +200,9 @@ module MPD
 
     # Closes the connection to MPD.
     def close
-      write_command("close")
+      synchronize do
+        write_command("close")
+      end
     end
 
     # Reports the current status of the player and the volume level.
@@ -301,15 +376,15 @@ module MPD
     # Show info about the first three songs in the playlist:
     #
     # ```crystal
-    # client.playlistinfo(1..3)
-    # client.playlistinfo(..3)
-    # client.playlistinfo(10..)
+    # mpd.playlistinfo(1..3)
+    # mpd.playlistinfo(..3)
+    # mpd.playlistinfo(10..)
     # ```
     #
     # With negative range end MPD will assumes the biggest possible number then
     #
     # ```crystal
-    # client.playlistinfo(10..-1)
+    # mpd.playlistinfo(10..-1)
     # ```
     def playlistinfo(songpos : Int32 | MPD::Range | Nil = nil)
       synchronize do
@@ -566,15 +641,15 @@ module MPD
     # `type` can be any tag supported by MPD or file.
     #
     # ```crystal
-    # client.list("Artist")
+    # mpd.list("Artist")
     # ```
     #
     # Additional arguments may specify a `filter`.
     # The following example lists all file names by their respective artist and date:
     #
     # ```crystal
-    # client.list("Artist")
-    # client.list("filename", "((artist == 'Linkin Park') AND (date == '2003'))")
+    # mpd.list("Artist")
+    # mpd.list("filename", "((artist == 'Linkin Park') AND (date == '2003'))")
     # ```
     def list(type : String, filter : String | Nil = nil)
       synchronize do
@@ -589,7 +664,7 @@ module MPD
     # The following prints the number of songs whose title matches "Echoes"
     #
     # ```crystal
-    # client.count("title", "Echoes")
+    # mpd.count("title", "Echoes")
     # ```
     def count(type : String, query : String)
       synchronize do
@@ -711,7 +786,7 @@ module MPD
     # Parameters have the same meaning as for `find`, except that search is not case sensitive.
     #
     # ```crystal
-    # client.search("title", "crystal")
+    # mpd.search("title", "crystal")
     # ```
     def search(type : String, query : String)
       synchronize do
@@ -725,7 +800,7 @@ module MPD
     # Parameters have the same meaning as for `find`, except that search is not case sensitive.
     #
     # ```crystal
-    # client.search("(any =~ 'crystal')")
+    # mpd.search("(any =~ 'crystal')")
     # ```
     def search(filter : String)
       synchronize do
@@ -739,7 +814,7 @@ module MPD
     # Parameters have the same meaning as for `find`.
     #
     # ```crystal
-    # client.findadd("(genre == 'Alternative Rock')")
+    # mpd.findadd("(genre == 'Alternative Rock')")
     # ```
     def findadd(filter : String)
       synchronize do
