@@ -130,6 +130,70 @@ client.findaddpl("alt_rock", "(genre == 'Alternative Rock')")
 client.list("filename", "((artist == 'Linkin Park') AND (date == '2003'))")
 ```
 
+### Callbacks
+
+Callbacks are a simple way to make your client respond to events, rather that have to continuously ask the server for updates. This is done by having a background thread continuously check the server for changes.
+
+To make use of callbacks, you need to:
+
+1. Create a MPD client instance with callbacks enabled.
+
+   ```crystal
+   client = MPD::Client.new(with_callbacks: true)
+   ```
+
+2. Setup a callback to be called when something happens.
+
+   ```crystal
+   client.on :state do |state|
+     puts "[#{Time.local}] State was change to #{state}"
+   end
+   ```
+
+`crystal_mpd` supports callbacks for any of the keys returned by `MPD::Client#status`.
+
+Here's the full list of events:
+
+- :volume
+- :repeat
+- :random
+- :single
+- :consume
+- :playlist
+- :playlistlength
+- :mixrampdb
+- :state
+- :song
+- :songid
+- :time
+- :elapsed
+- :bitrate
+- :duration
+- :audio
+- :nextsong
+- :nextsongid
+
+```crystal
+client = MPD::Client.new(with_callbacks: true)
+client.callbacks_timeout = 2.seconds
+
+client.on :state do |state|
+  puts "[#{Time.local}] State was change to #{state}"
+end
+
+client.on :song do
+  if current_song = client.currentsong
+    puts "[#{Time.local}] 🎵 #{current_song["Artist"]} - #{current_song["Title"]}"
+  end
+end
+
+loop do
+  sleep 1
+end
+```
+
+The above will connect to the server like normal, but this time it will create a new thread that loops until you issue an exit. This loop checks the server, then sleeps for 2 seconds, then loops.
+
 ### Logging
 
 Sets the logger used by this instance of `MPD::Client`:
