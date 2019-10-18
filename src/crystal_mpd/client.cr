@@ -160,21 +160,17 @@ module MPD
 
     # https://www.musicpd.org/doc/html/protocol.html#command-lists
     def command_list_ok_begin
-      synchronize do
-        write_command("command_list_ok_begin")
+      write_command("command_list_ok_begin")
 
-        @command_list.begin
-      end
+      @command_list.begin
     end
 
     def command_list_end
-      synchronize do
-        write_command("command_list_end")
+      write_command("command_list_end")
 
-        process_command_list
-        @command_list.reset
-        read_line
-      end
+      process_command_list
+      @command_list.reset
+      read_line
     end
 
     private def process_command_list
