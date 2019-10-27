@@ -1,4 +1,4 @@
-# crystal_mpd
+# MPD::Client
 
 [![Build Status](
 https://travis-ci.org/mamantoha/crystal_mpd.svg?branch=master)](https://travis-ci.org/mamantoha/crystal_mpd)
