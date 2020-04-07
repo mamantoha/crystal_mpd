@@ -1,5 +1,3 @@
-require "logger"
-
 module MPD
   alias Object = Hash(String, String)
   alias Objects = Array(MPD::Object)
@@ -16,7 +14,6 @@ module MPD
     NEXT         = "list_OK"
 
     getter host, port, version
-    property log : Logger?
     property callbacks_timeout : Time::Span | Int32 = 1.second
 
     # Creates a new MPD client. Parses the `host`, `port`.
@@ -966,13 +963,11 @@ module MPD
     # :nodoc:
     private def write_line(line : String)
       @socket.try do |socket|
-        @log.try do |log|
-          log.debug("MPD request: `#{line}`")
-        end
+        Log.debug { "request: `#{line}`" }
 
         socket.puts(line)
       end
-    rescue Errno
+    rescue RuntimeError
       reconnect
 
       @socket.try do |socket|
@@ -1098,9 +1093,7 @@ module MPD
       @socket.try do |socket|
         line = socket.gets(chomp: true)
 
-        @log.try do |log|
-          log.debug("MPD response: `#{line}`")
-        end
+        Log.debug { "response: `#{line}`" }
 
         if line.not_nil!.starts_with?(ERROR_PREFIX)
           error = line.not_nil![/#{ERROR_PREFIX}(.*)/, 1].strip

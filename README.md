@@ -196,17 +196,13 @@ The above will connect to the server like normal, but this time it will create a
 
 ### Logging
 
-Sets the logger used by this instance of `MPD::Client`:
-
 ```crystal
-require "logger"
 require "crystal_mpd"
 
-log = Logger.new(STDOUT)
-log.level = Logger::DEBUG
-
 client = MPD::Client.new
-client.log = log
+
+MPD::Log.level = :debug
+MPD::Log.backend = ::Log::IOBackend.new
 ```
 
 ## Development

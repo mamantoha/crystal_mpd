@@ -1,6 +1,5 @@
 require "../src/crystal_mpd"
 require "option_parser"
-require "logger"
 
 options = {} of String => String | Bool
 options["verbose"] = false
@@ -33,7 +32,7 @@ begin
     raise OptionParser::MissingOption.new(missing.join(", "))
   end
 rescue ex : OptionParser::MissingOption
-  STDERR.puts "ERROR: #{ex.to_s}"
+  STDERR.puts "ERROR: #{ex}"
   STDERR.puts optparse
   exit(1)
 end
@@ -41,9 +40,8 @@ end
 client = MPD::Client.new(options["host"].as(String))
 
 if options["verbose"]
-  log = Logger.new(STDOUT)
-  log.level = Logger::DEBUG
-  client.log = log
+  MPD::Log.level = :debug
+  MPD::Log.backend = ::Log::IOBackend.new
 end
 
 client.stop

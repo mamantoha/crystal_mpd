@@ -1,18 +1,16 @@
 require "../src/crystal_mpd"
-require "logger"
+
+MPD::Log.level = :debug
+MPD::Log.backend = ::Log::IOBackend.new
 
 client = MPD::Client.new
-
-log = Logger.new(STDOUT)
-log.level = Logger::DEBUG
-client.log = log
 
 puts "MPD host: #{client.host}"
 puts "MPD port: #{client.port}"
 puts "MPD version: #{client.version}"
 
 # puts client.status
-# puts client.currentsong
+puts client.currentsong
 # puts client.stats
 # puts client.config
 # puts client.list("Artist")
