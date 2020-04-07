@@ -1,0 +1,6 @@
+Style/ConstantNames:
+  Description: Enforces constant names to be in screaming case
+  Enabled: true
+  Severity: Convention
+  Excluded:
+  - src/crystal_mpd.cr
