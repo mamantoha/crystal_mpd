@@ -153,11 +153,12 @@ module MPD
         begin
           yield
         ensure
-          if socket = @socket
-            socket.flush
-          end
+          @socket.try &.flush
         end
       end
+    rescue ex : IO::Error
+      Log.error { ex.message }
+      reconnect
     end
 
     # https://www.musicpd.org/doc/html/protocol.html#command-lists
