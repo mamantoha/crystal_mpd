@@ -154,24 +154,24 @@ To make use of callbacks, you need to:
 
 Here's the full list of events:
 
-- :volume
-- :repeat
-- :random
-- :single
-- :consume
-- :playlist
-- :playlistlength
-- :mixrampdb
-- :state
-- :song
-- :songid
-- :time
-- :elapsed
-- :bitrate
-- :duration
-- :audio
-- :nextsong
-- :nextsongid
+- `:volume`
+- `:repeat`
+- `:random`
+- `:single`
+- `:consume`
+- `:playlist`
+- `:playlistlength`
+- `:mixrampdb`
+- `:state`
+- `:song`
+- `:songid`
+- `:time`
+- `:elapsed`
+- `:bitrate`
+- `:duration`
+- `:audio`
+- `:nextsong`
+- `:nextsongid`
 
 ```crystal
 client = MPD::Client.new(with_callbacks: true)
