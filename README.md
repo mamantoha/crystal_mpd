@@ -1,7 +1,6 @@
 # MPD::Client
 
-[![Build Status](
-https://travis-ci.org/mamantoha/crystal_mpd.svg?branch=master)](https://travis-ci.org/mamantoha/crystal_mpd)
+[![Build Status](https://travis-ci.org/mamantoha/crystal_mpd.svg?branch=master)](https://travis-ci.org/mamantoha/crystal_mpd)
 [![GitHub release](https://img.shields.io/github/release/mamantoha/crystal_mpd.svg)](https://github.com/mamantoha/crystal_mpd/releases)
 [![Docs](https://img.shields.io/badge/docs-available-brightgreen.svg)](https://mamantoha.github.io/crystal_mpd/)
 [![License](https://img.shields.io/github/license/mamantoha/crystal_mpd.svg)](https://github.com/mamantoha/crystal_mpd/blob/master/LICENSE)
@@ -233,6 +232,6 @@ crystal spec
 
 ## License
 
-Copyright: 2018-2019 Anton Maminov (<anton.maminov@gmail.com>)
+Copyright: 2018-2020 Anton Maminov (<anton.maminov@gmail.com>)
 
 This library is distributed under the MIT license. Please see the LICENSE file.
