@@ -48,7 +48,12 @@ module MPD
 
     # Attempts to reconnect to the MPD daemon.
     def reconnect
-      @socket = TCPSocket.new(host, port)
+      @socket = if host.starts_with?('/')
+                  UNIXSocket.new(host)
+                else
+                  TCPSocket.new(host, port)
+                end
+
       hello
       callback_thread if @with_callbacks
     end
@@ -148,11 +153,12 @@ module MPD
         begin
           yield
         ensure
-          if socket = @socket
-            socket.flush
-          end
+          @socket.try &.flush
         end
       end
+    rescue ex : IO::Error
+      Log.error { ex.message }
+      reconnect
     end
 
     # https://www.musicpd.org/doc/html/protocol.html#command-lists
@@ -248,10 +254,14 @@ module MPD
     # Dumps configuration values that may be interesting for the client.
     #
     # This command is only permitted to `local` clients (connected via UNIX domain socket).
+    #
+    # The following response attributes are available:
+    #
+    # * `music_directory`: The absolute path of the music directory.
     def config
       synchronize do
-        write_command("stats")
-        execute("fetch_item")
+        write_command("config")
+        execute("fetch_object")
       end
     end
 
