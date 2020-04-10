@@ -10,8 +10,8 @@ module MPD
 
     HELLO_PREFIX = "OK MPD "
     ERROR_PREFIX = "ACK "
-    SUCCESS      = "OK"
-    NEXT         = "list_OK"
+    SUCCESS      = "OK\n"
+    NEXT         = "list_OK\n"
 
     getter host, port, version
     property callbacks_timeout : Time::Span | Int32 = 1.second
@@ -661,6 +661,11 @@ module MPD
       end
     end
 
+    # Locate album art for the given song
+    def albumart(uri : String) : IO
+      fetch_binary(IO::Memory.new, 0, "albumart", uri)
+    end
+
     # Count the number of songs and their total playtime in the database
     # that `type` is `query`
     #
@@ -1016,6 +1021,57 @@ module MPD
       fetch_objects.first
     end
 
+    # Some commands can return binary data.
+    # This is initiated by a line containing `binary: 1234` (followed as usual by a newline).
+    # After that, the specified number of bytes of binary data follows, then a newline, and finally the `OK` line.
+    #
+    # If the object to be transmitted is large, the server may choose a reasonable chunk size.
+    # Usually, the response also contains a `size` line which specifies the total (uncropped) size,
+    # and the command usually has a way to specify an offset into the object
+    #
+    # Example:
+    #
+    # ```
+    # albumart foo/bar.ogg 0
+    # size: 1024768
+    # binary: 8192
+    # <8192 bytes>
+    # OK
+    # ```
+    private def fetch_binary(io : IO::Memory, offset = 0, *args)
+      data = {} of String => String
+
+      synchronize do
+        write_command(*args, offset)
+
+        binary = false
+
+        read_pairs.each do |item|
+          if binary
+            io << item.join(": ")
+            next
+          end
+
+          key = item[0]
+          value = item[1].chomp
+
+          binary = true if key == "binary"
+
+          data[key] = value
+        end
+      end
+
+      size = data["size"].to_i
+      binary = data["binary"].to_i
+
+      next_offset = offset + binary
+
+      return io if next_offset >= size
+
+      io.seek(-1, IO::Seek::Current)
+      fetch_binary(io, next_offset, *args)
+    end
+
     # :nodoc:
     private def fetch_objects(delimiters = [] of String) : Objects
       result = MPD::Objects.new
@@ -1023,7 +1079,7 @@ module MPD
 
       read_pairs.each do |item|
         key = item[0]
-        value = item[1]
+        value = item[1].chomp
 
         if delimiters.includes?(key)
           result << obj unless obj.empty?
@@ -1101,7 +1157,7 @@ module MPD
     # :nodoc:
     private def read_line : String?
       @socket.try do |socket|
-        line = socket.gets(chomp: true)
+        line = socket.gets(chomp: false)
 
         Log.debug { "response: `#{line}`" }
 
