@@ -30,11 +30,17 @@ Creating an instance of this class is as simple as:
 client = MPD::Client.new("localhost", 6600)
 ```
 
-You can also omit the `host` and `post`, and it will use the defaults.
+You can also omit the `host` and `post`, and it will use the defaults:
 
 ```crystal
 client = MPD::Client.new("localhost")
 client = MPD::Client.new
+```
+
+You can connect to a local socket (UNIX domain socket), specify an absolute path:
+
+```crystal
+client = MPD::Client.new("/run/mpd/socket")
 ```
 
 The client library can be used as follows:
@@ -191,7 +197,24 @@ loop do
 end
 ```
 
-The above will connect to the server like normal, but this time it will create a new thread that loops until you issue an exit. This loop checks the server, then sleeps for 2 seconds, then loops.
+The above will connect to the server like normal, but this time it will create a new thread
+that loops until you issue an exit. This loop checks the server, then sleeps for 1 second, then loops.
+
+### Binary responses
+
+Some commands can return binary data.
+
+```crystal
+client = MPD::Client.new
+
+if current_song = client.currentsong
+  if response = client.albumart(current_song["file"])
+    File.open("cover.png", "w") { |file| file.write(response.to_slice) }
+  end
+end
+```
+
+The above will locate album art for the current song and save image to `cover.png` file.
 
 ### Logging
 
