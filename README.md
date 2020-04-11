@@ -5,7 +5,7 @@
 [![Docs](https://img.shields.io/badge/docs-available-brightgreen.svg)](https://mamantoha.github.io/crystal_mpd/)
 [![License](https://img.shields.io/github/license/mamantoha/crystal_mpd.svg)](https://github.com/mamantoha/crystal_mpd/blob/master/LICENSE)
 
-Simple Music Player Daemon (MPD) client written entirely in Crystal
+Concurrent [Music Player Daemon](https://www.musicpd.org/) client written entirely in Crystal
 
 ## Installation
 
