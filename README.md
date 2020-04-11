@@ -198,7 +198,7 @@ end
 ```
 
 The above will connect to the server like normal, but this time it will create a new thread
-that loops until you issue an exit. This loop checks the server, then sleeps for 1 second, then loops.
+that loops until you issue an exit. This loop checks the server, then sleeps for 2 seconds, then loops.
 
 ### Binary responses
 
