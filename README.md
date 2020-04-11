@@ -47,7 +47,7 @@ The client library can be used as follows:
 
 ```crystal
 puts client.mpd_version                # print the mpd version
-puts client.search('title', 'crystal') # print the result of the command 'search title crystal'
+puts client.search("title", "crystal") # print the result of the command 'search title crystal'
 client.close                           # send the close command
 client.disconect                       # disconnect from the server
 ```
