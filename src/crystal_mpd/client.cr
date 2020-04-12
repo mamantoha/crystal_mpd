@@ -705,6 +705,14 @@ module MPD
       end
     end
 
+    # Sets volume to `vol`, the range of volume is 0-100.
+    def setvol(vol : Int)
+      synchronize do
+        write_command("setvol", vol)
+        execute("fetch_nothing")
+      end
+    end
+
     # Sets single state to `state`, `state` should be `false` or `true`.
     #
     # When single is activated, playback is stopped after current song,
