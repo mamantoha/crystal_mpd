@@ -1025,8 +1025,8 @@ module MPD
     end
 
     # :nodoc:
-    private def fetch_object : MPD::Object
-      fetch_objects.first
+    private def fetch_object : MPD::Object?
+      fetch_objects.first?
     end
 
     # Some commands can return binary data.
