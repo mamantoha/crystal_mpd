@@ -194,6 +194,8 @@ module MPD
       when "fetch_outputs"  then fetch_outputs
       when "fetch_database" then fetch_database
       when "fetch_plugins"  then fetch_plugins
+      else
+        nil
       end
     end
 
@@ -1025,8 +1027,8 @@ module MPD
     end
 
     # :nodoc:
-    private def fetch_object : MPD::Object
-      fetch_objects.first
+    private def fetch_object : MPD::Object?
+      fetch_objects.first?
     end
 
     # Some commands can return binary data.
