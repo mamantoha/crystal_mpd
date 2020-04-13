@@ -194,6 +194,8 @@ module MPD
       when "fetch_outputs"  then fetch_outputs
       when "fetch_database" then fetch_database
       when "fetch_plugins"  then fetch_plugins
+      else
+        nil
       end
     end
 
