@@ -43,6 +43,12 @@ You can connect to a local socket (UNIX domain socket), specify an absolute path
 client = MPD::Client.new("/run/mpd/socket")
 ```
 
+If a password specified for access to MPD:
+
+```crystal
+client = MPD::Client.new("localhost", password: "password")
+```
+
 The client library can be used as follows:
 
 ```crystal

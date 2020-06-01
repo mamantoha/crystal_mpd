@@ -30,7 +30,9 @@ module MPD
     def initialize(
       @host : String = "localhost",
       @port : Int32 = 6600,
-      @with_callbacks = false
+      *,
+      @with_callbacks = false,
+      @password : String? = nil
     )
       @command_list = CommandList.new
       @mutex = Mutex.new
@@ -55,6 +57,7 @@ module MPD
                 end
 
       hello
+      password
       callback_thread if @with_callbacks
     end
 
@@ -145,6 +148,16 @@ module MPD
           raise MPD::Error.new("Got invalid MPD hello: #{response}") unless response.starts_with?(HELLO_PREFIX)
           @version = response[/#{HELLO_PREFIX}(.*)/, 1]
         end
+      end
+    end
+
+    # This is used for authentication with the server.
+    private def password
+      return unless @password
+
+      synchronize do
+        write_command("password", @password)
+        execute("fetch_nothing")
       end
     end
 
@@ -988,7 +1001,11 @@ module MPD
     # :nodoc:
     private def write_line(line : String)
       @socket.try do |socket|
-        Log.debug { "request: `#{line}`" }
+        if line.starts_with?("password")
+          Log.debug { "request: `password \"******\"`" }
+        else
+          Log.debug { "request: `#{line}`" }
+        end
 
         socket.puts(line)
       end
