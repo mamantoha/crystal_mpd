@@ -818,8 +818,8 @@ module MPD
       synchronize do
         hash = {} of String => String
 
-        sort.try { |sort| hash["sort"] = sort }
-        window.try { |sort| hash["window"] = parse_range(window) }
+        sort.try { |arg| hash["sort"] = arg }
+        window.try { |arg| hash["window"] = parse_range(arg) }
 
         write_command("find", filter, hash)
         execute("fetch_songs")
@@ -851,8 +851,8 @@ module MPD
       synchronize do
         hash = {} of String => String
 
-        sort.try { |sort| hash["sort"] = sort }
-        window.try { |sort| hash["window"] = parse_range(window) }
+        sort.try { |arg| hash["sort"] = arg }
+        window.try { |arg| hash["window"] = parse_range(arg) }
 
         write_command("search", filter, hash)
         execute("fetch_songs")
@@ -1205,7 +1205,7 @@ module MPD
       @socket.try do |socket|
         line = socket.gets(chomp: false)
 
-        Log.debug { "response: `#{line}`" }
+        Log.debug { "response: #{line.inspect}" }
 
         if line.not_nil!.starts_with?(ERROR_PREFIX)
           error = line.not_nil![/#{ERROR_PREFIX}(.*)/, 1].strip
