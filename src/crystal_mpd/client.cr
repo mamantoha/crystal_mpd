@@ -804,10 +804,24 @@ module MPD
       end
     end
 
-    # Search the database for songs matching `filter`
-    def find(filter : String)
+    # Search the database for songs matching `filter`.
+    #
+    # `sort` sorts the result by the specified tag. The sort is descending if the tag is prefixed with a minus (‘-‘).
+    # Without `sort`, the order is undefined. Only the first tag value will be used, if multiple of the same type exist.
+    # To sort by "Artist", "Album" or "AlbumArtist", you should specify "ArtistSort", "AlbumSort" or "AlbumArtistSort"
+    # instead. These will automatically fall back to the former if "*Sort" doesn’t exist.
+    # "AlbumArtist" falls back to just “Artist”. The type "Last-Modified" can sort by file modification time.
+    #
+    # `window` can be used to query only a portion of the real response. The parameter is two zero-based record numbers;
+    # a start number and an end number.
+    def find(filter : String, *, sort : String? = nil, window : MPD::Range? = nil)
       synchronize do
-        write_command("find", filter)
+        hash = {} of String => String
+
+        sort.try { |sort| hash["sort"] = sort }
+        window.try { |sort| hash["window"] = parse_range(window) }
+
+        write_command("find", filter, hash)
         execute("fetch_songs")
       end
     end
@@ -833,9 +847,14 @@ module MPD
     # ```crystal
     # mpd.search("(any =~ 'crystal')")
     # ```
-    def search(filter : String)
+    def search(filter : String, *, sort : String? = nil, window : MPD::Range? = nil)
       synchronize do
-        write_command("search", filter)
+        hash = {} of String => String
+
+        sort.try { |sort| hash["sort"] = sort }
+        window.try { |sort| hash["window"] = parse_range(window) }
+
+        write_command("search", filter, hash)
         execute("fetch_songs")
       end
     end
@@ -974,7 +993,7 @@ module MPD
         parse_range(arg)
       when Hash
         arg.reduce([] of String) do |acc, (key, value)|
-          acc << "#{key} \"#{escape(value)}\""
+          acc << "#{key} #{value}"
         end.join(" ")
       when String
         %{"#{escape(arg)}"}
