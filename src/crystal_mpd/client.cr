@@ -78,7 +78,7 @@ module MPD
     # This will register a block callback that will trigger whenever
     # that specific event happens.
     #
-    # ```crystal
+    # ```
     # mpd.on :state do |state|
     #   puts "State was change to #{state}"
     # end
@@ -352,7 +352,7 @@ module MPD
       end
     end
 
-    # Displays the song info of the current song (same song that is identified in `status`).
+    # Displays the song info of the current song (same song that is identified in `#status`).
     def currentsong
       synchronize do
         write_command("currentsong")
@@ -360,7 +360,7 @@ module MPD
       end
     end
 
-    # Same as `update`, but also rescans unmodified files.
+    # Same as `#update`, but also rescans unmodified files.
     def rescan(uri : String? = nil)
       synchronize do
         write_command("rescan", uri)
@@ -398,7 +398,7 @@ module MPD
     #
     # Show info about the first three songs in the playlist:
     #
-    # ```crystal
+    # ```
     # mpd.playlistinfo(1..3)
     # mpd.playlistinfo(..3)
     # mpd.playlistinfo(10..)
@@ -406,7 +406,7 @@ module MPD
     #
     # With negative range end MPD will assumes the biggest possible number then
     #
-    # ```crystal
+    # ```
     # mpd.playlistinfo(10..-1)
     # ```
     def playlistinfo(songpos : Int32 | MPD::Range | Nil = nil)
@@ -520,7 +520,8 @@ module MPD
     # Searches for any song that contains `what` in tag `type` and adds them to the playlist named `name`.
     #
     # If a playlist by that name doesn't exist it is created.
-    # Parameters have the same meaning as for `find`, except that search is not case sensitive.
+    #
+    # Parameters have the same meaning as for `#find`, except that search is not case sensitive.
     def searchaddpl(name : String, type : String, query : String)
       synchronize do
         write_command("searchaddpl", name, type, query)
@@ -531,7 +532,8 @@ module MPD
     # Search the database for songs matching `filter` and add them to the playlist named `name`.
     #
     # If a playlist by that name doesn’t exist it is created.
-    # Parameters have the same meaning as for `search `.
+    #
+    # Parameters have the same meaning as for `#search `.
     def searchaddpl(name : String, filler : String)
       synchronize do
         write_command("searchaddpl", name, type, query)
@@ -663,14 +665,14 @@ module MPD
     #
     # `type` can be any tag supported by MPD or file.
     #
-    # ```crystal
+    # ```
     # mpd.list("Artist")
     # ```
     #
     # Additional arguments may specify a `filter`.
     # The following example lists all file names by their respective artist and date:
     #
-    # ```crystal
+    # ```
     # mpd.list("Artist")
     # mpd.list("filename", "((artist == 'Linkin Park') AND (date == '2003'))")
     # ```
@@ -691,7 +693,7 @@ module MPD
     #
     # The following prints the number of songs whose title matches "Echoes"
     #
-    # ```crystal
+    # ```
     # mpd.count("title", "Echoes")
     # ```
     def count(type : String, query : String)
@@ -833,9 +835,9 @@ module MPD
 
     # Searches for any song that contains `query`.
     #
-    # Parameters have the same meaning as for `find`, except that search is not case sensitive.
+    # Parameters have the same meaning as for `#find`, except that search is not case sensitive.
     #
-    # ```crystal
+    # ```
     # mpd.search("title", "crystal")
     # ```
     def search(type : String, query : String)
@@ -845,11 +847,11 @@ module MPD
       end
     end
 
-    # Search the database for songs matching `filter` (see Filters).
+    # Search the database for songs matching `filter`.
     #
-    # Parameters have the same meaning as for `find`, except that search is not case sensitive.
+    # Parameters have the same meaning as for `#find`, except that search is not case sensitive.
     #
-    # ```crystal
+    # ```
     # mpd.search("(any =~ 'crystal')")
     # ```
     def search(filter : String, *, sort : String? = nil, window : MPD::Range? = nil)
@@ -866,9 +868,9 @@ module MPD
 
     # Search the database for songs matching `filter` and add them to the queue.
     #
-    # Parameters have the same meaning as for `find`.
+    # Parameters have the same meaning as for `#find`.
     #
-    # ```crystal
+    # ```
     # mpd.findadd("(genre == 'Alternative Rock')")
     # ```
     def findadd(filter : String)
@@ -899,7 +901,7 @@ module MPD
     # Lists the contents of the directory `uri`.
     #
     # When listing the root directory, this currently returns the list of stored playlists.
-    # This behavior is deprecated; use `listplaylists` instead.
+    # This behavior is deprecated; use `#listplaylists` instead.
     #
     # Clients that are connected via UNIX domain socket may use this command
     # to read the tags of an arbitrary local file (`uri` beginning with `file:///`).
@@ -910,7 +912,7 @@ module MPD
       end
     end
 
-    # Same as `listall`, except it also returns metadata info in the same format as `lsinfo`.
+    # Same as `#listall`, except it also returns metadata info in the same format as `#lsinfo`.
     def listallinfo(uri : String? = nil)
       synchronize do
         write_command("listallinfo", uri)
