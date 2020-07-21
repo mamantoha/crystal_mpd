@@ -5,6 +5,19 @@ module MPD
   alias Pairs = Array(MPD::Pair)
   alias Range = ::Range(Int32, Int32) | ::Range(Nil, Int32) | ::Range(Int32, Nil)
 
+  # An MPD Client.
+  #
+  # ### One-shot usage
+  #
+  # ```
+  # require "crystal_mpd"
+  #
+  # mpd = MPD::Client.new("localhost", 6600)
+  # puts mpd.version
+  # puts mpd.status
+  # puts mpd.stats
+  # mpd.disconnect
+  # ```
   class Client
     @version : String?
 
@@ -17,14 +30,6 @@ module MPD
     property callbacks_timeout : Time::Span | Int32 = 1.second
 
     # Creates a new MPD client. Parses the `host`, `port`.
-    #
-    # ```crystal
-    # mpd = MPD::Client.new("localhost", 6600)
-    # puts mpd.version
-    # puts mpd.status
-    # puts mpd.stats
-    # mpd.disconnect
-    # ```
     #
     # This constructor will raise an exception if could not connect to MPD
     def initialize(
