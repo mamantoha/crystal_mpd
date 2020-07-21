@@ -688,6 +688,11 @@ module MPD
       fetch_binary(IO::Memory.new, 0, "albumart", uri)
     end
 
+    # Locate a picture for the given song
+    def readpicture(uri : String) : IO
+      fetch_binary(IO::Memory.new, 0, "readpicture", uri)
+    end
+
     # Count the number of songs and their total playtime in the database
     # that `type` is `query`
     #
