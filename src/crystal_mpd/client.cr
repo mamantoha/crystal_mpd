@@ -818,8 +818,8 @@ module MPD
       synchronize do
         hash = {} of String => String
 
-        sort.try { |arg| hash["sort"] = arg }
-        window.try { |arg| hash["window"] = parse_range(arg) }
+        sort.try { hash["sort"] = sort }
+        window.try { hash["window"] = parse_range(window) }
 
         write_command("find", filter, hash)
         execute("fetch_songs")
@@ -851,8 +851,8 @@ module MPD
       synchronize do
         hash = {} of String => String
 
-        sort.try { |arg| hash["sort"] = arg }
-        window.try { |arg| hash["window"] = parse_range(arg) }
+        sort.try { hash["sort"] = sort }
+        window.try { hash["window"] = parse_range(window) }
 
         write_command("search", filter, hash)
         execute("fetch_songs")
