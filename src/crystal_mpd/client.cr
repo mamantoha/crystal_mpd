@@ -534,9 +534,14 @@ module MPD
     # If a playlist by that name doesn’t exist it is created.
     #
     # Parameters have the same meaning as for `#search `.
-    def searchaddpl(name : String, filler : String)
+    def searchaddpl(name : String, filler : String, *, sort : String? = nil, window : MPD::Range? = nil)
       synchronize do
-        write_command("searchaddpl", name, type, query)
+        hash = {} of String => String
+
+        sort.try { hash["sort"] = sort }
+        window.try { hash["window"] = parse_range(window) }
+
+        write_command("searchaddpl", name, filter, query, hash)
         execute("fetch_nothing")
       end
     end
@@ -878,9 +883,14 @@ module MPD
     # ```
     # mpd.findadd("(genre == 'Alternative Rock')")
     # ```
-    def findadd(filter : String)
+    def findadd(filter : String, *, sort : String? = nil, window : MPD::Range? = nil)
       synchronize do
-        write_command("findadd", filter)
+        hash = {} of String => String
+
+        sort.try { hash["sort"] = sort }
+        window.try { hash["window"] = parse_range(window) }
+
+        write_command("findadd", filter, hash)
         execute("fetch_nothing")
       end
     end
@@ -888,9 +898,14 @@ module MPD
     # Search the database for songs matching `filter` and add them to the queue.
     #
     # Parameters have the same meaning as for `#search`.
-    def searchadd(filter : String)
+    def searchadd(filter : String, *, sort : String? = nil, window : MPD::Range? = nil)
       synchronize do
-        write_command("searchadd", filter)
+        hash = {} of String => String
+
+        sort.try { hash["sort"] = sort }
+        window.try { hash["window"] = parse_range(window) }
+
+        write_command("searchadd", filter, hash)
         execute("fetch_nothing")
       end
     end
