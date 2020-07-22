@@ -882,7 +882,7 @@ module MPD
 
     # Search the database for songs matching `filter` and add them to the queue.
     #
-    # Parameters have the same meaning as for `search`.
+    # Parameters have the same meaning as for `#search`.
     def searchadd(filter : String)
       synchronize do
         write_command("searchadd", filter)
