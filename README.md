@@ -251,7 +251,7 @@ crystal spec
 
 If you're using `MPD::Client` and would like to have your application added to this list, just submit a PR!
 
-- [MPD Web Client](https://github.com/mamantoha/mpd_web_client) - control MPD audio playing in the browser
+- [cryMPD](https://github.com/mamantoha/cryMPD) - control MPD audio playing in the browser
 
 ## Contributing
 
