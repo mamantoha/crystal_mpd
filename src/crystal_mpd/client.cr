@@ -91,7 +91,7 @@ module MPD
     private def emit(event : Symbol, arg : String)
       return unless @callbacks[event]?
 
-      @callbacks[event].each { |handle| handle.call(arg) }
+      @callbacks[event].each(&.call(arg))
     end
 
     # Constructs a callback loop
