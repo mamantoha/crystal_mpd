@@ -194,6 +194,14 @@ module MPD
       read_line
     end
 
+    def with_command_list
+      command_list_ok_begin
+
+      yield
+    ensure
+      command_list_end
+    end
+
     private def process_command_list
       synchronize do
         @command_list.commands.each do |command|

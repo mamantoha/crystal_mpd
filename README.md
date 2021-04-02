@@ -83,6 +83,15 @@ client.status                # insert the status command into the list
 client.command_list_end      # result will be a Array with the results
 ```
 
+or
+
+```crystal
+client.with_command_list do
+  client.update
+  client.status
+end
+```
+
 ### Ranges
 
 Ranges [documentation](https://www.musicpd.org/doc/html/protocol.html#ranges).

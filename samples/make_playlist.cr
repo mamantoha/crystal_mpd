@@ -49,13 +49,11 @@ client.clear
 
 songs = client.search(options["type"].as(String), options["query"].as(String))
 
-client.command_list_ok_begin
-
-songs.not_nil!.each do |song|
-  client.add(song["file"]) if song["file"]?
+client.with_command_list do
+  songs.not_nil!.each do |song|
+    client.add(song["file"]) if song["file"]?
+  end
 end
-
-client.command_list_end
 
 client.play
 
