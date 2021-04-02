@@ -407,6 +407,7 @@ module MPD
     # Show info about the first three songs in the playlist:
     #
     # ```
+    # mpd.playlistinfo
     # mpd.playlistinfo(1..3)
     # mpd.playlistinfo(..3)
     # mpd.playlistinfo(10..)
@@ -453,6 +454,23 @@ module MPD
       synchronize do
         write_command("deleteid", songid)
         execute("fetch_nothing")
+      end
+    end
+
+    # Delete all playlist entries except the one currently playing
+    def crop
+      curren_song = currentsong
+
+      return unless curren_song
+
+      if songs = playlistinfo
+        with_command_list do
+          songs.each do |song|
+            next if song["file"] == curren_song["file"]
+
+            deleteid(song["Id"].to_i)
+          end
+        end
       end
     end
 
