@@ -30,7 +30,7 @@ Creating an instance of this class is as simple as:
 client = MPD::Client.new("localhost", 6600)
 ```
 
-You can also omit the `host` and `post`, and it will use the defaults:
+You can also omit the `host` and `port`, and it will use the defaults:
 
 ```crystal
 client = MPD::Client.new("localhost")
