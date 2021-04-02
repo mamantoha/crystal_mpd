@@ -26,6 +26,11 @@ module MPD
     SUCCESS      = "OK\n"
     NEXT         = "list_OK\n"
 
+    EVENTS_LIST = [
+      :volume, :repeat, :random, :single, :consume, :playlist, :playlistlength, :mixrampdb, :state,
+      :song, :songid, :time, :elapsed, :bitrate, :duration, :audio, :nextsong, :nextsongid,
+    ]
+
     getter host, port, version
     property callbacks_timeout : Time::Span | Int32 = 1.second
 
@@ -123,17 +128,8 @@ module MPD
       Fiber.yield
     end
 
-    def events_list
-      @events_list ||= [
-        :volume, :repeat, :random, :single, :consume,
-        :playlist, :playlistlength, :mixrampdb, :state,
-        :song, :songid, :time, :elapsed, :bitrate,
-        :duration, :audio, :nextsong, :nextsongid,
-      ]
-    end
-
     private def get_status(status : Hash(String, String)) : Hash(Symbol, String?)
-      events_list.each_with_object({} of Symbol => String | Nil) do |event, hash|
+      EVENTS_LIST.each_with_object({} of Symbol => String | Nil) do |event, hash|
         hash[event] = status[event.to_s]?
       end
     end
