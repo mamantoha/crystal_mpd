@@ -293,7 +293,7 @@ module MPD
       end
     end
 
-    # "Shows which commands the current user has access to.
+    # Shows which commands the current user has access to.
     def commands
       synchronize do
         write_command("commands")
@@ -365,6 +365,17 @@ module MPD
       synchronize do
         write_command("currentsong")
         execute("fetch_object")
+      end
+    end
+
+    # Show the currently queued (next) song.
+    def nextsong : Object?
+      if _status = status
+        if nextsongid = _status["nextsongid"]?
+          if songs = playlistid(nextsongid.to_i)
+            songs.first
+          end
+        end
       end
     end
 
