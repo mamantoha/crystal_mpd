@@ -1162,7 +1162,7 @@ module MPD
           end
           seen = key
         end
-        result << value
+        result << value.chomp
       end
 
       result
