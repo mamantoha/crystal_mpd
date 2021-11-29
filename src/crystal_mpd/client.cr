@@ -785,6 +785,15 @@ module MPD
       end
     end
 
+    # Read the volume.
+    # The result is a `{"volume" => "100"}` like in `status`.
+    def getvol
+      synchronize do
+        write_command("getvol")
+        execute("fetch_object")
+      end
+    end
+
     # Sets single state to `state`, `state` should be `false` or `true`.
     #
     # When single is activated, playback is stopped after current song,
