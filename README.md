@@ -60,7 +60,7 @@ client.disconect                       # disconnect from the server
 
 Check `MPD::Client` [source](https://mamantoha.github.io/crystal_mpd/MPD/Client.html) for supported commands.
 
-To use all `crystal_mpd` functions you should use the latest stable MPD version (0.21.x). `crystal_mpd` already supports function of MPD 0.22.x (e.g. the `readpicture` command).
+To use all `crystal_mpd` functions you should use the latest stable MPD version (0.23.x).
 
 ### Command lists
 
@@ -202,14 +202,12 @@ client.on :state do |state|
 end
 
 client.on :song do
-  if current_song = client.currentsong
+  if (current_song = client.currentsong)
     puts "[#{Time.local}] 🎵 #{current_song["Artist"]} - #{current_song["Title"]}"
   end
 end
 
-loop do
-  sleep 1
-end
+loop { sleep 1 }
 ```
 
 The above will connect to the server like normal, but this time it will create a new thread
@@ -222,7 +220,7 @@ Some commands can return binary data.
 ```crystal
 client = MPD::Client.new
 
-if current_song = client.currentsong
+if (current_song = client.currentsong)
   if response = client.albumart(current_song["file"])
     File.open("cover.png", "w") { |file| file.write(response.to_slice) }
   end
