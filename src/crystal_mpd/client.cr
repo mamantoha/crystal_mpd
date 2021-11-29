@@ -616,16 +616,18 @@ module MPD
       end
     end
 
-    # Moves `songid` in the playlist `name`.m3u to the position `songpos`
-    def playlistmove(name : String, songid : Int32, songpos : Int32)
+    # Moves the song at position `from` in the playlist `name`.m3u to the position `to`.
+    def playlistmove(name : String, from : Int32, to : Int32)
       synchronize do
-        write_command("playlistmove", name, songid, songpos)
+        write_command("playlistmove", name, from, to)
         execute("fetch_nothing")
       end
     end
 
     # Deletes `songpos` from the playlist `name`.m3u.
-    def playlistdelete(name : String, songpos : Int32)
+    #
+    # The `songpos` parameter can be a range.
+    def playlistdelete(name : String, songpos : Int32 | MPD::Range)
       synchronize do
         write_command("playlistdelete", name, songpos)
         execute("fetch_nothing")
