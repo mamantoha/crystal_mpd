@@ -493,9 +493,14 @@ module MPD
     #
     # Playlist plugins are supported.
     # A range `songpos` may be specified to load only a part of the playlist.
-    def load(name : String, songpos : Int32 | MPD::Range | Nil = nil)
+    #
+    # The `position` parameter specifies where the songs will be inserted into the queue;
+    # it can be relative as described in `addid`.
+    # (This requires specifying the range as well;
+    # the special value 0: can be used if the whole playlist shall be loaded at a certain queue position.)
+    def load(name : String, songpos : Int32 | MPD::Range | Nil = nil, position : Int32? = nil)
       synchronize do
-        write_command("load", name, songpos)
+        write_command("load", name, songpos, position)
         execute("fetch_nothing")
       end
     end
@@ -555,9 +560,9 @@ module MPD
     # If a playlist by that name doesn't exist it is created.
     #
     # Parameters have the same meaning as for `#find`, except that search is not case sensitive.
-    def searchaddpl(name : String, type : String, query : String)
+    def searchaddpl(name : String, type : String, query : String, position : Int32? = nil)
       synchronize do
-        write_command("searchaddpl", name, type, query)
+        write_command("searchaddpl", name, type, query, position)
         execute("fetch_nothing")
       end
     end
@@ -602,9 +607,11 @@ module MPD
     # Adds `uri` to the playlist `name`.m3u.
     #
     # `name`.m3u will be created if it does not exist.
-    def playlistadd(name : String, uri : String)
+    #
+    # The `position` parameter specifies where the songs will be inserted into the playlist.
+    def playlistadd(name : String, uri : String, position : Int32? = nil)
       synchronize do
-        write_command("playlistadd", name, uri)
+        write_command("playlistadd", name, uri, position)
         execute("fetch_nothing")
       end
     end
@@ -832,10 +839,28 @@ module MPD
     # Adds the file `uri` to the playlist (directories add recursively).
     #
     # `uri` can also be a single file.
-    def add(uri : String)
+    #
+    # The `position` parameter is the same as in `addid`.
+    def add(uri : String, position : Int32? = nil)
       synchronize do
-        write_command("add", uri)
+        write_command("add", uri, position)
         execute("fetch_nothing")
+      end
+    end
+
+    # Adds a song to the playlist (non-recursive) and returns the song id.
+    # `uri` is always a single file or URL.
+    #
+    # If the `position` is given, then the song is inserted at the specified position.
+    # If the parameter starts with + or -, then it is relative to the current song 8;
+    # e.g. +0 inserts right after the current song
+    # and -0 inserts right before the current song (i.e. zero songs between the current song and the newly added song).
+    #
+    # returning a song ID: `{"Id" => "42"}`
+    def addid(uri : String, position : Int32? = nil)
+      synchronize do
+        write_command("addid", uri, position)
+        execute("fetch_object")
       end
     end
 
