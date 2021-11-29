@@ -1069,6 +1069,14 @@ module MPD
       end
     end
 
+    # Shows a list of available tag types.
+    def tagtypes
+      synchronize do
+        write_command("tagtypes")
+        execute("fetch_list")
+      end
+    end
+
     # :nodoc:
     private def write_command(command : String, *args)
       parts = [command]
