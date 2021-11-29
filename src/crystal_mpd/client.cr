@@ -104,14 +104,14 @@ module MPD
       spawn do
         old_status = {} of Symbol => String
 
-        if status = self.status
+        if (status = self.status)
           old_status = get_status(status)
         end
 
         loop do
           sleep @callbacks_timeout
 
-          if status = self.status
+          if (status = self.status)
             new_status = get_status(status)
 
             new_status.each do |key, val|
@@ -366,9 +366,9 @@ module MPD
 
     # Show the currently queued (next) song.
     def nextsong : Object?
-      if _status = status
-        if nextsongid = _status["nextsongid"]?
-          if songs = playlistid(nextsongid.to_i)
+      if (_status = status)
+        if (nextsongid = _status["nextsongid"]?)
+          if (songs = playlistid(nextsongid.to_i))
             songs.first
           end
         end
@@ -470,7 +470,7 @@ module MPD
 
       return unless curren_song
 
-      if songs = playlistinfo
+      if (songs = playlistinfo)
         with_command_list do
           songs.each do |song|
             next if song["file"] == curren_song["file"]

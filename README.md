@@ -202,7 +202,7 @@ client.on :state do |state|
 end
 
 client.on :song do
-  if current_song = client.currentsong
+  if (current_song = client.currentsong)
     puts "[#{Time.local}] 🎵 #{current_song["Artist"]} - #{current_song["Title"]}"
   end
 end
@@ -222,7 +222,7 @@ Some commands can return binary data.
 ```crystal
 client = MPD::Client.new
 
-if current_song = client.currentsong
+if (current_song = client.currentsong)
   if response = client.albumart(current_song["file"])
     File.open("cover.png", "w") { |file| file.write(response.to_slice) }
   end
