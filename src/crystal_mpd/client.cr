@@ -489,6 +489,18 @@ module MPD
       end
     end
 
+    # Moves the song with `from` (songid) to `to` (playlist index) in the playlist.
+    #
+    # If `to` starts with "+" or "-", then it is relative to the current song;
+    # e.g. "+0" moves to right after the current song
+    # and "-0" moves to right before the current song (i.e. zero songs between the current song and the moved song).
+    def moveid(from : Int32, to : Int32 | String)
+      synchronize do
+        write_command("moveid", from, to)
+        execute("fetch_nothing")
+      end
+    end
+
     # Loads the playlist `name` into the current queue.
     #
     # Playlist plugins are supported.
