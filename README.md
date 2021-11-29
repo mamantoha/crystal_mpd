@@ -60,7 +60,7 @@ client.disconect                       # disconnect from the server
 
 Check `MPD::Client` [source](https://mamantoha.github.io/crystal_mpd/MPD/Client.html) for supported commands.
 
-To use all `crystal_mpd` functions you should use the latest stable MPD version (0.21.x). `crystal_mpd` already supports function of MPD 0.22.x (e.g. the `readpicture` command).
+To use all `crystal_mpd` functions you should use the latest stable MPD version (0.23.x).
 
 ### Command lists
 
