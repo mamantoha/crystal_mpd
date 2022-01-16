@@ -743,12 +743,12 @@ module MPD
     end
 
     # Locate album art for the given song
-    def albumart(uri : String) : IO
+    def albumart(uri : String)
       fetch_binary(IO::Memory.new, 0, "albumart", uri)
     end
 
     # Locate a picture for the given song
-    def readpicture(uri : String) : IO
+    def readpicture(uri : String)
       fetch_binary(IO::Memory.new, 0, "readpicture", uri)
     end
 
@@ -1198,7 +1198,7 @@ module MPD
     # <8192 bytes>
     # OK
     # ```
-    private def fetch_binary(io : IO::Memory, offset = 0, *args)
+    private def fetch_binary(io : IO::Memory, offset = 0, *args) : Tuple(Hash(String, String), IO::Memory)
       data = {} of String => String
 
       synchronize do
@@ -1226,7 +1226,7 @@ module MPD
 
       next_offset = offset + binary
 
-      return io if next_offset >= size
+      return {data, io} if next_offset >= size
 
       io.seek(-1, IO::Seek::Current)
       fetch_binary(io, next_offset, *args)

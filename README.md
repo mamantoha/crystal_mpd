@@ -221,13 +221,19 @@ Some commands can return binary data.
 client = MPD::Client.new
 
 if (current_song = client.currentsong)
-  if response = client.albumart(current_song["file"])
-    File.open("cover.png", "w") { |file| file.write(response.to_slice) }
+  if (response = client.albumart(current_song["file"]))
+    data, binary = response
+    # data # => {"size" => "30219", "type" => "image/jpeg", "binary" => "5643"}
+
+    extension = MIME.extensions(data["type"]).first? || ".png"
+
+    file = File.open("cover#{extension}", "w")
+    file.write(binary.to_slice)
   end
 end
 ```
 
-The above will locate album art for the current song and save image to `cover.png` file.
+The above will locate album art for the current song and save image to `cover.jpg` file.
 
 ### Logging
 
