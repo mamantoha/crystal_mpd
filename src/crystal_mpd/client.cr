@@ -1299,25 +1299,25 @@ module MPD
     # :nodoc:
     private def read_line : String?
       @socket.try do |socket|
-        line = socket.gets(chomp: false)
+        if (line = socket.gets(chomp: false))
+          Log.debug { "response: #{line.inspect}" }
 
-        Log.debug { "response: #{line.inspect}" }
+          if line.starts_with?(ERROR_PREFIX)
+            error = line[/#{ERROR_PREFIX}(.*)/, 1].strip
 
-        if line.not_nil!.starts_with?(ERROR_PREFIX)
-          error = line.not_nil![/#{ERROR_PREFIX}(.*)/, 1].strip
+            raise MPD::Error.new(error)
+          end
 
-          raise MPD::Error.new(error)
+          if @command_list.active?
+            return if line == NEXT
+
+            raise "Got unexpected '#{SUCCESS}' in command list" if line == SUCCESS
+          end
+
+          return if line == SUCCESS
+
+          line
         end
-
-        if @command_list.active?
-          return if line == NEXT
-
-          raise "Got unexpected '#{SUCCESS}' in command list" if line == SUCCESS
-        end
-
-        return if line == SUCCESS
-
-        line
       end
     end
 
