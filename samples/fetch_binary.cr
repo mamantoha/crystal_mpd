@@ -10,7 +10,7 @@ if (song = client.currentsong)
   if (response = client.readpicture(song["file"]))
     data, binary = response
 
-    p! data
+    puts data
 
     extension = MIME.extensions(data["type"]).first? || ".png"
 
