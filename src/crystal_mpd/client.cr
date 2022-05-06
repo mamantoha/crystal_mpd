@@ -112,8 +112,8 @@ module MPD
             new_status = get_status(status)
 
             new_status.each do |key, val|
-              next unless val
-              next if val == old_status[key]?
+              next if val.nil? || val == old_status[key]?
+
               emit(key, val)
             end
 
