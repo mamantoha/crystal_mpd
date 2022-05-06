@@ -732,6 +732,7 @@ module MPD
     #
     # ```
     # mpd.count("(genre == 'Rock')")
+    # => {"songs" => "11", "playtime" => "2496"}
     # ```
     #
     # The `group` keyword may be used to group the results by a tag.
@@ -740,6 +741,7 @@ module MPD
     #
     # ```
     # mpd.count("(genre != 'Pop')", group: "artist")
+    # => [{"Artist" => "Artist 1", "songs" => "11", "playtime" => "2388"}, {"Artist" => "Artist 2", "songs" => "12", "playtime" => "2762"}]
     # ```
     def count(filter : String, *, group : String? = nil)
       synchronize do
@@ -748,7 +750,8 @@ module MPD
         group.try { hash["group"] = group }
 
         write_command("count", filter, hash)
-        execute("fetch_object")
+
+        execute("fetch_counts")
       end
     end
 
@@ -1208,6 +1211,28 @@ module MPD
       result << obj unless obj.empty?
 
       result
+    end
+
+    # :nodoc:
+    private def fetch_counts : Object | Objects
+      result = MPD::Objects.new
+      obj = MPD::Object.new
+
+      read_pairs.each do |item|
+        key = item[0]
+        value = item[1].chomp
+
+        if obj.has_key?(key)
+          result << obj unless obj.empty?
+          obj = MPD::Object.new
+        end
+
+        obj[key] = value
+      end
+
+      result << obj unless obj.empty?
+
+      result.one? ? result.first : result
     end
 
     # :nodoc:
