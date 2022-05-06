@@ -31,8 +31,6 @@ puts client.currentsong
 # puts client.delete(10..) # 10:
 # puts client.delete(10...) # 10:
 # puts client.playlistinfo(1)
-# puts client.playlistsearch("title", "All Around Me")
-# puts client.playlistfind("title", "All Around Me")
 # puts client.playlistinfo(0..1) # 0:2
 # puts client.playlistinfo(0...1) # 0:1
 # puts client.playlistinfo(10..-1) # 10:
@@ -53,7 +51,6 @@ puts client.currentsong
 # puts client.rm("test")
 # puts client.listplaylists
 # client.playlistclear("test")
-# client.searchaddpl("test", "Artist", "Otep")
 # puts client.listplaylist("test")
 # puts client.playlistdelete("test", 0)
 # puts client.listplaylistinfo("test")
@@ -66,9 +63,7 @@ puts client.currentsong
 # puts client.move(10, 0)
 # puts client.outputs
 # puts client.tagtypes
-# puts client.search("title", "crystal")
 # puts client.search("(any =~ 'crystal')")
-# puts client.find("artist", "Порнофильмы")
 # puts client.find("(artist == 'Порнофильмы')")
 # puts client.clear
 # puts client.findadd("(genre == 'Alternative Rock')")
@@ -92,9 +87,9 @@ puts client.currentsong
 # puts client.seekcur("-10")
 # puts client.seekid(13, 45)
 # puts client.seek(3, 45)
-# puts client.list("album", "Linkin Park")
+# puts client.list("album", "(artist == 'Linkin Park')")
 # puts client.list("Genre")
-# client.searchadd("Artist", "Otep")
+# client.searchadd("(artist == 'Otep')")
 # puts client.list("Artist")
 # puts client.list("filename", "((artist == 'Linkin Park') AND (date == '2003'))")
 # puts client.count("((artist == 'Linkin Park') AND (date == '2003'))")

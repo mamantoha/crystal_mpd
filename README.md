@@ -52,10 +52,11 @@ client = MPD::Client.new("localhost", password: "password")
 The client library can be used as follows:
 
 ```crystal
-puts client.version                    # print the mpd version
-puts client.search("title", "crystal") # print the result of the command 'search title crystal'
-client.close                           # send the close command
-client.disconect                       # disconnect from the server
+puts client.version # print the mpd version
+client.play(2)      # begins playing the playlist at song number 2
+puts client.status  # print the current status of the player and the volume level
+client.close        # send the close command
+client.disconect    # disconnect from the server
 ```
 
 Check `MPD::Client` [source](https://mamantoha.github.io/crystal_mpd/MPD/Client.html) for supported commands.
@@ -146,7 +147,7 @@ The `find` commands are case sensitive, which `search` and related commands igno
 
 ```crystal
 client.search("(any =~ 'crystal')")
-client.findaddpl("alt_rock", "(genre == 'Alternative Rock')")
+client.searchaddpl("alt_rock", "(genre == 'Alternative Rock')", sort: "-ArtistSort", window: (5..10))
 client.list("filename", "((artist == 'Linkin Park') AND (date == '2003'))")
 ```
 
