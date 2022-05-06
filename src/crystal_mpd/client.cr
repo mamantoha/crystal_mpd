@@ -73,10 +73,7 @@ module MPD
 
     # Disconnect from the MPD daemon.
     def disconnect
-      @socket.try do |socket|
-        socket.close
-      end
-
+      @socket.try &.close
       reset
     end
 
@@ -142,11 +139,13 @@ module MPD
     # Ping the server.
     private def hello
       @socket.try do |socket|
-        response = socket.gets(chomp: false)
-        if response
+        if (response = socket.gets(chomp: false))
           raise MPD::Error.new("Connection lost while reading MPD hello") unless response.ends_with?("\n")
+
           response = response.chomp
+
           raise MPD::Error.new("Got invalid MPD hello: #{response}") unless response.starts_with?(HELLO_PREFIX)
+
           @version = response[/#{HELLO_PREFIX}(.*)/, 1]
         end
       end
@@ -172,6 +171,7 @@ module MPD
       end
     rescue ex : IO::Error
       Log.error { ex.message }
+
       reconnect
     end
 
@@ -301,14 +301,6 @@ module MPD
     def notcommands
       synchronize do
         write_command("notcommands")
-        execute("fetch_list")
-      end
-    end
-
-    # Shows a list of available song metadata.
-    def tagtypes
-      synchronize do
-        write_command("tagtypes")
         execute("fetch_list")
       end
     end
@@ -1074,9 +1066,7 @@ module MPD
       parts = [command]
 
       args.each do |arg|
-        line = parse_arg(arg)
-
-        parts << line
+        parts << parse_arg(arg)
       end
 
       write_line(parts.join(' '))
@@ -1086,6 +1076,7 @@ module MPD
     macro execute(retval)
       if @command_list.active?
         @command_list.add({{retval}})
+
         return
       end
 
@@ -1137,35 +1128,32 @@ module MPD
     rescue RuntimeError
       reconnect
 
-      @socket.try do |socket|
-        socket.puts(line)
-      end
+      @socket.try &.puts(line)
     end
 
     # :nodoc:
     private def fetch_nothing
       line = read_line
+
       raise MPD::Error.new("Got unexpected return value: #{line}") unless line.nil?
     end
 
     # :nodoc:
-    private def fetch_list
-      result = [] of String
+    private def fetch_list : Array(String)
       seen = nil
-      read_pairs.each do |item|
+
+      read_pairs.reduce([] of String) do |result, item|
         key = item[0]
         value = item[1]
 
         if key != seen
-          if seen != nil
-            raise MPD::Error.new("Expected key '#{seen}', got '#{key}'")
-          end
+          raise MPD::Error.new("Expected key '#{seen}', got '#{key}'") unless seen.nil?
+
           seen = key
         end
+
         result << value.chomp
       end
-
-      result
     end
 
     # :nodoc:
@@ -1279,9 +1267,10 @@ module MPD
     # :nodoc:
     private def fetch_item : String
       pairs = read_pairs
-      return "" if pairs.size != 1
 
-      pairs[0][1]
+      return "" unless pairs.one?
+
+      pairs[0][1].chomp
     end
 
     # :nodoc:
@@ -1289,6 +1278,7 @@ module MPD
       pairs = MPD::Pairs.new
 
       pair = read_pair
+
       while !pair.empty?
         pairs << pair
         pair = read_pair
@@ -1300,10 +1290,10 @@ module MPD
     # :nodoc:
     private def read_pair : MPD::Pair
       line = read_line
-      return MPD::Pair.new if line.nil?
-      pair = line.split(": ", 2)
 
-      pair
+      return MPD::Pair.new if line.nil?
+
+      line.split(": ", 2)
     end
 
     # :nodoc:
@@ -1315,11 +1305,13 @@ module MPD
 
         if line.not_nil!.starts_with?(ERROR_PREFIX)
           error = line.not_nil![/#{ERROR_PREFIX}(.*)/, 1].strip
+
           raise MPD::Error.new(error)
         end
 
         if @command_list.active?
           return if line == NEXT
+
           raise "Got unexpected '#{SUCCESS}' in command list" if line == SUCCESS
         end
 
