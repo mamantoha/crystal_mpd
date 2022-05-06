@@ -396,14 +396,6 @@ module MPD
       end
     end
 
-    # Get current playlist
-    def playlist
-      synchronize do
-        write_command("playlist")
-        execute("fetch_songs")
-      end
-    end
-
     # Displays a list of all songs in the playlist,
     #
     # or if the optional argument is given, displays information only for

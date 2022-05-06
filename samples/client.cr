@@ -57,7 +57,6 @@ puts client.currentsong
 # puts client.listplaylist("test")
 # puts client.playlistdelete("test", 0)
 # puts client.listplaylistinfo("test")
-# puts client.playlist
 # puts client.playlistid
 # puts client.playlistid(2121)
 # client.playlistadd("test", "world/0-9/5Diez/2009.Пандемия/03 Спрут.ogg")
