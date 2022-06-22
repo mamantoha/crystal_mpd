@@ -9,8 +9,8 @@ optparse = OptionParser.new do |parser|
   parser.banner = "Usage: salute [arguments]"
   parser.on("-v", "--verbose", "Show verbose output") { options["verbose"] = true }
   parser.on("-h HOST", "--host=NAME", "Specifies the MPD host") { |name| options["host"] = name }
-  parser.on("-t NAME", "--type=NAME", "Specifies the type") { |name| options["type"] = name }
-  parser.on("-q NAME", "--query=NAME", "Specifies the query") { |name| options["query"] = name }
+  parser.on("-t NAME", "--tag=NAME", "Specifies the tag") { |name| options["tag"] = name }
+  parser.on("-q NAME", "--query=NAME", "Specifies the seach query") { |name| options["query"] = name }
   parser.on("-h", "--help", "Show this help") { puts parser }
   parser.invalid_option do |flag|
     STDERR.puts "ERROR: #{flag} is not a valid option."
@@ -26,7 +26,7 @@ end
 
 begin
   optparse.parse
-  mandatory = ["type", "query"]
+  mandatory = ["tag", "query"]
   missing = mandatory.select { |param| options[param]?.nil? }
   unless missing.empty?
     raise OptionParser::MissingOption.new(missing.join(", "))
@@ -47,7 +47,11 @@ end
 client.stop
 client.clear
 
-songs = client.search(options["type"].as(String), options["query"].as(String))
+tag = options["tag"].as(String)
+query = options["query"].as(String)
+filter = "(#{tag} == '#{query}')"
+
+songs = client.search(filter)
 
 client.with_command_list do
   songs.not_nil!.each do |song|

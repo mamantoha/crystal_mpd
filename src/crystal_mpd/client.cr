@@ -551,31 +551,23 @@ module MPD
       end
     end
 
-    # Searches for any song that contains `what` in tag `type` and adds them to the playlist named `name`.
+    # Search the database for songs matching `filter` and add them to the queue.
     #
-    # If a playlist by that name doesn't exist it is created.
+    # If a playlist by that `name` doesn't exist it is created.
     #
-    # Parameters have the same meaning as for `#find`, except that search is not case sensitive.
-    def searchaddpl(name : String, type : String, query : String, position : Int32 | String | Nil = nil)
-      synchronize do
-        write_command("searchaddpl", name, type, query, position)
-        execute("fetch_nothing")
-      end
-    end
-
-    # Search the database for songs matching `filter` and add them to the playlist named `name`.
+    # Parameters have the same meaning as for `search`.
     #
-    # If a playlist by that name doesn’t exist it is created.
-    #
-    # Parameters have the same meaning as for `#search `.
-    def searchaddpl(name : String, filler : String, *, sort : String? = nil, window : MPD::Range? = nil)
+    # The `position` parameter specifies where the songs will be inserted.
+    # It can be relative to the current song as in `addid`.
+    def searchaddpl(name : String, filter : String, *, sort : String? = nil, window : MPD::Range? = nil, position : Int32 | String | Nil = nil)
       synchronize do
         hash = {} of String => String
 
         sort.try { hash["sort"] = sort }
         window.try { hash["window"] = parse_range(window) }
+        position.try { hash["position"] = position }
 
-        write_command("searchaddpl", name, filter, query, hash)
+        write_command("searchaddpl", name, filter, hash)
         execute("fetch_nothing")
       end
     end
@@ -736,26 +728,30 @@ module MPD
       fetch_binary(IO::Memory.new, 0, "readpicture", uri)
     end
 
-    # Count the number of songs and their total playtime in the database
-    # that `type` is `query`
-    #
-    # The following prints the number of songs whose title matches "Echoes"
+    # Count the number of songs and their total playtime in the database matching `filter`.
     #
     # ```
-    # mpd.count("title", "Echoes")
+    # mpd.count("(genre == 'Rock')")
+    # => {"songs" => "11", "playtime" => "2496"}
     # ```
-    def count(type : String, query : String)
+    #
+    # The `group` keyword may be used to group the results by a tag.
+    # The first following example prints per-artist counts
+    # while the next prints the number of songs whose title matches "Echoes" grouped by artist:
+    #
+    # ```
+    # mpd.count("(genre != 'Pop')", group: "artist")
+    # => [{"Artist" => "Artist 1", "songs" => "11", "playtime" => "2388"}, {"Artist" => "Artist 2", "songs" => "12", "playtime" => "2762"}]
+    # ```
+    def count(filter : String, *, group : String? = nil)
       synchronize do
-        write_command("count", type, query)
-        execute("fetch_object")
-      end
-    end
+        hash = {} of String => String
 
-    # Count the number of songs and their total playtime in the database matching `filter`
-    def count(filter : String)
-      synchronize do
-        write_command("count", filter)
-        execute("fetch_object")
+        group.try { hash["group"] = group }
+
+        write_command("count", filter, hash)
+
+        execute("fetch_counts")
       end
     end
 
@@ -869,31 +865,23 @@ module MPD
       end
     end
 
-    # Finds songs in the db that are exactly `query`.
-    #
-    # `type` can be any tag supported by MPD, or one of the two special parameters:
-    #
-    # * `file` to search by full path (relative to database root)
-    # * `any` to match against all available tags.
-    #
-    # `query` is what to find.
-    def find(type : String, query : String)
-      synchronize do
-        write_command("find", type, query)
-        execute("fetch_songs")
-      end
-    end
-
     # Search the database for songs matching `filter`.
     #
-    # `sort` sorts the result by the specified tag. The sort is descending if the tag is prefixed with a minus (‘-‘).
-    # Without `sort`, the order is undefined. Only the first tag value will be used, if multiple of the same type exist.
-    # To sort by "Artist", "Album" or "AlbumArtist", you should specify "ArtistSort", "AlbumSort" or "AlbumArtistSort"
-    # instead. These will automatically fall back to the former if "*Sort" doesn’t exist.
-    # "AlbumArtist" falls back to just “Artist”. The type "Last-Modified" can sort by file modification time.
+    # `sort` sorts the result by the specified tag.
+    # The sort is descending if the tag is prefixed with a minus (`-`).
+    # Without `sort`, the order is undefined.
+    # Only the first tag value will be used, if multiple of the same type exist.
+    # To sort by "Artist", “Album” or "AlbumArtist", you should specify "ArtistSort", "AlbumSort" or "AlbumArtistSort" instead.
+    # These will automatically fall back to the former if "*Sort" doesn't exist.
+    # "AlbumArtist" falls back to just "Artist".
+    # The type "Last-Modified" can sort by file modification time.
     #
-    # `window` can be used to query only a portion of the real response. The parameter is two zero-based record numbers;
-    # a start number and an end number.
+    # `window` can be used to query only a portion of the real response.
+    # The parameter is two zero-based record numbers; a start number and an end number.
+    #
+    # ```
+    # mpd.find("(genre != 'Pop')", sort: "-ArtistSort", window: (5..10))
+    # ```
     def find(filter : String, *, sort : String? = nil, window : MPD::Range? = nil)
       synchronize do
         hash = {} of String => String
@@ -902,20 +890,6 @@ module MPD
         window.try { hash["window"] = parse_range(window) }
 
         write_command("find", filter, hash)
-        execute("fetch_songs")
-      end
-    end
-
-    # Searches for any song that contains `query`.
-    #
-    # Parameters have the same meaning as for `#find`, except that search is not case sensitive.
-    #
-    # ```
-    # mpd.search("title", "crystal")
-    # ```
-    def search(type : String, query : String)
-      synchronize do
-        write_command("search", type, query)
         execute("fetch_songs")
       end
     end
@@ -941,17 +915,18 @@ module MPD
 
     # Search the database for songs matching `filter` and add them to the queue.
     #
-    # Parameters have the same meaning as for `#find`.
+    # Parameters have the same meaning as for `#find` and `#searchadd`.
     #
     # ```
     # mpd.findadd("(genre == 'Alternative Rock')")
     # ```
-    def findadd(filter : String, *, sort : String? = nil, window : MPD::Range? = nil)
+    def findadd(filter : String, *, sort : String? = nil, window : MPD::Range? = nil, position : Int32 | String | Nil = nil)
       synchronize do
         hash = {} of String => String
 
         sort.try { hash["sort"] = sort }
         window.try { hash["window"] = parse_range(window) }
+        position.try { hash["position"] = position }
 
         write_command("findadd", filter, hash)
         execute("fetch_nothing")
@@ -961,12 +936,16 @@ module MPD
     # Search the database for songs matching `filter` and add them to the queue.
     #
     # Parameters have the same meaning as for `#search`.
-    def searchadd(filter : String, *, sort : String? = nil, window : MPD::Range? = nil)
+    #
+    # The `position` parameter specifies where the songs will be inserted.
+    # It can be relative to the current song as in `#addid`.
+    def searchadd(filter : String, *, sort : String? = nil, window : MPD::Range? = nil, position : Int32 | String | Nil = nil)
       synchronize do
         hash = {} of String => String
 
         sort.try { hash["sort"] = sort }
         window.try { hash["window"] = parse_range(window) }
+        position.try { hash["position"] = position }
 
         write_command("searchadd", filter, hash)
         execute("fetch_nothing")
@@ -1232,6 +1211,28 @@ module MPD
       result << obj unless obj.empty?
 
       result
+    end
+
+    # :nodoc:
+    private def fetch_counts : Object | Objects
+      result = MPD::Objects.new
+      obj = MPD::Object.new
+
+      read_pairs.each do |item|
+        key = item[0]
+        value = item[1].chomp
+
+        if obj.has_key?(key)
+          result << obj unless obj.empty?
+          obj = MPD::Object.new
+        end
+
+        obj[key] = value
+      end
+
+      result << obj unless obj.empty?
+
+      result.one? ? result.first : result
     end
 
     # :nodoc:
