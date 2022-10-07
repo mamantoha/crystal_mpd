@@ -2,21 +2,23 @@ name: website
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
 
 jobs:
   publish:
     runs-on: ubuntu-latest
-    container:
-      image: crystallang/crystal
     steps:
-      - uses: actions/checkout@v2
+      - name: Install Crystal
+        uses: crystal-lang/install-crystal@v1
+        with:
+          crystal: nightly
+      - name: Check out repository code
+        uses: actions/checkout@v2
       - name: Install dependencies
-        run: shards install --ignore-crystal-version
+        run: shards install
       - name: Generate documentation
         run: crystal docs
-      -
-        name: Deploy to GitHub Pages
+      - name: Deploy to GitHub Pages
         if: success()
         uses: crazy-max/ghaction-github-pages@v2
         with:
