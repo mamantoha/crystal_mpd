@@ -277,7 +277,7 @@ If you're using `MPD::Client` and would like to have your application added to t
 
 ## Contributors
 
-- [mamantoha](<https://github.com/mamantoha>) Anton Maminov - creator, maintainer
+- [mamantoha](https://github.com/mamantoha) Anton Maminov - creator, maintainer
 
 ## License
 
