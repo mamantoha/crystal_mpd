@@ -65,7 +65,7 @@ To use all `crystal_mpd` functions you should use the latest stable MPD version 
 
 ### Command lists
 
-Command lists [documentation](https://www.musicpd.org/doc/html/protocol.html#command-lists).
+Command lists [documentation](https://mpd.readthedocs.io/en/latest/protocol.html#command-lists).
 
 To facilitate faster adding of files etc. you can pass a list of commands all at once using a command list.
 The command list begins with `command_list_ok_begin` and ends with `command_list_end`.
@@ -95,7 +95,7 @@ end
 
 ### Ranges
 
-Ranges [documentation](https://www.musicpd.org/doc/html/protocol.html#ranges).
+Ranges [documentation](https://mpd.readthedocs.io/en/latest/protocol.html#ranges).
 
 Some commands(e.g. `move`, `delete`, `load`, `shuffle`, `playlistinfo`) allow integer ranges(`START:END`) instead of numbers, specifying a range of songs.
 This is done by using `MPD::Range`. `crystal_mpd` correctly handles inclusive and exclusive ranges (`1..10` vs `1...10`). Negative range end means that we want the range to span until the end of the list.
@@ -139,7 +139,7 @@ client.delete(...2)
 
 ### Filters
 
-Filters [documentation](https://www.musicpd.org/doc/html/protocol.html#filters).
+Filters [documentation](https://mpd.readthedocs.io/en/latest/protocol.html#filters)
 
 All commands which search for songs (`find`, `search`, `searchadd`, `searchaddpl`, `findadd`, `list`, and `count`) share a common filter syntax.
 

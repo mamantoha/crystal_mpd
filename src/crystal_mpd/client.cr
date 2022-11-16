@@ -175,7 +175,7 @@ module MPD
       reconnect
     end
 
-    # https://www.musicpd.org/doc/html/protocol.html#command-lists
+    # https://mpd.readthedocs.io/en/latest/protocol.html#command-lists
     def command_list_ok_begin
       write_command("command_list_ok_begin")
 
