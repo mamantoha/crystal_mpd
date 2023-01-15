@@ -161,7 +161,7 @@ module MPD
       end
     end
 
-    private def synchronize
+    private def synchronize(&)
       @mutex.synchronize do
         begin
           yield
@@ -190,7 +190,7 @@ module MPD
       read_line
     end
 
-    def with_command_list
+    def with_command_list(&)
       command_list_ok_begin
 
       yield
