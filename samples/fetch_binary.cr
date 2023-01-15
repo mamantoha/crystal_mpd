@@ -6,8 +6,8 @@ require "../src/crystal_mpd"
 
 client = MPD::Client.new
 
-if (song = client.currentsong)
-  if (response = client.readpicture(song["file"]))
+if song = client.currentsong
+  if response = client.readpicture(song["file"])
     data, binary = response
 
     puts data

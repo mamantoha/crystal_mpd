@@ -7,7 +7,7 @@ ensure
   client.close
 end
 
-def with_server(host = "localhost", port = 6600)
+def with_server(host = "localhost", port = 6600, &)
   wants_close = Channel(Nil).new
   server = TCPServer.new(host, port)
 
