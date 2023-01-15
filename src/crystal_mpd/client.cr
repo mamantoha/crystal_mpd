@@ -101,14 +101,14 @@ module MPD
       spawn do
         old_status = {} of Symbol => String
 
-        if (status = self.status)
+        if status = self.status
           old_status = get_status(status)
         end
 
         loop do
           sleep @callbacks_timeout
 
-          if (status = self.status)
+          if status = self.status
             new_status = get_status(status)
 
             new_status.each do |key, val|
@@ -139,7 +139,7 @@ module MPD
     # Ping the server.
     private def hello
       @socket.try do |socket|
-        if (response = socket.gets(chomp: false))
+        if response = socket.gets(chomp: false)
           raise MPD::Error.new("Connection lost while reading MPD hello") unless response.ends_with?("\n")
 
           response = response.chomp
@@ -358,9 +358,9 @@ module MPD
 
     # Show the currently queued (next) song.
     def nextsong : Object?
-      if (_status = status)
-        if (nextsongid = _status["nextsongid"]?)
-          if (songs = playlistid(nextsongid.to_i))
+      if _status = status
+        if nextsongid = _status["nextsongid"]?
+          if songs = playlistid(nextsongid.to_i)
             songs.first
           end
         end
@@ -454,7 +454,7 @@ module MPD
 
       return unless curren_song
 
-      if (songs = playlistinfo)
+      if songs = playlistinfo
         with_command_list do
           songs.each do |song|
             next if song["file"] == curren_song["file"]
@@ -1300,7 +1300,7 @@ module MPD
     # :nodoc:
     private def read_line : String?
       @socket.try do |socket|
-        if (line = socket.gets(chomp: false))
+        if line = socket.gets(chomp: false)
           Log.debug { "response: #{line.inspect}" }
 
           if line.starts_with?(ERROR_PREFIX)
