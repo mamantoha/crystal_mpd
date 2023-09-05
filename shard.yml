@@ -6,8 +6,4 @@ authors:
 
 crystal: ">= 1.0.0"
 
-development_dependencies:
-  ameba:
-    github: veelenga/ameba
-
 license: MIT
