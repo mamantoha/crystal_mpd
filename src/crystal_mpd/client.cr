@@ -416,18 +416,29 @@ module MPD
       end
     end
 
-    # Searches case-sensitively for partial matches in the current playlist.
-    def playlistsearch(tag : String, needle : String)
+    # Search the queue for songs matching `filter`.
+    # Parameters have the same meaning as for `find`, except that search is not case sensitive.
+    def playlistsearch(filter : String, *, sort : String? = nil, window : MPD::Range? = nil)
       synchronize do
-        write_command("playlistsearch", tag, needle)
+        hash = {} of String => String
+
+        sort.try { hash["sort"] = sort }
+        window.try { hash["window"] = parse_range(window) }
+
+        write_command("playlistsearch", filter, hash)
         execute("fetch_songs")
       end
     end
 
-    # Finds songs in the current playlist with strict matching.
-    def playlistfind(tag : String, needle : String)
+    # Search the queue for songs matching `filter`.
+    def playlistfind(filter : String, *, sort : String? = nil, window : MPD::Range? = nil)
       synchronize do
-        write_command("playlistfind", tag, needle)
+        hash = {} of String => String
+
+        sort.try { hash["sort"] = sort }
+        window.try { hash["window"] = parse_range(window) }
+
+        write_command("playlistfind", filter, hash)
         execute("fetch_songs")
       end
     end
