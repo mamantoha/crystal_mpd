@@ -583,6 +583,20 @@ module MPD
       end
     end
 
+    # Count the number of songs and their total playtime in the database matching `filter`.
+    # Parameters have the same meaning as for `count` except the search is not case sensitive.
+    def searchcount(filter : String, *, group : String? = nil)
+      synchronize do
+        hash = {} of String => String
+
+        group.try { hash["group"] = group }
+
+        write_command("searchcount", filter, hash)
+
+        execute("fetch_counts")
+      end
+    end
+
     # Lists the songs in the playlist `name`.
     #
     # Playlist plugins are supported.
