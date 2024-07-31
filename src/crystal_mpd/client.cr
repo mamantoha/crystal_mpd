@@ -616,7 +616,7 @@ module MPD
     end
 
     # Moves the song at position `from` in the playlist `name`.m3u to the position `to`.
-    def playlistmove(name : String, from : Int32, to : Int32)
+    def playlistmove(name : String, from : Int32 | MPD::Range, to : Int32)
       synchronize do
         write_command("playlistmove", name, from, to)
         execute("fetch_nothing")
