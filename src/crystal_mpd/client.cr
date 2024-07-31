@@ -796,6 +796,14 @@ module MPD
       end
     end
 
+    # Changes volume by amount `change`.
+    def volume(change : Int)
+      synchronize do
+        write_command("volume", change)
+        execute("fetch_nothing")
+      end
+    end
+
     # Sets volume to `vol`, the range of volume is 0-100.
     def setvol(vol : Int)
       synchronize do
