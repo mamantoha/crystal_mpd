@@ -32,7 +32,7 @@ module MPD
     ]
 
     getter host, port, version
-    property callbacks_timeout : Time::Span | Int32 = 1.second
+    property callbacks_timeout : Time::Span = 1.second
 
     # Creates a new MPD client. Parses the `host`, `port`.
     #
