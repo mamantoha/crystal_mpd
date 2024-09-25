@@ -416,18 +416,29 @@ module MPD
       end
     end
 
-    # Searches case-sensitively for partial matches in the current playlist.
-    def playlistsearch(tag : String, needle : String)
+    # Search the queue for songs matching `filter`.
+    # Parameters have the same meaning as for `find`, except that search is not case sensitive.
+    def playlistsearch(filter : String, *, sort : String? = nil, window : MPD::Range? = nil)
       synchronize do
-        write_command("playlistsearch", tag, needle)
+        hash = {} of String => String
+
+        sort.try { hash["sort"] = sort }
+        window.try { hash["window"] = parse_range(window) }
+
+        write_command("playlistsearch", filter, hash)
         execute("fetch_songs")
       end
     end
 
-    # Finds songs in the current playlist with strict matching.
-    def playlistfind(tag : String, needle : String)
+    # Search the queue for songs matching `filter`.
+    def playlistfind(filter : String, *, sort : String? = nil, window : MPD::Range? = nil)
       synchronize do
-        write_command("playlistfind", tag, needle)
+        hash = {} of String => String
+
+        sort.try { hash["sort"] = sort }
+        window.try { hash["window"] = parse_range(window) }
+
+        write_command("playlistfind", filter, hash)
         execute("fetch_songs")
       end
     end
@@ -572,6 +583,20 @@ module MPD
       end
     end
 
+    # Count the number of songs and their total playtime in the database matching `filter`.
+    # Parameters have the same meaning as for `count` except the search is not case sensitive.
+    def searchcount(filter : String, *, group : String? = nil)
+      synchronize do
+        hash = {} of String => String
+
+        group.try { hash["group"] = group }
+
+        write_command("searchcount", filter, hash)
+
+        execute("fetch_counts")
+      end
+    end
+
     # Lists the songs in the playlist `name`.
     #
     # Playlist plugins are supported.
@@ -605,7 +630,7 @@ module MPD
     end
 
     # Moves the song at position `from` in the playlist `name`.m3u to the position `to`.
-    def playlistmove(name : String, from : Int32, to : Int32)
+    def playlistmove(name : String, from : Int32 | MPD::Range, to : Int32)
       synchronize do
         write_command("playlistmove", name, from, to)
         execute("fetch_nothing")
@@ -771,6 +796,14 @@ module MPD
       end
     end
 
+    # Changes volume by amount `change`.
+    def volume(change : Int)
+      synchronize do
+        write_command("volume", change)
+        execute("fetch_nothing")
+      end
+    end
+
     # Sets volume to `vol`, the range of volume is 0-100.
     def setvol(vol : Int)
       synchronize do
@@ -881,6 +914,8 @@ module MPD
     #
     # ```
     # mpd.find("(genre != 'Pop')", sort: "-ArtistSort", window: (5..10))
+    # mpd.find("(genre starts_with 'Indie')")
+    # mpd.find("(genre contains 'Rock')")
     # ```
     def find(filter : String, *, sort : String? = nil, window : MPD::Range? = nil)
       synchronize do
