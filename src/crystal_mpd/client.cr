@@ -655,10 +655,17 @@ module MPD
       end
     end
 
-    # Toggles pause/resumes playing.
-    def pause
+    # Pause or resume playback.
+    # Pass `state` `true` to pause playback or `false` to resume playback.
+    # Without the parameter, the pause state is toggled.
+    def pause(state : Bool? = nil)
       synchronize do
-        write_command("pause")
+        if state
+          write_command("pause", boolean(state))
+        else
+          write_command("pause")
+        end
+
         execute("fetch_nothing")
       end
     end
