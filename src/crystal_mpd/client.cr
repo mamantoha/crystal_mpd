@@ -42,7 +42,7 @@ module MPD
       @port : Int32 = 6600,
       *,
       @with_callbacks = false,
-      @password : String? = nil
+      @password : String? = nil,
     )
       @command_list = CommandList.new
       @mutex = Mutex.new
