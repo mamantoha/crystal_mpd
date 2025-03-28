@@ -521,9 +521,14 @@ module MPD
     end
 
     # Saves the current playlist to `name`.m3u in the playlist directory.
-    def save(name : String)
+    #
+    # `mode` is optional argument. One of "create", "append", or "replace".
+    #
+    # - "create": The default. Create a new playlist. Fail if a playlist with name `name` already exists.
+    # - "append", "replace": Append or replace an existing playlist. Fail if a playlist with name `name` doesn't already exist.
+    def save(name : String, mode : String? = nil)
       synchronize do
-        write_command("save", name)
+        write_command("save", name, mode)
         execute("fetch_nothing")
       end
     end
