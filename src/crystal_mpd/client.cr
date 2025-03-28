@@ -931,7 +931,9 @@ module MPD
     # ```
     # mpd.find("(genre != 'Pop')", sort: "-ArtistSort", window: (5..10))
     # mpd.find("(genre starts_with 'Indie')")
+    # mpd.find("(genre starts_with_ci 'inDIE')")
     # mpd.find("(genre contains 'Rock')")
+    # mpd.find("(genre contains_ci 'RocK')")
     # ```
     def find(filter : String, *, sort : String? = nil, window : MPD::Range? = nil)
       synchronize do
