@@ -828,13 +828,15 @@ module MPD
       end
     end
 
-    # Sets single state to `state`, `state` should be `false` or `true`.
+    # Sets single state to `state`, `state` should be `false`, `true` or `"oneshot"`.
     #
     # When single is activated, playback is stopped after current song,
     # or song is repeated if the `repeat` mode is enabled.
-    def single(state : Bool)
+    def single(state : Bool | String)
       synchronize do
-        write_command("single", boolean(state))
+        state = state.is_a?(String) ? state : boolean(state)
+
+        write_command("single", state)
         execute("fetch_nothing")
       end
     end
