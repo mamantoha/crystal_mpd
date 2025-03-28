@@ -431,6 +431,17 @@ module MPD
     end
 
     # Search the queue for songs matching `filter`.
+    #
+    # `sort` sorts the result by the specified tag.
+    # The sort is descending if the tag is prefixed with a minus ('-').
+    # Only the first tag value will be used, if multiple of the same type exist.
+    # To sort by "Title", "Artist", "Album", "AlbumArtist" or "Composer",
+    # you should specify "TitleSort", "ArtistSort", "AlbumSort", "AlbumArtistSort" or "ComposerSort" instead.
+    # These will automatically fall back to the former if "*Sort" doesn’t exist.
+    # "AlbumArtist" falls back to just "Artist".
+    # The type "Last-Modified" can sort by file modification time, and "prio" sorts by queue priority.
+    #
+    # `window` can be used to query only a portion of the real response.
     def playlistfind(filter : String, *, sort : String? = nil, window : MPD::Range? = nil)
       synchronize do
         hash = {} of String => String
@@ -920,7 +931,7 @@ module MPD
     # The sort is descending if the tag is prefixed with a minus (`-`).
     # Without `sort`, the order is undefined.
     # Only the first tag value will be used, if multiple of the same type exist.
-    # To sort by "Artist", “Album” or "AlbumArtist", you should specify "ArtistSort", "AlbumSort" or "AlbumArtistSort" instead.
+    # To sort by "Artist", "Album" or "AlbumArtist", you should specify "ArtistSort", "AlbumSort" or "AlbumArtistSort" instead.
     # These will automatically fall back to the former if "*Sort" doesn't exist.
     # "AlbumArtist" falls back to just "Artist".
     # The type "Last-Modified" can sort by file modification time.
