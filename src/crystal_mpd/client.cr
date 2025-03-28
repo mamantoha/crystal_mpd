@@ -839,12 +839,14 @@ module MPD
       end
     end
 
-    # Sets consume state to `state`, `state` should be `false` or `true`.
+    # Sets consume state to `state`, `state` should be `false`, `true` or `"oneshot"`.
     #
     # When consume is activated, each song played is removed from playlist.
-    def consume(state : Bool)
+    def consume(state : Bool | String)
       synchronize do
-        write_command("consume", boolean(state))
+        state = state.is_a?(String) ? state : boolean(state)
+
+        write_command("consume", state)
         execute("fetch_nothing")
       end
     end
