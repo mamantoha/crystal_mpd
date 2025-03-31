@@ -747,6 +747,7 @@ module MPD
     # Lists unique tags values of the specified `type`.
     #
     # `type` can be any tag supported by MPD or file.
+    # `window` works like in `find`. In this command, it affects only the top-most tag type.
     #
     # ```
     # mpd.list("Artist")
@@ -759,9 +760,13 @@ module MPD
     # mpd.list("Artist")
     # mpd.list("filename", "((artist == 'Linkin Park') AND (date == '2003'))")
     # ```
-    def list(type : String, filter : String | Nil = nil)
+    def list(type : String, filter : String | Nil = nil, *, window : MPD::Range? = nil)
       synchronize do
-        write_command("list", type, filter)
+        hash = {} of String => String
+
+        window.try { hash["window"] = parse_range(window) }
+
+        write_command("list", type, filter, hash)
         execute("fetch_list")
       end
     end
