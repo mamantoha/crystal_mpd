@@ -431,6 +431,17 @@ module MPD
     end
 
     # Search the queue for songs matching `filter`.
+    #
+    # `sort` sorts the result by the specified tag.
+    # The sort is descending if the tag is prefixed with a minus ('-').
+    # Only the first tag value will be used, if multiple of the same type exist.
+    # To sort by "Title", "Artist", "Album", "AlbumArtist" or "Composer",
+    # you should specify "TitleSort", "ArtistSort", "AlbumSort", "AlbumArtistSort" or "ComposerSort" instead.
+    # These will automatically fall back to the former if "*Sort" doesn’t exist.
+    # "AlbumArtist" falls back to just "Artist".
+    # The type "Last-Modified" can sort by file modification time, and "prio" sorts by queue priority.
+    #
+    # `window` can be used to query only a portion of the real response.
     def playlistfind(filter : String, *, sort : String? = nil, window : MPD::Range? = nil)
       synchronize do
         hash = {} of String => String
@@ -521,9 +532,14 @@ module MPD
     end
 
     # Saves the current playlist to `name`.m3u in the playlist directory.
-    def save(name : String)
+    #
+    # `mode` is optional argument. One of "create", "append", or "replace".
+    #
+    # - "create": The default. Create a new playlist. Fail if a playlist with name `name` already exists.
+    # - "append", "replace": Append or replace an existing playlist. Fail if a playlist with name `name` doesn't already exist.
+    def save(name : String, mode : String? = nil)
       synchronize do
-        write_command("save", name)
+        write_command("save", name, mode)
         execute("fetch_nothing")
       end
     end
@@ -533,6 +549,14 @@ module MPD
       synchronize do
         write_command("playlistclear", name)
         execute("fetch_nothing")
+      end
+    end
+
+    # Count the number of songs and their total playtime (seconds) in the playlist.
+    def playlistlength(name : String)
+      synchronize do
+        write_command("playlistlength", name)
+        execute("fetch_object")
       end
     end
 
@@ -600,9 +624,15 @@ module MPD
     # Lists the songs in the playlist `name`.
     #
     # Playlist plugins are supported.
-    def listplaylist(name : String)
+    # A `range` may be specified to list only a part of the playlist
+    def listplaylist(name : String, range : MPD::Range? = nil)
       synchronize do
-        write_command("listplaylist", name)
+        if range
+          write_command("listplaylist", name, parse_range(range))
+        else
+          write_command("listplaylist", name)
+        end
+
         execute("fetch_list")
       end
     end
@@ -610,9 +640,28 @@ module MPD
     # Lists the songs with metadata in the playlist.
     #
     # Playlist plugins are supported.
-    def listplaylistinfo(name : String)
+    # A `range` may be specified to list only a part of the playlist.
+    def listplaylistinfo(name : String, range : MPD::Range? = nil)
       synchronize do
-        write_command("listplaylistinfo", name)
+        if range
+          write_command("listplaylistinfo", name, parse_range(range))
+        else
+          write_command("listplaylistinfo", name)
+        end
+
+        execute("fetch_songs")
+      end
+    end
+
+    # Search the playlist for songs matching `filter`.
+    # A range may be specified to list only a part of the playlist.
+    def searchplaylist(name : String, filter : String | Nil = nil, *, window : MPD::Range? = nil)
+      synchronize do
+        hash = {} of String => String
+
+        window.try { hash["window"] = parse_range(window) }
+
+        write_command("searchplaylist", name, filter, hash)
         execute("fetch_songs")
       end
     end
@@ -633,6 +682,26 @@ module MPD
     def playlistmove(name : String, from : Int32 | MPD::Range, to : Int32)
       synchronize do
         write_command("playlistmove", name, from, to)
+        execute("fetch_nothing")
+      end
+    end
+
+    # Set the priority of the specified songs.
+    #
+    # A higher priority means that it will be played first when “random” mode is enabled.
+    #
+    # A `priority` is an integer between 0 and 255. The default priority of new songs is 0.
+    def prio(priority : Int32, range : MPD::Range)
+      synchronize do
+        write_command("prio", priority, parse_range(range))
+        execute("fetch_nothing")
+      end
+    end
+
+    # Same as `prio`, but address the songs with their id.
+    def prioid(priority : Int32, songid : Int32)
+      synchronize do
+        write_command("prioid", priority, songid)
         execute("fetch_nothing")
       end
     end
@@ -731,6 +800,8 @@ module MPD
     # Lists unique tags values of the specified `type`.
     #
     # `type` can be any tag supported by MPD or file.
+    # `window` works like in `find`. In this command, it affects only the top-most tag type.
+    # `group` keyword may be used to group the results by tags.
     #
     # ```
     # mpd.list("Artist")
@@ -743,9 +814,14 @@ module MPD
     # mpd.list("Artist")
     # mpd.list("filename", "((artist == 'Linkin Park') AND (date == '2003'))")
     # ```
-    def list(type : String, filter : String | Nil = nil)
+    def list(type : String, filter : String | Nil = nil, *, group : String? = nil, window : MPD::Range? = nil)
       synchronize do
-        write_command("list", type, filter)
+        hash = {} of String => String
+
+        group.try { hash["group"] = group }
+        window.try { hash["window"] = parse_range(window) }
+
+        write_command("list", type, filter, hash)
         execute("fetch_list")
       end
     end
@@ -828,23 +904,27 @@ module MPD
       end
     end
 
-    # Sets single state to `state`, `state` should be `false` or `true`.
+    # Sets single state to `state`, `state` should be `false`, `true` or `"oneshot"`.
     #
     # When single is activated, playback is stopped after current song,
     # or song is repeated if the `repeat` mode is enabled.
-    def single(state : Bool)
+    def single(state : Bool | String)
       synchronize do
-        write_command("single", boolean(state))
+        state = state.is_a?(String) ? state : boolean(state)
+
+        write_command("single", state)
         execute("fetch_nothing")
       end
     end
 
-    # Sets consume state to `state`, `state` should be `false` or `true`.
+    # Sets consume state to `state`, `state` should be `false`, `true` or `"oneshot"`.
     #
     # When consume is activated, each song played is removed from playlist.
-    def consume(state : Bool)
+    def consume(state : Bool | String)
       synchronize do
-        write_command("consume", boolean(state))
+        state = state.is_a?(String) ? state : boolean(state)
+
+        write_command("consume", state)
         execute("fetch_nothing")
       end
     end
@@ -911,7 +991,7 @@ module MPD
     # The sort is descending if the tag is prefixed with a minus (`-`).
     # Without `sort`, the order is undefined.
     # Only the first tag value will be used, if multiple of the same type exist.
-    # To sort by "Artist", “Album” or "AlbumArtist", you should specify "ArtistSort", "AlbumSort" or "AlbumArtistSort" instead.
+    # To sort by "Artist", "Album" or "AlbumArtist", you should specify "ArtistSort", "AlbumSort" or "AlbumArtistSort" instead.
     # These will automatically fall back to the former if "*Sort" doesn't exist.
     # "AlbumArtist" falls back to just "Artist".
     # The type "Last-Modified" can sort by file modification time.
@@ -922,7 +1002,9 @@ module MPD
     # ```
     # mpd.find("(genre != 'Pop')", sort: "-ArtistSort", window: (5..10))
     # mpd.find("(genre starts_with 'Indie')")
+    # mpd.find("(genre starts_with_ci 'inDIE')")
     # mpd.find("(genre contains 'Rock')")
+    # mpd.find("(genre contains_ci 'RocK')")
     # ```
     def find(filter : String, *, sort : String? = nil, window : MPD::Range? = nil)
       synchronize do
@@ -1079,6 +1161,58 @@ module MPD
       synchronize do
         write_command("tagtypes")
         execute("fetch_list")
+      end
+    end
+
+    # Shows a list of enabled protocol features.
+    #
+    # Available features:
+    #
+    # "hide_playlists_in_root": disables the listing of stored playlists for the `lsinfo`.
+    def protocol
+      synchronize do
+        write_command("protocol")
+        execute("fetch_list")
+      end
+    end
+
+    # Lists all available protocol features.
+    def protocol_available
+      synchronize do
+        write_command("protocol available")
+        execute("fetch_list")
+      end
+    end
+
+    # Enables a `feature`.
+    def protocol_enable(feature : String)
+      synchronize do
+        write_command("protocol enable #{feature}")
+        execute("fetch_nothing")
+      end
+    end
+
+    # Disables a `feature`.
+    def protocol_disable(feature : String)
+      synchronize do
+        write_command("protocol disable #{feature}")
+        execute("fetch_nothing")
+      end
+    end
+
+    # Disables all protocol features.
+    def protocol_clear
+      synchronize do
+        write_command("protocol clear")
+        execute("fetch_nothing")
+      end
+    end
+
+    # Enables all protocol features.
+    def protocol_all
+      synchronize do
+        write_command("protocol all")
+        execute("fetch_nothing")
       end
     end
 

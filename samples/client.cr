@@ -51,9 +51,13 @@ puts client.currentsong
 # puts client.rm("test")
 # puts client.listplaylists
 # client.playlistclear("test")
+# puts client.playlistlength("test")
 # puts client.listplaylist("test")
+# puts client.listplaylist("test", 1..2)
 # puts client.playlistdelete("test", 0)
 # puts client.listplaylistinfo("test")
+# puts client.listplaylistinfo("test", 1..2)
+# puts client.searchplaylist("test", "(artist == 'Фактично Самі')", window: 0..2)
 # puts client.playlistid
 # puts client.playlistid(2121)
 # client.playlistadd("test", "world/0-9/5Diez/2009.Пандемия/03 Спрут.ogg")
@@ -63,7 +67,15 @@ puts client.currentsong
 # puts client.move(10, 0)
 # puts client.outputs
 # puts client.tagtypes
+# client.protocol_enable("hide_playlists_in_root")
+# client.protocol_disable("hide_playlists_in_root")
+# puts client.protocol_clear
+# puts client.protocol_all
+# puts client.protocol
+# puts client.protocol_available
 # puts client.search("(any =~ 'crystal')")
+# client.prioid(100, 10)
+# client.prio(255, 1..2)
 # puts client.find("(artist == 'Порнофильмы')")
 # puts client.clear
 # puts client.findadd("(genre == 'Alternative Rock')")
