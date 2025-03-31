@@ -674,6 +674,26 @@ module MPD
       end
     end
 
+    # Set the priority of the specified songs.
+    #
+    # A higher priority means that it will be played first when “random” mode is enabled.
+    #
+    # A `priority` is an integer between 0 and 255. The default priority of new songs is 0.
+    def prio(priority : Int32, range : MPD::Range)
+      synchronize do
+        write_command("prio", priority, parse_range(range))
+        execute("fetch_nothing")
+      end
+    end
+
+    # Same as `prio`, but address the songs with their id.
+    def prioid(priority : Int32, songid : Int32)
+      synchronize do
+        write_command("prioid", priority, songid)
+        execute("fetch_nothing")
+      end
+    end
+
     # Deletes `songpos` from the playlist `name`.m3u.
     #
     # The `songpos` parameter can be a range.
