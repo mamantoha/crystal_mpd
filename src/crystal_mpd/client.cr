@@ -1216,6 +1216,128 @@ module MPD
       end
     end
 
+    # Reads a sticker value for the specified object.
+    def sticker_get(type : String, uri : String, name : String) : String?
+      synchronize do
+        write_command("sticker get", type, uri, name)
+        item = execute("fetch_item")
+
+        item.split("=", 2)[1]
+      end
+    end
+
+    # Adds a sticker value to the specified object.
+    # If a sticker item with that name already exists, it is replaced.
+    def sticker_set(type : String, uri : String, name : String, value : String)
+      synchronize do
+        write_command("sticker set", type, uri, name, value)
+        execute("fetch_nothing")
+      end
+    end
+
+    # Adds a sticker value to the specified object.
+    # If a sticker item with that name already exists, it is incremented by supplied value.
+    def sticker_inc(type : String, uri : String, name : String, value : Int32)
+      synchronize do
+        write_command("sticker inc", type, uri, name, value)
+        execute("fetch_nothing")
+      end
+    end
+
+    # Adds a sticker value to the specified object.
+    # If a sticker item with that name already exists, it is decremented by supplied value.
+    def sticker_dec(type : String, uri : String, name : String, value : Int32)
+      synchronize do
+        write_command("sticker dec", type, uri, name, value)
+        execute("fetch_nothing")
+      end
+    end
+
+    # Deletes a sticker value from the specified object.
+    #
+    # If you do not specify a sticker name, all sticker values are deleted.
+    def sticker_delete(type : String, uri : String, name : String? = nil)
+      synchronize do
+        write_command("sticker delete", type, uri, name)
+        execute("fetch_nothing")
+      end
+    end
+
+    # Lists the stickers for the specified object.
+    def sticker_list(type : String, uri : String) : Hash(String, String)?
+      synchronize do
+        write_command("sticker list", type, uri)
+        list = execute("fetch_sticker_list")
+
+        list.map(&.["sticker"]).map(&.split("=", 2)).to_h
+      end
+    end
+
+    # Searches the sticker database for stickers with the specified `name`, below the specified directory (`uri`).
+    # For each matching song, it prints the URI and that one sticker’s value.
+    #
+    # `sort` sorts the result by "uri", "value" or "value_int" (casts the sticker value to an integer).
+    #
+    # Returns:
+    #
+    # ```
+    # client.sticker_find("song", "path/to/folder", "name1")
+    # # => [{"file" => "path/to/folder/file1.ogg", "sticker" => "name1=value1"}, ...]
+    # ```
+    def sticker_find(type : String, uri : String, name : String,
+                     *, sort : String? = nil, window : MPD::Range? = nil)
+      synchronize do
+        hash = {} of String => String
+
+        sort.try { hash["sort"] = sort }
+        window.try { hash["window"] = parse_range(window) }
+
+        write_command("sticker find", type, uri, name, hash)
+        execute("fetch_songs")
+      end
+    end
+
+    # Searches for stickers with the given value.
+    #
+    # Other supported operators are: "<", ">", "contains", "starts_with" for strings
+    # and "eq", "lt", "gt" to cast the value to an integer.
+    def sticker_find(type : String, uri : String, name : String, value : String, operator : String = "=",
+                     *, sort : String? = nil, window : MPD::Range? = nil)
+      synchronize do
+        hash = {} of String => String
+
+        sort.try { hash["sort"] = sort }
+        window.try { hash["window"] = parse_range(window) }
+
+        write_command("sticker find", type, uri, name, hash)
+        execute("fetch_songs")
+      end
+    end
+
+    # Gets a list of uniq sticker names.
+    def stickernames
+      synchronize do
+        write_command("stickernames")
+        execute("fetch_list")
+      end
+    end
+
+    # Shows a list of available sticker types.
+    def stickertypes
+      synchronize do
+        write_command("stickertypes")
+        execute("fetch_list")
+      end
+    end
+
+    # Gets a list of uniq sticker names and their types.
+    def stickernamestypes(type : String)
+      synchronize do
+        write_command("stickernamestypes", type)
+        execute("fetch_stickernamestypes")
+      end
+    end
+
     # :nodoc:
     private def write_command(command : String, *args)
       parts = [command]
@@ -1439,6 +1561,16 @@ module MPD
     # :nodoc:
     def fetch_messages
       fetch_objects("channel")
+    end
+
+    # :nodoc:
+    def fetch_sticker_list
+      fetch_objects("sticker")
+    end
+
+    # :nodoc:
+    def fetch_stickernamestypes
+      fetch_objects("name")
     end
 
     # :nodoc:
