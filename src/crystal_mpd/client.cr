@@ -624,9 +624,15 @@ module MPD
     # Lists the songs in the playlist `name`.
     #
     # Playlist plugins are supported.
-    def listplaylist(name : String)
+    # A `range` may be specified to list only a part of the playlist
+    def listplaylist(name : String, range : MPD::Range? = nil)
       synchronize do
-        write_command("listplaylist", name)
+        if range
+          write_command("listplaylist", name, parse_range(range))
+        else
+          write_command("listplaylist", name)
+        end
+
         execute("fetch_list")
       end
     end
@@ -634,9 +640,15 @@ module MPD
     # Lists the songs with metadata in the playlist.
     #
     # Playlist plugins are supported.
-    def listplaylistinfo(name : String)
+    # A `range` may be specified to list only a part of the playlist.
+    def listplaylistinfo(name : String, range : MPD::Range? = nil)
       synchronize do
-        write_command("listplaylistinfo", name)
+        if range
+          write_command("listplaylistinfo", name, parse_range(range))
+        else
+          write_command("listplaylistinfo", name)
+        end
+
         execute("fetch_songs")
       end
     end

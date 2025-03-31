@@ -53,8 +53,10 @@ puts client.currentsong
 # client.playlistclear("test")
 # puts client.playlistlength("test")
 # puts client.listplaylist("test")
+# puts client.listplaylist("test", 1..2)
 # puts client.playlistdelete("test", 0)
 # puts client.listplaylistinfo("test")
+# puts client.listplaylistinfo("test", 1..2)
 # puts client.searchplaylist("test", "(artist == 'Фактично Самі')", window: 0..2)
 # puts client.playlistid
 # puts client.playlistid(2121)
