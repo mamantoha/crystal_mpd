@@ -641,6 +641,19 @@ module MPD
       end
     end
 
+    # Search the playlist for songs matching `filter`.
+    # A range may be specified to list only a part of the playlist.
+    def searchplaylist(name : String, filter : String | Nil = nil, *, window : MPD::Range? = nil)
+      synchronize do
+        hash = {} of String => String
+
+        window.try { hash["window"] = parse_range(window) }
+
+        write_command("searchplaylist", name, filter, hash)
+        execute("fetch_songs")
+      end
+    end
+
     # Adds `uri` to the playlist `name`.m3u.
     #
     # `name`.m3u will be created if it does not exist.
