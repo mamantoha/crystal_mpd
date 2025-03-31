@@ -748,6 +748,7 @@ module MPD
     #
     # `type` can be any tag supported by MPD or file.
     # `window` works like in `find`. In this command, it affects only the top-most tag type.
+    # `group` keyword may be used to group the results by tags.
     #
     # ```
     # mpd.list("Artist")
@@ -760,10 +761,11 @@ module MPD
     # mpd.list("Artist")
     # mpd.list("filename", "((artist == 'Linkin Park') AND (date == '2003'))")
     # ```
-    def list(type : String, filter : String | Nil = nil, *, window : MPD::Range? = nil)
+    def list(type : String, filter : String | Nil = nil, *, group : String? = nil, window : MPD::Range? = nil)
       synchronize do
         hash = {} of String => String
 
+        group.try { hash["group"] = group }
         window.try { hash["window"] = parse_range(window) }
 
         write_command("list", type, filter, hash)
