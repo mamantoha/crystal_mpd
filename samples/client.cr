@@ -65,6 +65,12 @@ puts client.currentsong
 # puts client.move(10, 0)
 # puts client.outputs
 # puts client.tagtypes
+# client.protocol_enable("hide_playlists_in_root")
+# client.protocol_disable("hide_playlists_in_root")
+# puts client.protocol_clear
+# puts client.protocol_all
+# puts client.protocol
+# puts client.protocol_available
 # puts client.search("(any =~ 'crystal')")
 # puts client.find("(artist == 'Порнофильмы')")
 # puts client.clear

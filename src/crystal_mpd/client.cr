@@ -1132,6 +1132,58 @@ module MPD
       end
     end
 
+    # Shows a list of enabled protocol features.
+    #
+    # Available features:
+    #
+    # "hide_playlists_in_root": disables the listing of stored playlists for the `lsinfo`.
+    def protocol
+      synchronize do
+        write_command("protocol")
+        execute("fetch_list")
+      end
+    end
+
+    # Lists all available protocol features.
+    def protocol_available
+      synchronize do
+        write_command("protocol available")
+        execute("fetch_list")
+      end
+    end
+
+    # Enables a `feature`.
+    def protocol_enable(feature : String)
+      synchronize do
+        write_command("protocol enable #{feature}")
+        execute("fetch_nothing")
+      end
+    end
+
+    # Disables a `feature`.
+    def protocol_disable(feature : String)
+      synchronize do
+        write_command("protocol disable #{feature}")
+        execute("fetch_nothing")
+      end
+    end
+
+    # Disables all protocol features.
+    def protocol_clear
+      synchronize do
+        write_command("protocol clear")
+        execute("fetch_nothing")
+      end
+    end
+
+    # Enables all protocol features.
+    def protocol_all
+      synchronize do
+        write_command("protocol all")
+        execute("fetch_nothing")
+      end
+    end
+
     # :nodoc:
     private def write_command(command : String, *args)
       parts = [command]
