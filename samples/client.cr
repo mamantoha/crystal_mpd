@@ -51,6 +51,7 @@ puts client.currentsong
 # puts client.rm("test")
 # puts client.listplaylists
 # client.playlistclear("test")
+# puts client.playlistlength("test")
 # puts client.listplaylist("test")
 # puts client.playlistdelete("test", 0)
 # puts client.listplaylistinfo("test")

@@ -552,6 +552,14 @@ module MPD
       end
     end
 
+    # Count the number of songs and their total playtime (seconds) in the playlist.
+    def playlistlength(name : String)
+      synchronize do
+        write_command("playlistlength", name)
+        execute("fetch_object")
+      end
+    end
+
     # Removes the playlist `name`.m3u from the playlist directory.
     def rm(name : String)
       synchronize do
