@@ -47,5 +47,24 @@ describe MPD::CommandBuilder do
       command = MPD::CommandBuilder.build("find", "(genre != 'Pop')", {"sort" => "-ArtistSort", "window" => (5..10)})
       command.should eq("find \"(genre != 'Pop')\" sort -ArtistSort window 5..10")
     end
+
+    it "escapes string values" do
+      # https://mpd.readthedocs.io/en/latest/protocol.html#escaping-string-values
+      #
+      # Example expression which matches an artist named `foo'bar"`:
+      # (Artist == "foo\'bar\"")
+      #
+      # At the protocol level, the command must look like this:
+      # find "(Artist == \"foo\\'bar\\\"\")"
+
+      # client.find(%q{(Artist == "foo\'bar\"")})
+      # DEBUG - mpd: request: `find "(Artist == \"foo\\'bar\\\"\")" `
+
+      expression = %q{(Artist == "foo\'bar\"")}
+      result = MPD::CommandBuilder.build("find", expression)
+
+      command = %q{find "(Artist == \"foo\\'bar\\\"\")"}
+      result.should eq command
+    end
   end
 end
