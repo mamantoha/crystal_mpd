@@ -1372,7 +1372,7 @@ module MPD
       when String
         %{"#{escape(arg)}"}
       when Int32
-        %{"#{escape(arg.to_s)}"}
+        arg.to_s
       else
         ""
       end
@@ -1638,7 +1638,7 @@ module MPD
 
     # :nodoc:
     private def boolean(value : Bool)
-      value ? "1" : "0"
+      value ? 1 : 0
     end
 
     # :nodoc:
