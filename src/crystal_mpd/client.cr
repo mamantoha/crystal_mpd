@@ -619,7 +619,7 @@ module MPD
 
     # :ditto:
     def searchaddpl(name : String, filter : MPD::Filter, *, sort : String? = nil, window : MPD::Range? = nil, position : Int32 | String | Nil = nil)
-      searchaddpl(name, filter.to_s, sort: sort, window: windows, position: position)
+      searchaddpl(name, filter.to_s, sort: sort, window: window, position: position)
     end
 
     # Count the number of songs and their total playtime in the database matching `filter`.
@@ -1079,7 +1079,7 @@ module MPD
 
     # :ditto:
     def search(filter : MPD::Filter, *, sort : String? = nil, window : MPD::Range? = nil)
-      search(filter.to_s, sort: sort, window: windows)
+      search(filter.to_s, sort: sort, window: window)
     end
 
     # Search the database for songs matching `filter` and add them to the queue.
