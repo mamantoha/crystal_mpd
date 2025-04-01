@@ -1340,13 +1340,8 @@ module MPD
 
     # :nodoc:
     private def write_command(command : String, *args)
-      parts = [command]
-
-      args.each do |arg|
-        parts << parse_arg(arg)
-      end
-
-      write_line(parts.join(' '))
+      line = MPD::CommandBuilder.build(command, *args)
+      write_line(line)
     end
 
     # :nodoc:
@@ -1358,24 +1353,6 @@ module MPD
       end
 
       {{retval.id}}
-    end
-
-    # :nodoc:
-    private def parse_arg(arg) : String
-      case arg
-      when MPD::Range
-        parse_range(arg)
-      when Hash
-        arg.reduce([] of String) do |acc, (key, value)|
-          acc << "#{key} #{value}"
-        end.join(" ")
-      when String
-        %{"#{escape(arg)}"}
-      when Int32
-        arg.to_s
-      else
-        ""
-      end
     end
 
     # :nodoc:
