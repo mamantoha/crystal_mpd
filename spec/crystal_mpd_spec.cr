@@ -5,7 +5,7 @@ describe MPD do
     (MPD::VERSION).should be_a(String)
   end
 
-  it "initialize new MPD client without params" do
+  it "initialize new MPD client without params", tags: "network" do
     with_server do |_host, _port, wants_close|
       client = MPD::Client.new
 
@@ -27,7 +27,7 @@ describe MPD do
     end
   end
 
-  it "initialized MPD client should have version" do
+  it "initialized MPD client should have version", tags: "network" do
     with_server do |_host, _port, wants_close|
       client = MPD::Client.new
 
@@ -37,7 +37,7 @@ describe MPD do
     end
   end
 
-  it "successfully disconnect MPD client" do
+  it "successfully disconnect MPD client", tags: "network" do
     with_server do |_host, _port, wants_close|
       client = MPD::Client.new
       client.disconnect
@@ -49,7 +49,7 @@ describe MPD do
     end
   end
 
-  it "disconnect MPD client 2 times should not raise error" do
+  it "disconnect MPD client 2 times should not raise error", tags: "network" do
     with_server do |_host, _port, wants_close|
       client = MPD::Client.new
       client.disconnect

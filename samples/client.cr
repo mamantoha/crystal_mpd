@@ -76,7 +76,7 @@ puts client.currentsong
 # puts client.search("(any =~ 'crystal')")
 # client.prioid(100, 10)
 # client.prio(255, 1..2)
-# puts client.find("(artist == 'Порнофильмы')")
+# puts client.find(%q{(Artist == "foo\'bar\"")})
 # puts client.clear
 # puts client.findadd("(genre == 'Alternative Rock')")
 # puts client.add("world/a")
