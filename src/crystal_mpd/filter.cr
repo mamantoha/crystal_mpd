@@ -6,13 +6,22 @@ module MPD
       @parts = [] of String
     end
 
+    private def escape(value : String) : String
+      value
+        .gsub("\\", "\\\\\\\\")
+        .gsub("'", "\\'")
+        .gsub("\"", "\\\"")
+    end
+
     private def add(tag : String, op : String, value : String)
-      @parts << "(#{tag} #{op} '#{value}')"
+      escaped = escape(value)
+      @parts << "(#{tag} #{op} \"#{escaped}\")"
       self
     end
 
     private def add_neg(tag : String, op : String, value : String)
-      @parts << "(!(#{tag} #{op} '#{value}'))"
+      escaped = escape(value)
+      @parts << "(!(#{tag} #{op} \"#{escaped}\"))"
       self
     end
 
