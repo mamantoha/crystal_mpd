@@ -1357,18 +1357,10 @@ module MPD
 
     # :nodoc:
     private def parse_range(range : MPD::Range) : String
-      range_start = range.begin
-      range_end = range.end
-
-      p! range_start
-      p! range_end
-
-      range_start = 0 if range_start.nil? || range_start < 0
-      range_end = -1 if range_end.nil?
-      range_end += 1 unless range.exclusive?
-      range_end = nil if range_end <= 0
-
-      "#{range_start}:#{range_end}"
+      start = range.begin || 0
+      end_ = range.end || -1
+      end_ += 1 unless range.exclusive?
+      "#{start}:#{end_}"
     end
 
     # :nodoc:
