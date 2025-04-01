@@ -165,7 +165,7 @@ filter = MPD::Filter.new
   .contains("Album", "Meteora")
   .not_eq("Title", "Numb")
 
-client.find(filter.to_s)
+client.find(filter)
 ```
 
 This is equivalent to:
@@ -201,6 +201,21 @@ client.find(expression)
 | `not(filter)`                 | `(!...)`                          |
 
 Chaining multiple filters implies logical `AND`.
+
+Negate an expression with `#not`.
+
+```crystal
+inner = MPD::Filter.new.eq("Genre", "Pop")
+outer = MPD::Filter.new.not(inner)
+# => "(!(Genre == \"Pop\"))"
+```
+
+which is equivalent to
+
+```crystal
+MPD::Filter.new.not_eq("Genre", "Pop")
+# => "(Genre != \"Pop\")"
+```
 
 ### Callbacks
 
