@@ -8,7 +8,7 @@ module MPD
 
     private def escape(value : String) : String
       value
-        .gsub("\\", "\\\\\\\\")
+        .gsub("\\", "\\\\")
         .gsub("'", "\\'")
         .gsub("\"", "\\\"")
     end
