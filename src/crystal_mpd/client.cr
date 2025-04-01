@@ -430,6 +430,11 @@ module MPD
       end
     end
 
+    # :ditto:
+    def playlistsearch(filter : MPD::Filter, *, sort : String? = nil, window : MPD::Range? = nil)
+      playlistsearch(filter.to_s, sort: sort, window: window)
+    end
+
     # Search the queue for songs matching `filter`.
     #
     # `sort` sorts the result by the specified tag.
@@ -452,6 +457,11 @@ module MPD
         write_command("playlistfind", filter, hash)
         execute("fetch_songs")
       end
+    end
+
+    # :ditto
+    def playlistfind(filter : MPD::Filter, *, sort : String? = nil, window : MPD::Range? = nil)
+      playlistfind(filter.to_s, sort: sort, window: window)
     end
 
     # Deletes a song from the playlist.
@@ -607,6 +617,11 @@ module MPD
       end
     end
 
+    # :ditto:
+    def searchaddpl(name : String, filter : MPD::Filter, *, sort : String? = nil, window : MPD::Range? = nil, position : Int32 | String | Nil = nil)
+      searchaddpl(name, filter.to_s, sort: sort, window: windows, position: position)
+    end
+
     # Count the number of songs and their total playtime in the database matching `filter`.
     # Parameters have the same meaning as for `count` except the search is not case sensitive.
     def searchcount(filter : String, *, group : String? = nil)
@@ -619,6 +634,11 @@ module MPD
 
         execute("fetch_counts")
       end
+    end
+
+    # :ditto:
+    def searchcount(filter : MPD::Filter, *, group : String? = nil)
+      searchcount(filter.to_s, group: group)
     end
 
     # Lists the songs in the playlist `name`.
@@ -664,6 +684,11 @@ module MPD
         write_command("searchplaylist", name, filter, hash)
         execute("fetch_songs")
       end
+    end
+
+    # :ditto:
+    def searchplaylist(name : String, filter : MPD::Filter | Nil = nil, *, window : MPD::Range? = nil)
+      searchplaylist(name, filter, window: window)
     end
 
     # Adds `uri` to the playlist `name`.m3u.
@@ -826,6 +851,11 @@ module MPD
       end
     end
 
+    # :ditto:
+    def list(type : String, filter : MPD::Filter | Nil = nil, *, group : String? = nil, window : MPD::Range? = nil)
+      list(type, filter.to_s, group: group, window: window)
+    end
+
     # Locate album art for the given song
     def albumart(uri : String)
       fetch_binary(IO::Memory.new, 0, "albumart", uri)
@@ -861,6 +891,11 @@ module MPD
 
         execute("fetch_counts")
       end
+    end
+
+    # :ditto:
+    def count(filter : MPD::Filter, *, group : String? = nil)
+      count(filter, group: group)
     end
 
     # Sets random state to `state`, `state` should be `false` or `true`.
@@ -1018,6 +1053,11 @@ module MPD
       end
     end
 
+    # :ditto:
+    def find(filter : MPD::Filter, *, sort : String? = nil, window : MPD::Range? = nil)
+      find(filter.to_s, sort: sort, window: window)
+    end
+
     # Search the database for songs matching `filter`.
     #
     # Parameters have the same meaning as for `#find`, except that search is not case sensitive.
@@ -1035,6 +1075,11 @@ module MPD
         write_command("search", filter, hash)
         execute("fetch_songs")
       end
+    end
+
+    # :ditto:
+    def search(filter : MPD::Filter, *, sort : String? = nil, window : MPD::Range? = nil)
+      search(filter.to_s, sort: sort, window: windows)
     end
 
     # Search the database for songs matching `filter` and add them to the queue.
@@ -1057,6 +1102,11 @@ module MPD
       end
     end
 
+    # :ditto:
+    def findadd(filter : MPD::Filter, *, sort : String? = nil, window : MPD::Range? = nil, position : Int32 | String | Nil = nil)
+      findadd(filter.to_s, sort: sort, window: window, position: position)
+    end
+
     # Search the database for songs matching `filter` and add them to the queue.
     #
     # Parameters have the same meaning as for `#search`.
@@ -1074,6 +1124,11 @@ module MPD
         write_command("searchadd", filter, hash)
         execute("fetch_nothing")
       end
+    end
+
+    # :ditto:
+    def searchadd(filter : MPD::Filter, *, sort : String? = nil, window : MPD::Range? = nil, position : Int32 | String | Nil = nil)
+      searchadd(filter.to_s, sort: sort, window: window, position: position)
     end
 
     # Lists all songs and directories in `uri`.
