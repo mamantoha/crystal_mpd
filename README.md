@@ -151,6 +151,53 @@ client.searchaddpl("alt_rock", "(genre == 'Alternative Rock')", sort: "-ArtistSo
 client.list("filename", "((artist == 'Linkin Park') AND (date == '2003'))")
 ```
 
+#### Build MPD query expressions in Crystal
+
+You can build expressions using chainable methods like `#eq`, `#contains`, `#not_eq`, and logical `#not`.
+
+```crystal
+client = MPD::Client.new
+
+filter = MPD::Filter.new
+  .eq("Artist", "Linkin Park")
+  .contains("Album", "Meteora")
+  .not_eq("Title", "Numb")
+
+client.find(filter.to_s)
+```
+
+This is equivalent to:
+
+```crystal
+expression = "((Artist == 'Linkin Park') AND (Album contains 'Meteora') AND (Title != 'Numb'))"
+
+client.find(expression)
+```
+
+| Method                        | MPD Equivalent                    |
+| ----------------------------- | --------------------------------- |
+| `eq(tag, value)`              | `(tag == 'value')`                |
+| `not_eq(tag, value)`          | `(tag != 'value')`                |
+| `eq_cs(tag, value)`           | `(tag eq_cs 'value')`             |
+| `eq_ci(tag, value)`           | `(tag eq_ci 'value')`             |
+| `not_eq_cs(tag, value)`       | `(!(tag eq_cs 'value'))`          |
+| `not_eq_ci(tag, value)`       | `(!(tag eq_ci 'value'))`          |
+| `contains(tag, value)`        | `(tag contains 'value')`          |
+| `not_contains(tag, value)`    | `(!(tag contains 'value'))`       |
+| `contains_cs(tag, value)`     | `(tag contains_cs 'value')`       |
+| `contains_ci(tag, value)`     | `(tag contains_ci 'value')`       |
+| `not_contains_cs(tag, value)` | `(!(tag contains_cs 'value'))`    |
+| `not_contains_ci(tag, value)` | `(!(tag contains_ci 'value'))`    |
+| `starts_with(tag, value)`     | `(tag starts_with 'value')`       |
+| `not_starts_with(tag, value)` | `(!(tag starts_with 'value'))`    |
+| `starts_with_cs(tag, value)`  | `(tag starts_with_cs 'value')`    |
+| `starts_with_ci(tag, value)`  | `(tag starts_with_ci 'value')`    |
+| `not_starts_with_cs(tag,val)` | `(!(tag starts_with_cs 'value'))` |
+| `not_starts_with_ci(tag,val)` | `(!(tag starts_with_ci 'value'))` |
+| `not(filter)`                 | `(!...)`                          |
+
+Chaining multiple filters implies logical `AND`.
+
 ### Callbacks
 
 Callbacks are a simple way to make your client respond to events, rather that have to continuously ask the server for updates. This is done by having a background thread continuously check the server for changes.
