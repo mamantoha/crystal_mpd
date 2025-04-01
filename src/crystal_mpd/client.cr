@@ -3,7 +3,7 @@ module MPD
   alias Objects = Array(MPD::Object)
   alias Pair = Array(String)
   alias Pairs = Array(MPD::Pair)
-  alias Range = ::Range(Int32, Int32) | ::Range(Nil, Int32) | ::Range(Int32, Nil)
+  alias Range = ::Range(Int32, Int32) | ::Range(Nil, Int32) | ::Range(Int32, Nil) | ::Range(Nil, Nil)
 
   # An MPD Client.
   #
@@ -1359,6 +1359,9 @@ module MPD
     private def parse_range(range : MPD::Range) : String
       range_start = range.begin
       range_end = range.end
+
+      p! range_start
+      p! range_end
 
       range_start = 0 if range_start.nil? || range_start < 0
       range_end = -1 if range_end.nil?
