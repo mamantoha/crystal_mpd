@@ -160,10 +160,11 @@ You can build expressions using chainable methods like `#eq`, `#contains`, `#not
 ```crystal
 client = MPD::Client.new
 
-filter = MPD::Filter.new
-  .eq("Artist", "Linkin Park")
-  .contains("Album", "Meteora")
-  .not_eq("Title", "Numb")
+filter =
+  MPD::Filter
+    .eq("Artist", "Linkin Park")
+    .contains("Album", "Meteora")
+    .not_eq("Title", "Numb")
 
 client.find(filter)
 ```
@@ -205,15 +206,15 @@ Chaining multiple filters implies logical `AND`.
 Negate an expression with `#not`.
 
 ```crystal
-inner = MPD::Filter.new.eq("Genre", "Pop")
-outer = MPD::Filter.new.not(inner)
+inner = MPD::Filter.eq("Genre", "Pop")
+outer = MPD::Filter.not(inner)
 # => "(!(Genre == \"Pop\"))"
 ```
 
 which is equivalent to
 
 ```crystal
-MPD::Filter.new.not_eq("Genre", "Pop")
+MPD::Filter.not_eq("Genre", "Pop")
 # => "(Genre != \"Pop\")"
 ```
 
