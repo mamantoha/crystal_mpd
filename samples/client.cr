@@ -77,6 +77,8 @@ puts client.currentsong
 # client.prioid(100, 10)
 # client.prio(255, 1..2)
 # puts client.find(%q{(Artist == "foo\'bar\"")})
+# puts client.find(MPD::Filter.new.match("Genre", ".* Rock"))
+# puts client.find(MPD::Filter.new.not_match("Genre", "Alternative*?|Trip-Hop"))
 # puts client.clear
 # puts client.findadd("(genre == 'Alternative Rock')")
 # puts client.add("world/a")
