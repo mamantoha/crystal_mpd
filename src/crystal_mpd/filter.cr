@@ -59,7 +59,8 @@ module MPD
       new.not_match(tag, value)
     end
 
-    OPERATORS = [
+    # :nodoc:
+    private OPERATORS = [
       "eq_cs",
       "eq_ci",
       "contains",
