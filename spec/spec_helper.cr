@@ -1,8 +1,28 @@
 require "spec"
 require "../src/crystal_mpd"
 
-def handle_client(client)
-  client.puts("OK MPD 0.21.4")
+def handle_client(client : TCPSocket)
+  client.puts("OK MPD 0.24.2")
+
+  while line = client.gets
+    case line
+    when .starts_with?("find ")
+      client.puts("file: music/foo.mp3")
+      client.puts("Title: foo")
+      client.puts("Artist: foo'bar\"")
+      client.puts("OK")
+    when .starts_with?("playid ")
+      song_id = line.split(" ")[1].to_i
+
+      if song_id == 1
+        client.puts("OK")
+      else
+        client.puts("ACK [50@0] {playid} No such song")
+      end
+    else
+      client.puts("ACK [5@0] {} unknown command")
+    end
+  end
 ensure
   client.close
 end
