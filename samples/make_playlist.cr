@@ -49,9 +49,7 @@ client.clear
 
 tag = options["tag"].as(String)
 query = options["query"].as(String)
-filter = MPD::Filter.eq(tag, query)
-
-songs = client.search(filter)
+songs = client.search &.eq(tag, query)
 
 client.with_command_list do
   songs.not_nil!.each do |song|
