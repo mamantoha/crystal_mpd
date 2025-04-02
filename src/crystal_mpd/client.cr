@@ -435,6 +435,13 @@ module MPD
       playlistsearch(filter.to_s, sort: sort, window: window)
     end
 
+    # :ditto:
+    def playlistsearch(*, sort : String? = nil, window : MPD::Range? = nil, &block : MPD::Filter ->)
+      filter = MPD::Filter.new
+      yield filter
+      playlistsearch(filter.to_s, sort: sort, window: window)
+    end
+
     # Search the queue for songs matching `filter`.
     #
     # `sort` sorts the result by the specified tag.
@@ -461,6 +468,13 @@ module MPD
 
     # :ditto
     def playlistfind(filter : MPD::Filter, *, sort : String? = nil, window : MPD::Range? = nil)
+      playlistfind(filter.to_s, sort: sort, window: window)
+    end
+
+    # :ditto
+    def playlistfind(*, sort : String? = nil, window : MPD::Range? = nil, &block : MPD::Filter ->)
+      filter = MPD::Filter.new
+      yield filter
       playlistfind(filter.to_s, sort: sort, window: window)
     end
 
@@ -622,6 +636,13 @@ module MPD
       searchaddpl(name, filter.to_s, sort: sort, window: window, position: position)
     end
 
+    # :ditto:
+    def searchaddpl(name : String, *, sort : String? = nil, window : MPD::Range? = nil, position : Int32 | String | Nil = nil, &block : MPD::Filter ->)
+      filter = MPD::Filter.new
+      yield filter
+      searchaddpl(name, filter.to_s, sort: sort, window: window, position: position)
+    end
+
     # Count the number of songs and their total playtime in the database matching `filter`.
     # Parameters have the same meaning as for `count` except the search is not case sensitive.
     def searchcount(filter : String, *, group : String? = nil)
@@ -638,6 +659,13 @@ module MPD
 
     # :ditto:
     def searchcount(filter : MPD::Filter, *, group : String? = nil)
+      searchcount(filter.to_s, group: group)
+    end
+
+    # :ditto:
+    def searchcount(*, group : String? = nil, &block : MPD::Filter ->)
+      filter = MPD::Filter.new
+      yield filter
       searchcount(filter.to_s, group: group)
     end
 
@@ -675,7 +703,7 @@ module MPD
 
     # Search the playlist for songs matching `filter`.
     # A range may be specified to list only a part of the playlist.
-    def searchplaylist(name : String, filter : String | Nil = nil, *, window : MPD::Range? = nil)
+    def searchplaylist(name : String, filter : String, *, window : MPD::Range? = nil)
       synchronize do
         hash = {} of String => String
 
@@ -687,7 +715,14 @@ module MPD
     end
 
     # :ditto:
-    def searchplaylist(name : String, filter : MPD::Filter | Nil = nil, *, window : MPD::Range? = nil)
+    def searchplaylist(name : String, filter : MPD::Filter, *, window : MPD::Range? = nil)
+      searchplaylist(name, filter, window: window)
+    end
+
+    # :ditto:
+    def searchplaylist(name : String, *, window : MPD::Range? = nil, &block : MPD::Filter ->)
+      filter = MPD::Filter.new
+      yield filter
       searchplaylist(name, filter, window: window)
     end
 
@@ -856,6 +891,13 @@ module MPD
       list(type, filter.to_s, group: group, window: window)
     end
 
+    # :ditto:
+    def list(type : String, *, group : String? = nil, window : MPD::Range? = nil, &block : MPD::Filter ->)
+      filter = MPD::Filter.new
+      yield filter
+      list(type, filter.to_s, group: group, window: window)
+    end
+
     # Locate album art for the given song
     def albumart(uri : String)
       fetch_binary(IO::Memory.new, 0, "albumart", uri)
@@ -895,6 +937,13 @@ module MPD
 
     # :ditto:
     def count(filter : MPD::Filter, *, group : String? = nil)
+      count(filter, group: group)
+    end
+
+    # :ditto:
+    def count(*, group : String? = nil, &block : MPD::Filter ->)
+      filter = MPD::Filter.new
+      yield filter
       count(filter, group: group)
     end
 
@@ -1058,6 +1107,13 @@ module MPD
       find(filter.to_s, sort: sort, window: window)
     end
 
+    # :ditto:
+    def find(*, sort : String? = nil, window : MPD::Range? = nil, &block : MPD::Filter ->)
+      filter = MPD::Filter.new
+      yield filter
+      find(filter.to_s, sort: sort, window: window)
+    end
+
     # Search the database for songs matching `filter`.
     #
     # Parameters have the same meaning as for `#find`, except that search is not case sensitive.
@@ -1079,6 +1135,13 @@ module MPD
 
     # :ditto:
     def search(filter : MPD::Filter, *, sort : String? = nil, window : MPD::Range? = nil)
+      search(filter.to_s, sort: sort, window: window)
+    end
+
+    # :ditto:
+    def search(*, sort : String? = nil, window : MPD::Range? = nil, &block : MPD::Filter ->)
+      filter = MPD::Filter.new
+      yield filter
       search(filter.to_s, sort: sort, window: window)
     end
 
@@ -1107,6 +1170,13 @@ module MPD
       findadd(filter.to_s, sort: sort, window: window, position: position)
     end
 
+    # :ditto:
+    def findadd(*, sort : String? = nil, window : MPD::Range? = nil, position : Int32 | String | Nil = nil, &block : MPD::Filter ->)
+      filter = MPD::Filter.new
+      yield filter
+      findadd(filter.to_s, sort: sort, window: window, position: position)
+    end
+
     # Search the database for songs matching `filter` and add them to the queue.
     #
     # Parameters have the same meaning as for `#search`.
@@ -1128,6 +1198,13 @@ module MPD
 
     # :ditto:
     def searchadd(filter : MPD::Filter, *, sort : String? = nil, window : MPD::Range? = nil, position : Int32 | String | Nil = nil)
+      searchadd(filter.to_s, sort: sort, window: window, position: position)
+    end
+
+    # :ditto:
+    def searchadd(*, sort : String? = nil, window : MPD::Range? = nil, position : Int32 | String | Nil = nil, &block : MPD::Filter ->)
+      filter = MPD::Filter.new
+      yield filter
       searchadd(filter.to_s, sort: sort, window: window, position: position)
     end
 

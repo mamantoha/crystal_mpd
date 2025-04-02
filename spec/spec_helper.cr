@@ -7,10 +7,16 @@ def handle_client(client : TCPSocket)
   while line = client.gets
     case line
     when .starts_with?("find ")
-      client.puts("file: music/foo.mp3")
-      client.puts("Title: foo")
-      client.puts("Artist: foo'bar\"")
-      client.puts("OK")
+      expression = line.split(" ", 2)[1]
+
+      if expression == "\"(Artist == \\\"Nirvana\\\")\" "
+        client.puts("file: music/foo.mp3")
+        client.puts("Title: Smells Like Teen Spirit")
+        client.puts("Artist: Nirvana")
+        client.puts("OK")
+      else
+        client.puts("OK")
+      end
     when .starts_with?("playid ")
       song_id = line.split(" ")[1].to_i
 
