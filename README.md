@@ -153,7 +153,7 @@ client.list("filename", "((artist == 'Linkin Park') AND (date == '2003'))")
 
 #### Build MPD query expressions in Crystal
 
-The `MPD::Filter` class helps you construct complex MPD filter expressions using a fluent and chainable DSL — fully compatible with (MPD) filter syntax.
+The `MPD::Filter` class helps you construct complex MPD filter expressions using a fluent and chainable DSL — fully compatible with MPD filter syntax.
 
 You can build expressions using chainable methods like `#eq`, `#contains`, `#not_eq`, and logical `#not`.
 
@@ -175,7 +175,7 @@ expression = "((Artist == 'Linkin Park') AND (Album contains 'Meteora') AND (Tit
 client.find(expression)
 ```
 
-You can use this block-based filter DSL like:
+You can also use this block-based filter DSL like:
 
 ```crystal
 client.find(sort: "Track") do |filter|
