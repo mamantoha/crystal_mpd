@@ -34,71 +34,26 @@ module MPD
       add(tag, "!=", value)
     end
 
-    def eq_cs(tag : String, value : String)
-      add(tag, "eq_cs", value)
-    end
+    OPERATORS = [
+      "eq_cs",
+      "eq_ci",
+      "contains",
+      "contains_cs",
+      "contains_ci",
+      "starts_with",
+      "starts_with_cs",
+      "starts_with_ci",
+    ]
 
-    def eq_ci(tag : String, value : String)
-      add(tag, "eq_ci", value)
-    end
+    {% for operator in OPERATORS %}
+      def {{operator.id}}(tag : String, value : String)
+        add(tag, "{{operator.id}}", value)
+      end
 
-    def not_eq_cs(tag : String, value : String)
-      add_neg(tag, "eq_cs", value)
-    end
-
-    def not_eq_ci(tag : String, value : String)
-      add_neg(tag, "eq_ci", value)
-    end
-
-    # contains
-    def contains(tag : String, value : String)
-      add(tag, "contains", value)
-    end
-
-    def not_contains(tag : String, value : String)
-      add_neg(tag, "contains", value)
-    end
-
-    def contains_cs(tag : String, value : String)
-      add(tag, "contains_cs", value)
-    end
-
-    def contains_ci(tag : String, value : String)
-      add(tag, "contains_ci", value)
-    end
-
-    def not_contains_cs(tag : String, value : String)
-      add_neg(tag, "contains_cs", value)
-    end
-
-    def not_contains_ci(tag : String, value : String)
-      add_neg(tag, "contains_ci", value)
-    end
-
-    # starts_with
-    def starts_with(tag : String, value : String)
-      add(tag, "starts_with", value)
-    end
-
-    def not_starts_with(tag : String, value : String)
-      add_neg(tag, "starts_with", value)
-    end
-
-    def starts_with_cs(tag : String, value : String)
-      add(tag, "starts_with_cs", value)
-    end
-
-    def starts_with_ci(tag : String, value : String)
-      add(tag, "starts_with_ci", value)
-    end
-
-    def not_starts_with_cs(tag : String, value : String)
-      add_neg(tag, "starts_with_cs", value)
-    end
-
-    def not_starts_with_ci(tag : String, value : String)
-      add_neg(tag, "starts_with_ci", value)
-    end
+      def not_{{operator.id}}(tag : String, value : String)
+        add_neg(tag, "{{operator.id}}", value)
+      end
+    {% end %}
 
     # Logical NOT for nested filters
     def not(expr : Filter)
