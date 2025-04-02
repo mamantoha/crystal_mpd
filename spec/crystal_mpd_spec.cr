@@ -65,11 +65,24 @@ describe MPD do
   it "sends a find command and receives a response", tags: "network" do
     with_server do |_host, _port, wants_close|
       client = MPD::Client.new
-      filter = MPD::Filter.new.eq("Artist", "foo'bar\"")
+      filter = MPD::Filter.new.eq("Artist", "Nirvana")
 
       client.find(filter).try do |result|
         result.first["file"].should eq("music/foo.mp3")
-        result.first["Artist"].should eq("foo'bar\"")
+        result.first["Artist"].should eq("Nirvana")
+      end
+    ensure
+      wants_close.send(nil)
+    end
+  end
+
+  it "sends a find command with a block and receives a response", tags: "network" do
+    with_server do |_host, _port, wants_close|
+      client = MPD::Client.new
+
+      client.find { |f| f.eq("Artist", "Nirvana") }.try do |result|
+        result.first["file"].should eq("music/foo.mp3")
+        result.first["Artist"].should eq("Nirvana")
       end
     ensure
       wants_close.send(nil)
