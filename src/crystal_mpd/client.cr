@@ -422,8 +422,8 @@ module MPD
       synchronize do
         hash = {} of String => String
 
-        sort.try { hash["sort"] = sort }
-        window.try { hash["window"] = parse_range(window) }
+        sort.try { |_sort| hash["sort"] = _sort }
+        window.try { |_window| hash["window"] = parse_range(_window) }
 
         write_command("playlistsearch", filter, hash)
         execute("fetch_songs")
@@ -439,6 +439,8 @@ module MPD
     def playlistsearch(*, sort : String? = nil, window : MPD::Range? = nil, &block : MPD::Filter ->)
       filter = MPD::Filter.new
       yield filter
+      sort ||= filter.sort
+      window ||= filter.window
       playlistsearch(filter.to_s, sort: sort, window: window)
     end
 
@@ -458,8 +460,8 @@ module MPD
       synchronize do
         hash = {} of String => String
 
-        sort.try { hash["sort"] = sort }
-        window.try { hash["window"] = parse_range(window) }
+        sort.try { |_sort| hash["sort"] = _sort }
+        window.try { |_window| hash["window"] = parse_range(_window) }
 
         write_command("playlistfind", filter, hash)
         execute("fetch_songs")
@@ -475,6 +477,8 @@ module MPD
     def playlistfind(*, sort : String? = nil, window : MPD::Range? = nil, &block : MPD::Filter ->)
       filter = MPD::Filter.new
       yield filter
+      sort ||= filter.sort
+      window ||= filter.window
       playlistfind(filter.to_s, sort: sort, window: window)
     end
 
@@ -622,9 +626,9 @@ module MPD
       synchronize do
         hash = {} of String => String
 
-        sort.try { hash["sort"] = sort }
-        window.try { hash["window"] = parse_range(window) }
-        position.try { hash["position"] = position }
+        sort.try { |_sort| hash["sort"] = _sort }
+        window.try { |_window| hash["window"] = parse_range(_window) }
+        position.try { |_position| hash["position"] = _position }
 
         write_command("searchaddpl", name, filter, hash)
         execute("fetch_nothing")
@@ -640,6 +644,8 @@ module MPD
     def searchaddpl(name : String, *, sort : String? = nil, window : MPD::Range? = nil, position : Int32 | String | Nil = nil, &block : MPD::Filter ->)
       filter = MPD::Filter.new
       yield filter
+      sort ||= filter.sort
+      window ||= filter.window
       searchaddpl(name, filter.to_s, sort: sort, window: window, position: position)
     end
 
@@ -649,7 +655,7 @@ module MPD
       synchronize do
         hash = {} of String => String
 
-        group.try { hash["group"] = group }
+        group.try { |_group| hash["group"] = _group }
 
         write_command("searchcount", filter, hash)
 
@@ -707,7 +713,7 @@ module MPD
       synchronize do
         hash = {} of String => String
 
-        window.try { hash["window"] = parse_range(window) }
+        window.try { |_window| hash["window"] = parse_range(_window) }
 
         write_command("searchplaylist", name, filter, hash)
         execute("fetch_songs")
@@ -878,8 +884,8 @@ module MPD
       synchronize do
         hash = {} of String => String
 
-        group.try { hash["group"] = group }
-        window.try { hash["window"] = parse_range(window) }
+        group.try { |_group| hash["group"] = _group }
+        window.try { |_window| hash["window"] = parse_range(_window) }
 
         write_command("list", type, filter, hash)
         execute("fetch_list")
@@ -927,7 +933,7 @@ module MPD
       synchronize do
         hash = {} of String => String
 
-        group.try { hash["group"] = group }
+        group.try { |_group| hash["group"] = _group }
 
         write_command("count", filter, hash)
 
@@ -1094,8 +1100,8 @@ module MPD
       synchronize do
         hash = {} of String => String
 
-        sort.try { hash["sort"] = sort }
-        window.try { hash["window"] = parse_range(window) }
+        sort.try { |_sort| hash["sort"] = _sort }
+        window.try { |_window| hash["window"] = parse_range(_window) }
 
         write_command("find", filter, hash)
         execute("fetch_songs")
@@ -1111,6 +1117,8 @@ module MPD
     def find(*, sort : String? = nil, window : MPD::Range? = nil, &block : MPD::Filter ->)
       filter = MPD::Filter.new
       yield filter
+      sort ||= filter.sort
+      window ||= filter.window
       find(filter.to_s, sort: sort, window: window)
     end
 
@@ -1125,8 +1133,8 @@ module MPD
       synchronize do
         hash = {} of String => String
 
-        sort.try { hash["sort"] = sort }
-        window.try { hash["window"] = parse_range(window) }
+        sort.try { |_sort| hash["sort"] = _sort }
+        window.try { |_window| hash["window"] = parse_range(_window) }
 
         write_command("search", filter, hash)
         execute("fetch_songs")
@@ -1142,6 +1150,8 @@ module MPD
     def search(*, sort : String? = nil, window : MPD::Range? = nil, &block : MPD::Filter ->)
       filter = MPD::Filter.new
       yield filter
+      sort ||= filter.sort
+      window ||= filter.window
       search(filter.to_s, sort: sort, window: window)
     end
 
@@ -1156,9 +1166,9 @@ module MPD
       synchronize do
         hash = {} of String => String
 
-        sort.try { hash["sort"] = sort }
-        window.try { hash["window"] = parse_range(window) }
-        position.try { hash["position"] = position }
+        sort.try { |_sort| hash["sort"] = _sort }
+        window.try { |_window| hash["window"] = parse_range(_window) }
+        position.try { |_position| hash["position"] = _position }
 
         write_command("findadd", filter, hash)
         execute("fetch_nothing")
@@ -1174,6 +1184,9 @@ module MPD
     def findadd(*, sort : String? = nil, window : MPD::Range? = nil, position : Int32 | String | Nil = nil, &block : MPD::Filter ->)
       filter = MPD::Filter.new
       yield filter
+      sort ||= filter.sort
+      window ||= filter.window
+
       findadd(filter.to_s, sort: sort, window: window, position: position)
     end
 
@@ -1187,9 +1200,9 @@ module MPD
       synchronize do
         hash = {} of String => String
 
-        sort.try { hash["sort"] = sort }
-        window.try { hash["window"] = parse_range(window) }
-        position.try { hash["position"] = position }
+        sort.try { |_sort| hash["sort"] = _sort }
+        window.try { |_window| hash["window"] = parse_range(_window) }
+        position.try { |_position| hash["position"] = _position }
 
         write_command("searchadd", filter, hash)
         execute("fetch_nothing")
@@ -1421,8 +1434,8 @@ module MPD
       synchronize do
         hash = {} of String => String
 
-        sort.try { hash["sort"] = sort }
-        window.try { hash["window"] = parse_range(window) }
+        sort.try { |_sort| hash["sort"] = _sort }
+        window.try { |_window| hash["window"] = parse_range(_window) }
 
         write_command("sticker find", type, uri, name, hash)
         execute("fetch_songs")
@@ -1438,8 +1451,8 @@ module MPD
       synchronize do
         hash = {} of String => String
 
-        sort.try { hash["sort"] = sort }
-        window.try { hash["window"] = parse_range(window) }
+        sort.try { |_sort| hash["sort"] = _sort }
+        window.try { |_window| hash["window"] = parse_range(_window) }
 
         write_command("sticker find", type, uri, name, hash)
         execute("fetch_songs")

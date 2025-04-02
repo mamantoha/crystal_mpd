@@ -1,9 +1,21 @@
 module MPD
   class Filter
     @parts : Array(String)
+    getter sort : String?
+    getter window : MPD::Range?
 
     def initialize
       @parts = [] of String
+    end
+
+    def sort(tag : String)
+      @sort = tag
+      self
+    end
+
+    def window(range : MPD::Range)
+      @window = range
+      self
     end
 
     private def escape(value : String) : String
