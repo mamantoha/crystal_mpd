@@ -31,7 +31,7 @@ describe MPD do
     with_server do |_host, _port, wants_close|
       client = MPD::Client.new
 
-      (client.version).should eq("0.21.4")
+      (client.version).should eq("0.24.2")
     ensure
       wants_close.send(nil)
     end
@@ -57,6 +57,32 @@ describe MPD do
 
       (client.version).should eq(nil)
       (client.connected?).should eq(false)
+    ensure
+      wants_close.send(nil)
+    end
+  end
+
+  it "sends a find command and receives a response", tags: "network" do
+    with_server do |_host, _port, wants_close|
+      client = MPD::Client.new
+      filter = MPD::Filter.new.eq("Artist", "foo'bar\"")
+
+      client.find(filter).try do |result|
+        result.first["file"].should eq("music/foo.mp3")
+        result.first["Artist"].should eq("foo'bar\"")
+      end
+    ensure
+      wants_close.send(nil)
+    end
+  end
+
+  it "raises an error", tags: "network" do
+    with_server do |_host, _port, wants_close|
+      client = MPD::Client.new
+
+      expect_raises(MPD::Error, "[50@0] {playid} No such song") do
+        client.playid(2)
+      end
     ensure
       wants_close.send(nil)
     end
