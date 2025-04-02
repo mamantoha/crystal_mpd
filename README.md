@@ -141,7 +141,7 @@ client.delete(...2)
 
 Filters [documentation](https://mpd.readthedocs.io/en/latest/protocol.html#filters)
 
-All commands which search for songs (`find`, `search`, `searchadd`, `searchaddpl`, `findadd`, `list`, and `count`) share a common filter syntax.
+All commands which search for songs (`playlistsearch`, `playlistfind`, `searchaddpl`, `searchcount`, `searchplaylist`, `list`, `count`, `find`, `search`, `findadd`, `searchadd`) share a common filter syntax.
 
 The `find` commands are case sensitive, which `search` and related commands ignore case.
 
@@ -158,8 +158,6 @@ The `MPD::Filter` class helps you construct complex MPD filter expressions using
 You can build expressions using chainable methods like `#eq`, `#contains`, `#not_eq`, and logical `#not`.
 
 ```crystal
-client = MPD::Client.new
-
 filter =
   MPD::Filter
     .eq("Artist", "Linkin Park")
@@ -177,12 +175,25 @@ expression = "((Artist == 'Linkin Park') AND (Album contains 'Meteora') AND (Tit
 client.find(expression)
 ```
 
+You can use this block-based filter DSL like:
+
+```crystal
+client.find(sort: "Track") do |filter|
+  filter
+    .eq("Artist", "Linkin Park")
+    .match("Album", "Meteora.*")
+    .not_eq("Title", "Numb")
+end
+```
+
 ##### Supported methods
 
 | Method                        | MPD Equivalent                    |
 | ----------------------------- | --------------------------------- |
 | `eq(tag, value)`              | `(tag == 'value')`                |
 | `not_eq(tag, value)`          | `(tag != 'value')`                |
+| `match(tag, value)`           | `(tag =~ 'value')`                |
+| `not_match(tag, value)`       | `(tag !~ 'value')`                |
 | `eq_cs(tag, value)`           | `(tag eq_cs 'value')`             |
 | `eq_ci(tag, value)`           | `(tag eq_ci 'value')`             |
 | `not_eq_cs(tag, value)`       | `(!(tag eq_cs 'value'))`          |
