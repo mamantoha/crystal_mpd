@@ -49,7 +49,7 @@ client.clear
 
 tag = options["tag"].as(String)
 query = options["query"].as(String)
-filter = MPD::Filter.new.eq(tag, query)
+filter = MPD::Filter.eq(tag, query)
 
 songs = client.search(filter)
 
