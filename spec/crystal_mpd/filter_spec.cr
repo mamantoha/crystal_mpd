@@ -20,6 +20,20 @@ describe MPD::Filter do
     end
   end
 
+  describe "#match" do
+    it "builds match filter" do
+      filter = MPD::Filter.new.match("Genre", ".* Rock")
+      filter.to_s.should eq("(Genre =~ \".* Rock\")")
+    end
+  end
+
+  describe "#not_match" do
+    it "builds inequality filter" do
+      filter = MPD::Filter.new.not_match("Genre", ".*?Pop.*?")
+      filter.to_s.should eq("(Genre !~ \".*?Pop.*?\")")
+    end
+  end
+
   describe "#eq_cs and #eq_ci" do
     it "builds case-sensitive equality" do
       filter = MPD::Filter.new.eq_cs("album", "Hybrid Theory")

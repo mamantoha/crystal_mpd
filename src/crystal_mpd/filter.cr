@@ -34,6 +34,15 @@ module MPD
       add(tag, "!=", value)
     end
 
+    # =~ / !~
+    def match(tag : String, value : String)
+      add(tag, "=~", value)
+    end
+
+    def not_match(tag : String, value : String)
+      add(tag, "!~", value)
+    end
+
     OPERATORS = [
       "eq_cs",
       "eq_ci",
