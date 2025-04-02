@@ -28,7 +28,7 @@ describe MPD::Filter do
   end
 
   describe "#not_match" do
-    it "builds inequality filter" do
+    it "builds not match filter" do
       filter = MPD::Filter.new.not_match("Genre", ".*?Pop.*?")
       filter.to_s.should eq("(Genre !~ \".*?Pop.*?\")")
     end
