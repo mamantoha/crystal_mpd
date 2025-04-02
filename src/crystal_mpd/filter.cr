@@ -30,8 +30,16 @@ module MPD
       add(tag, "==", value)
     end
 
+    def self.eq(tag : String, value : String) : Filter
+      new.eq(tag, value)
+    end
+
     def not_eq(tag : String, value : String)
       add(tag, "!=", value)
+    end
+
+    def self.not_eq(tag : String, value : String) : Filter
+      new.not_eq(tag, value)
     end
 
     # =~ / !~
@@ -39,8 +47,16 @@ module MPD
       add(tag, "=~", value)
     end
 
+    def self.match(tag : String, value : String) : Filter
+      new.match(tag, value)
+    end
+
     def not_match(tag : String, value : String)
       add(tag, "!~", value)
+    end
+
+    def self.not_match(tag : String, value : String) : Filter
+      new.not_match(tag, value)
     end
 
     OPERATORS = [
@@ -59,8 +75,16 @@ module MPD
         add(tag, "{{operator.id}}", value)
       end
 
+      def self.{{operator.id}}(tag : String, value : String)
+        new.{{operator.id}}(tag, value)
+      end
+
       def not_{{operator.id}}(tag : String, value : String)
         add_neg(tag, "{{operator.id}}", value)
+      end
+
+      def self.not_{{operator.id}}(tag : String, value : String)
+        new.not_{{operator.id}}(tag, value)
       end
     {% end %}
 
@@ -68,6 +92,10 @@ module MPD
     def not(expr : Filter)
       @parts << "(!#{expr.to_s})"
       self
+    end
+
+    def self.not(expr : Filter)
+      new.not(expr)
     end
 
     def to_s : String
@@ -79,11 +107,6 @@ module MPD
       else
         "(#{@parts.join(" AND ")})"
       end
-    end
-
-    # Static constructor usage
-    def self.eq(tag : String, value : String) : Filter
-      new.eq(tag, value)
     end
   end
 end

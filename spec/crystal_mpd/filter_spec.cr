@@ -96,8 +96,8 @@ describe MPD::Filter do
     end
 
     it "chains negated filter with another condition" do
-      inner = MPD::Filter.new.contains("title", "intro")
-      outer = MPD::Filter.new.not(inner).eq("genre", "Rock")
+      inner = MPD::Filter.contains("title", "intro")
+      outer = MPD::Filter.not(inner).eq("genre", "Rock")
       outer.to_s.should eq("((!(title contains \"intro\")) AND (genre == \"Rock\"))")
     end
   end
