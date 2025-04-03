@@ -5,6 +5,24 @@ module MPD
   alias Pairs = Array(MPD::Pair)
   alias Range = ::Range(Int32, Int32) | ::Range(Nil, Int32) | ::Range(Int32, Nil) | ::Range(Nil, Nil)
 
+  # Converts a Crystal Range into an MPD-compatible "START:END" string.
+  #
+  # `(0..20)` -> "0:20"
+  # `(0...20)` -> "0:19"
+  # `(..5)` -> "0:5"
+  # `(5..)` -> "5:"
+  def self.parse_range(range : MPD::Range) : String
+    start = range.begin || 0
+    end_ = range.end || nil
+
+    if end_
+      end_ -= 1 if range.exclusive?
+      "#{start}:#{end_}"
+    else
+      "#{start}:"
+    end
+  end
+
   # An MPD Client.
   #
   # ### One-shot usage
@@ -423,7 +441,7 @@ module MPD
         hash = {} of String => String
 
         sort.try { |_sort| hash["sort"] = _sort }
-        window.try { |_window| hash["window"] = parse_range(_window) }
+        window.try { |_window| hash["window"] =MPD.parse_range(_window) }
 
         write_command("playlistsearch", filter, hash)
         execute("fetch_songs")
@@ -461,7 +479,7 @@ module MPD
         hash = {} of String => String
 
         sort.try { |_sort| hash["sort"] = _sort }
-        window.try { |_window| hash["window"] = parse_range(_window) }
+        window.try { |_window| hash["window"] =MPD.parse_range(_window) }
 
         write_command("playlistfind", filter, hash)
         execute("fetch_songs")
@@ -627,7 +645,7 @@ module MPD
         hash = {} of String => String
 
         sort.try { |_sort| hash["sort"] = _sort }
-        window.try { |_window| hash["window"] = parse_range(_window) }
+        window.try { |_window| hash["window"] =MPD.parse_range(_window) }
         position.try { |_position| hash["position"] = _position }
 
         write_command("searchaddpl", name, filter, hash)
@@ -682,7 +700,7 @@ module MPD
     def listplaylist(name : String, range : MPD::Range? = nil)
       synchronize do
         if range
-          write_command("listplaylist", name, parse_range(range))
+          write_command("listplaylist", name,MPD.parse_range(range))
         else
           write_command("listplaylist", name)
         end
@@ -698,7 +716,7 @@ module MPD
     def listplaylistinfo(name : String, range : MPD::Range? = nil)
       synchronize do
         if range
-          write_command("listplaylistinfo", name, parse_range(range))
+          write_command("listplaylistinfo", name,MPD.parse_range(range))
         else
           write_command("listplaylistinfo", name)
         end
@@ -713,7 +731,7 @@ module MPD
       synchronize do
         hash = {} of String => String
 
-        window.try { |_window| hash["window"] = parse_range(_window) }
+        window.try { |_window| hash["window"] =MPD.parse_range(_window) }
 
         write_command("searchplaylist", name, filter, hash)
         execute("fetch_songs")
@@ -759,7 +777,7 @@ module MPD
     # A `priority` is an integer between 0 and 255. The default priority of new songs is 0.
     def prio(priority : Int32, range : MPD::Range)
       synchronize do
-        write_command("prio", priority, parse_range(range))
+        write_command("prio", priority,MPD.parse_range(range))
         execute("fetch_nothing")
       end
     end
@@ -885,7 +903,7 @@ module MPD
         hash = {} of String => String
 
         group.try { |_group| hash["group"] = _group }
-        window.try { |_window| hash["window"] = parse_range(_window) }
+        window.try { |_window| hash["window"] =MPD.parse_range(_window) }
 
         write_command("list", type, filter, hash)
         execute("fetch_list")
@@ -1101,7 +1119,7 @@ module MPD
         hash = {} of String => String
 
         sort.try { |_sort| hash["sort"] = _sort }
-        window.try { |_window| hash["window"] = parse_range(_window) }
+        window.try { |_window| hash["window"] =MPD.parse_range(_window) }
 
         write_command("find", filter, hash)
         execute("fetch_songs")
@@ -1134,7 +1152,7 @@ module MPD
         hash = {} of String => String
 
         sort.try { |_sort| hash["sort"] = _sort }
-        window.try { |_window| hash["window"] = parse_range(_window) }
+        window.try { |_window| hash["window"] =MPD.parse_range(_window) }
 
         write_command("search", filter, hash)
         execute("fetch_songs")
@@ -1167,7 +1185,7 @@ module MPD
         hash = {} of String => String
 
         sort.try { |_sort| hash["sort"] = _sort }
-        window.try { |_window| hash["window"] = parse_range(_window) }
+        window.try { |_window| hash["window"] =MPD.parse_range(_window) }
         position.try { |_position| hash["position"] = _position }
 
         write_command("findadd", filter, hash)
@@ -1201,7 +1219,7 @@ module MPD
         hash = {} of String => String
 
         sort.try { |_sort| hash["sort"] = _sort }
-        window.try { |_window| hash["window"] = parse_range(_window) }
+        window.try { |_window| hash["window"] =MPD.parse_range(_window) }
         position.try { |_position| hash["position"] = _position }
 
         write_command("searchadd", filter, hash)
@@ -1435,7 +1453,7 @@ module MPD
         hash = {} of String => String
 
         sort.try { |_sort| hash["sort"] = _sort }
-        window.try { |_window| hash["window"] = parse_range(_window) }
+        window.try { |_window| hash["window"] =MPD.parse_range(_window) }
 
         write_command("sticker find", type, uri, name, hash)
         execute("fetch_songs")
@@ -1452,7 +1470,7 @@ module MPD
         hash = {} of String => String
 
         sort.try { |_sort| hash["sort"] = _sort }
-        window.try { |_window| hash["window"] = parse_range(_window) }
+        window.try { |_window| hash["window"] =MPD.parse_range(_window) }
 
         write_command("sticker find", type, uri, name, hash)
         execute("fetch_songs")
@@ -1498,14 +1516,6 @@ module MPD
       end
 
       {{retval.id}}
-    end
-
-    # :nodoc:
-    private def parse_range(range : MPD::Range) : String
-      start = range.begin || 0
-      end_ = range.end || -1
-      end_ += 1 unless range.exclusive?
-      "#{start}:#{end_}"
     end
 
     # :nodoc:

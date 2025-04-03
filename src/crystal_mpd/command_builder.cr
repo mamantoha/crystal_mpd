@@ -9,7 +9,7 @@ module MPD
     private def self.parse_arg(arg) : String
       case arg
       when MPD::Range
-        "#{arg.begin || 0}:#{arg.end || -1}"
+        MPD.parse_range(arg)
       when Hash
         arg.map { |key, value| "#{key} #{value}" }.join(" ")
       when String
