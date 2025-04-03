@@ -28,9 +28,38 @@ describe MPD::CommandBuilder do
     end
 
     it "builds a command with a hash argument" do
-      # find("(genre != 'Pop')", sort: "-ArtistSort", window: (5..10))
       command = MPD::CommandBuilder.build("find", "(genre != 'Pop')", {"sort" => "-ArtistSort", "window" => (5..10)})
-      command.should eq("find \"(genre != 'Pop')\" sort -ArtistSort window 5..10")
+      command.should eq("find \"(genre != 'Pop')\" sort -ArtistSort window 5:10")
+    end
+
+    describe ".parse_range" do
+      it "an inclusive range" do
+        MPD::CommandBuilder.parse_range(0..3).should eq("0:3")
+      end
+
+      it "an exclusive range" do
+        MPD::CommandBuilder.parse_range(0...3).should eq("0:2")
+      end
+
+      it "an endless range" do
+        MPD::CommandBuilder.parse_range(..3).should eq("0:3")
+      end
+
+      it "a beginless inclusive range" do
+        MPD::CommandBuilder.parse_range(..3).should eq("0:3")
+      end
+
+      it "a beginless exclusive range" do
+        MPD::CommandBuilder.parse_range(...3).should eq("0:2")
+      end
+
+      it "a beginless and an endless inclusive range" do
+        MPD::CommandBuilder.parse_range(..).should eq("0:")
+      end
+
+      it "a beginless and an endless exclusive range" do
+        MPD::CommandBuilder.parse_range(..).should eq("0:")
+      end
     end
 
     it "escapes string values" do

@@ -62,36 +62,6 @@ describe MPD do
     end
   end
 
-  describe ".parse_range" do
-    it "an inclusive range" do
-      MPD.parse_range(0..3).should eq("0:3")
-    end
-
-    it "an exclusive range" do
-      MPD.parse_range(0...3).should eq("0:2")
-    end
-
-    it "an endless range" do
-      MPD.parse_range(..3).should eq("0:3")
-    end
-
-    it "a beginless inclusive range" do
-      MPD.parse_range(..3).should eq("0:3")
-    end
-
-    it "a beginless exclusive range" do
-      MPD.parse_range(...3).should eq("0:2")
-    end
-
-    it "a beginless and an endless inclusive range" do
-      MPD.parse_range(..).should eq("0:")
-    end
-
-    it "a beginless and an endless exclusive range" do
-      MPD.parse_range(..).should eq("0:")
-    end
-  end
-
   it "sends a find command and receives a response", tags: "network" do
     with_server do |_host, _port, wants_close|
       client = MPD::Client.new
