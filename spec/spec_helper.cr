@@ -26,7 +26,8 @@ def handle_client(client : TCPSocket)
         client.puts("ACK [50@0] {playid} No such song")
       end
     else
-      client.puts("ACK [5@0] {} unknown command")
+      # for debug purposes
+      client.puts("ACK [5@0] {} unknown command `#{line}`")
     end
   end
 ensure
