@@ -107,10 +107,10 @@ describe MPD do
         client = MPD::Client.new
 
         begin
-          client.search &.eq("Artist", "Nirvana").sort("Track").window(1..19)
+          client.search &.eq("Artist", "Nirvana").sort("Track").window(...10)
         rescue ex : MPD::Error
           if line = ex.message.not_nil!.match(/`(.*)`/)
-            line[1].should eq("search \"(Artist == \\\"Nirvana\\\")\" sort Track window 1:20")
+            line[1].should eq("search \"(Artist == \\\"Nirvana\\\")\" sort Track window 0:9")
           end
         end
       ensure
