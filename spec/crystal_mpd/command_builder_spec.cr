@@ -24,33 +24,33 @@ describe MPD::CommandBuilder do
 
     it "builds a command with a range argument" do
       command = MPD::CommandBuilder.build("status", 0..2)
-      command.should eq("status 0:2")
+      command.should eq("status 0:3")
     end
 
     it "builds a command with a hash argument" do
       command = MPD::CommandBuilder.build("find", "(genre != 'Pop')", {"sort" => "-ArtistSort", "window" => (5..10)})
-      command.should eq("find \"(genre != 'Pop')\" sort -ArtistSort window 5:10")
+      command.should eq("find \"(genre != 'Pop')\" sort -ArtistSort window 5:11")
     end
 
     describe ".parse_range" do
       it "an inclusive range" do
-        MPD::CommandBuilder.parse_range(0..3).should eq("0:3")
+        MPD::CommandBuilder.parse_range(0..3).should eq("0:4")
       end
 
       it "an exclusive range" do
-        MPD::CommandBuilder.parse_range(0...3).should eq("0:2")
+        MPD::CommandBuilder.parse_range(0...3).should eq("0:3")
       end
 
       it "an endless range" do
-        MPD::CommandBuilder.parse_range(..3).should eq("0:3")
+        MPD::CommandBuilder.parse_range(..3).should eq("0:4")
       end
 
       it "a beginless inclusive range" do
-        MPD::CommandBuilder.parse_range(..3).should eq("0:3")
+        MPD::CommandBuilder.parse_range(..3).should eq("0:4")
       end
 
       it "a beginless exclusive range" do
-        MPD::CommandBuilder.parse_range(...3).should eq("0:2")
+        MPD::CommandBuilder.parse_range(...3).should eq("0:3")
       end
 
       it "a beginless and an endless inclusive range" do

@@ -27,17 +27,22 @@ module MPD
 
     # Converts a Crystal Range into an MPD-compatible "START:END" string.
     #
-    # `(0..20)` -> "0:20"
-    # `(0...20)` -> "0:19"
-    # `(..5)` -> "0:5"
-    # `(5..)` -> "5:"
+    # MPD treats the range as exclusive, so:
+    # - Inclusive ranges (e.g., 0..2) must be converted to "0:3" to include index 2
+    # - Exclusive ranges (e.g., 0...2) are used directly as "0:2"
+    #
+    # Examples:
+    #   `(0..20)`   -> "0:21"
+    #   `(0...20)`  -> "0:20"
+    #   `(..5)`     -> "0:6"
+    #   `(5..)`     -> "5:"
     def self.parse_range(range : MPD::Range) : String
       start = range.begin || 0
-      end_ = range.end || nil
+      finish = range.end
 
-      if end_
-        end_ -= 1 if range.exclusive?
-        "#{start}:#{end_}"
+      if finish
+        finish += 1 unless range.exclusive?
+        "#{start}:#{finish}"
       else
         "#{start}:"
       end
