@@ -40,42 +40,26 @@ module MPD
       self
     end
 
-    # == / !=
-    def eq(tag : String, value : String)
-      add(tag, "==", value)
-    end
+    # :nodoc:
+    private COMPARISON_OPS = [
+      {method: "eq", op: "=="},
+      {method: "not_eq", op: "!="},
+      {method: "match", op: "=~"},
+      {method: "not_match", op: "!~"},
+    ]
 
-    def self.eq(tag : String, value : String) : Filter
-      new.eq(tag, value)
-    end
+    {% for operator in COMPARISON_OPS %}
+      def {{operator[:method].id}}(tag : String, value : String)
+        add(tag, "{{operator[:op].id}}", value)
+      end
 
-    def not_eq(tag : String, value : String)
-      add(tag, "!=", value)
-    end
-
-    def self.not_eq(tag : String, value : String) : Filter
-      new.not_eq(tag, value)
-    end
-
-    # =~ / !~
-    def match(tag : String, value : String)
-      add(tag, "=~", value)
-    end
-
-    def self.match(tag : String, value : String) : Filter
-      new.match(tag, value)
-    end
-
-    def not_match(tag : String, value : String)
-      add(tag, "!~", value)
-    end
-
-    def self.not_match(tag : String, value : String) : Filter
-      new.not_match(tag, value)
-    end
+      def self.{{operator[:method].id}}(tag : String, value : String) : Filter
+        new.{{operator[:method].id}}(tag, value)
+      end
+    {% end %}
 
     # :nodoc:
-    private OPERATORS = [
+    private STRING_MATCH_OPS = [
       "eq_cs",
       "eq_ci",
       "contains",
@@ -86,7 +70,7 @@ module MPD
       "starts_with_ci",
     ]
 
-    {% for operator in OPERATORS %}
+    {% for operator in STRING_MATCH_OPS %}
       def {{operator.id}}(tag : String, value : String)
         add(tag, "{{operator.id}}", value)
       end
