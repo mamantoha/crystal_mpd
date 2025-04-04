@@ -1,11 +1,26 @@
 module MPD
   class Filter
     @parts : Array(String)
+    getter sort : String?
+    getter window : MPD::Range?
 
     def initialize
       @parts = [] of String
     end
 
+    # sorts the result by the specified tag
+    def sort(tag : String)
+      @sort = tag
+      self
+    end
+
+    # can be used to query only a portion of the real response
+    def window(range : MPD::Range)
+      @window = range
+      self
+    end
+
+    # https://mpd.readthedocs.io/en/latest/protocol.html#escaping-string-values
     private def escape(value : String) : String
       value
         .gsub("\\", "\\\\")

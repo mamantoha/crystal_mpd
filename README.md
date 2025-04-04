@@ -163,6 +163,8 @@ filter =
     .eq("Artist", "Linkin Park")
     .contains("Album", "Meteora")
     .not_eq("Title", "Numb")
+    .sort("Track")
+    .window(..10)
 
 client.find(filter)
 ```
@@ -172,7 +174,7 @@ This is equivalent to:
 ```crystal
 expression = "((Artist == 'Linkin Park') AND (Album contains 'Meteora') AND (Title != 'Numb'))"
 
-client.find(expression)
+client.find(expression, sort: "Track", window: ..10)
 ```
 
 You can also use this block-based filter DSL like:
@@ -183,6 +185,8 @@ client.find(sort: "Track") do |filter|
     .eq("Artist", "Linkin Park")
     .match("Album", "Meteora.*")
     .not_eq("Title", "Numb")
+    .sort("Track")
+    .window(..10)
 end
 ```
 

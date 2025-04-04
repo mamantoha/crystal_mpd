@@ -102,6 +102,20 @@ describe MPD::Filter do
     end
   end
 
+  describe "#sort" do
+    it "builds sort filter" do
+      filter = MPD::Filter.new.sort("Track")
+      filter.sort.should eq("Track")
+    end
+  end
+
+  describe "#window" do
+    it "builds window filter" do
+      filter = MPD::Filter.new.window(..2)
+      filter.window.should eq(..2)
+    end
+  end
+
   describe "#escape" do
     it "escapes string values for MPD protocol correctly" do
       filter = MPD::Filter.new.eq("Artist", %{foo'bar"})

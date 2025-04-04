@@ -89,7 +89,7 @@ describe MPD do
     end
   end
 
-  it "raises an error", tags: "network" do
+  it "raises an error when sorg not found", tags: "network" do
     with_server do |_host, _port, wants_close|
       client = MPD::Client.new
 
@@ -98,6 +98,24 @@ describe MPD do
       end
     ensure
       wants_close.send(nil)
+    end
+  end
+
+  describe "commands", tags: "network" do
+    it "#search" do
+      with_server do |_host, _port, wants_close|
+        client = MPD::Client.new
+
+        begin
+          client.search &.eq("Artist", "Nirvana").sort("Track").window(...10)
+        rescue ex : MPD::Error
+          if line = ex.message.not_nil!.match(/`(.*)`/)
+            line[1].should eq("search \"(Artist == \\\"Nirvana\\\")\" sort Track window 0:9")
+          end
+        end
+      ensure
+        wants_close.send(nil)
+      end
     end
   end
 end
