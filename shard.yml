@@ -1,5 +1,5 @@
 name: crystal_mpd
-version: 0.17.0
+version: 0.18.0
 description: A Crystal wrapper for the Music Player Daemon (MPD) protocol.
 
 authors:
