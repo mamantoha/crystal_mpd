@@ -100,10 +100,11 @@ Ranges [documentation](https://mpd.readthedocs.io/en/latest/protocol.html#ranges
 Some MPD commands (e.g. `move`, `delete`, `load`, `shuffle`, `playlistinfo`) support integer ranges in the format `START:END`, specifying a slice of songs. This is handled in `crystal_mpd` via `MPD::Range`, which supports both inclusive (`1..10`) and exclusive (`1...10`) ranges.
 
 Note: MPD treats `END` as exclusive, so we internally adjust inclusive ranges to match this behavior.
+Also note that in MPD, song indexes start at 0 — the same as in Crystal.
 
 ```crystal
-# Move songs 1, 2, and 3 to position 10, 11, and 12
-client.move(1..3, 10)
+# Move first 3 songs to position 10, 11, and 12
+client.move(0..2, 10)
 
 # Delete songs 0 and 1 (but NOT 2)
 client.delete(0...2)
