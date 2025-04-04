@@ -112,13 +112,6 @@ client.delete(0...2)
 client.delete(0..2)
 ```
 
-Negative range end means the range should continue to the end of the list:
-
-```crystal
-# Delete all songs from the playlist except the first 10
-client.delete(10..-1)
-```
-
 End-less ranges also span to the end of the list:
 
 ```crystal
