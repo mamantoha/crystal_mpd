@@ -97,43 +97,44 @@ end
 
 Ranges [documentation](https://mpd.readthedocs.io/en/latest/protocol.html#ranges).
 
-Some commands(e.g. `move`, `delete`, `load`, `shuffle`, `playlistinfo`) allow integer ranges(`START:END`) instead of numbers, specifying a range of songs.
-This is done by using `MPD::Range`. `crystal_mpd` correctly handles inclusive and exclusive ranges (`1..10` vs `1...10`). Negative range end means that we want the range to span until the end of the list.
+Some MPD commands (e.g. `move`, `delete`, `load`, `shuffle`, `playlistinfo`) support integer ranges in the format `START:END`, specifying a slice of songs. This is handled in `crystal_mpd` via `MPD::Range`, which supports both inclusive (`1..10`) and exclusive (`1...10`) ranges.
+
+Note: MPD treats `END` as exclusive, so we internally adjust inclusive ranges to match this behavior.
 
 ```crystal
-# move songs 1, 2 and 3 to position 10 (and 11 and 12)
+# Move songs 1, 2, and 3 to position 10, 11, and 12
 client.move(1..3, 10)
 
-# deleve songs 1, 2 and 3 from playlist
-client.delete(0..2)
-
-# deleve songs 1 and 2
+# Delete songs 0 and 1 (but NOT 2)
 client.delete(0...2)
+
+# Delete songs 0, 1, and 2
+client.delete(0..2)
 ```
 
-With negative range end MPD will assumes the biggest possible number then:
+Negative range end means the range should continue to the end of the list:
 
 ```crystal
-# delete all songs from the current playlist, except for the firts ten
+# Delete all songs from the playlist except the first 10
 client.delete(10..-1)
 ```
 
-End-less range end MPD will also assumes the biggest possible number then:
+End-less ranges also span to the end of the list:
 
 ```crystal
-# delete all songs from the current playlist, except for the firts ten
+# Delete all songs from the playlist starting from index 10
 client.delete(10..)
-# or
+# or using exclusive range (same effect)
 client.delete(10...)
 ```
 
-With begin-less range begin is equal to `0`:
+Begin-less ranges default the start to 0:
 
 ```crystal
-# delete first 1, 2 and 3 songs from the current playlist
+# Delete songs 0, 1, and 2
 client.delete(..2)
 
-# delete first 1 and 2 songs from the current playlist
+# Delete songs 0 and 1
 client.delete(...2)
 ```
 
