@@ -305,11 +305,50 @@ module MPD
       end
     end
 
-    # Obtain a list of all channels. The response is a list of `channel:` lines.
+    # Subscribe to a channel.
+    # The channel is created if it does not exist already.
+    # The `name` may consist of alphanumeric ASCII characters plus underscore, dash, dot and colon.
+    def subscribe(name : String)
+      synchronize do
+        write_command("subscribe", name)
+        execute("fetch_nothing")
+      end
+    end
+
+    # Unsubscribe from a channel.
+    def unsubscribe(name : String)
+      synchronize do
+        write_command("unsubscribe", name)
+        execute("fetch_nothing")
+      end
+    end
+
+    # Obtain a list of all channels.
     def channels
       synchronize do
         write_command("channels")
         execute("fetch_list")
+      end
+    end
+
+    # Reads messages for this client.
+    #
+    # ```
+    # client.readmessages
+    # [{"channel" => "notifications", "message" => "System update available"}]
+    # ```
+    def readmessages
+      synchronize do
+        write_command("readmessages")
+        execute("fetch_list")
+      end
+    end
+
+    # Send a `message` to the specified `channel`.
+    def sendmessage(channel : String, message : String)
+      synchronize do
+        write_command("sendmessage", channel, message)
+        execute("fetch_nothing")
       end
     end
 
