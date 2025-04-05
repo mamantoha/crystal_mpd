@@ -14,6 +14,7 @@ Concurrent [Music Player Daemon](https://www.musicpd.org/) client written entire
 - Callbacks
 - Command lists support
 - Binary responses
+- Client to client communicate
 - Logging
 - Handle exceptions
 
