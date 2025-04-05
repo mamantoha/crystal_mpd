@@ -323,6 +323,35 @@ end
 
 The above will locate album art for the current song and save image to `cover.jpg` file.
 
+### Client-to-Client communication
+
+`crystal_mpd` supports MPD's built-in client-to-client messaging system via channels.
+This allows clients to exchange messages in real time through the MPD server.
+
+#### Supported Methods
+
+```crystal
+client.subscribe("my_channel")          # Subscribes to a channel
+client.unsubscribe("my_channel")        # Unsubscribes from a channel
+client.channels                         # Returns a list of all existing channels
+client.readmessages                     # Reads messages sent to subscribed channels
+client.sendmessage("my_channel", "Hi!") # Sends a message to a specific channel
+```
+
+#### Example
+
+```crystal
+client.subscribe("notifications")
+
+# Somewhere else, another client sends a message
+client.sendmessage("notifications", "System update available")
+
+# The first client reads the message
+messages = client.readmessages
+puts messages
+# => [{"channel" => "notifications", "message" => "System update available"}]
+```
+
 ### Logging
 
 ```crystal
