@@ -1,0 +1,40 @@
+module MPD
+  # https://mpd.readthedocs.io/en/latest/protocol.html#tags
+  enum Tag
+    Artist
+    Artistsort
+    Album
+    Albumsort
+    Albumartist
+    Albumartistsort
+    Title
+    Titlesort
+    Track
+    Name
+    Genre
+    Mood
+    Date
+    Originaldate
+    Composer
+    Composersort
+    Performer
+    Conductor
+    Work
+    Ensemble
+    Movement
+    Movementnumber
+    Showmovement
+    Location
+    Grouping
+    Comment
+    Disc
+    Label
+    Musicbrainz_artistid
+    Musicbrainz_albumid
+    Musicbrainz_albumartistid
+    Musicbrainz_trackid
+    Musicbrainz_releasegroupid
+    Musicbrainz_releasetrackid
+    Musicbrainz_workid
+  end
+end

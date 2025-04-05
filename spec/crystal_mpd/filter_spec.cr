@@ -102,10 +102,27 @@ describe MPD::Filter do
     end
   end
 
+  describe MPD::Tag do
+    it "builds filter with tag as MPD::Tag" do
+      filter = MPD::Filter.new.eq(MPD::Tag::Artist, "Linkin Park")
+      filter.to_s.should eq("(artist == \"Linkin Park\")")
+    end
+
+    it "builds filter with tag as symbol" do
+      filter = MPD::Filter.new.eq(:artist, "Linkin Park")
+      filter.to_s.should eq("(artist == \"Linkin Park\")")
+    end
+  end
+
   describe "#sort" do
     it "builds sort filter" do
       filter = MPD::Filter.new.sort("Track")
       filter.sort.should eq("Track")
+    end
+
+    it "builds sort filter with tag as symbol" do
+      filter = MPD::Filter.new.sort(:musicbrainz_artistid)
+      filter.sort.should eq("musicbrainz_artistid")
     end
   end
 
