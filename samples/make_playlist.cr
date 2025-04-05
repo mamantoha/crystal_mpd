@@ -49,7 +49,7 @@ client.clear
 
 tag = options["tag"].as(String)
 query = options["query"].as(String)
-songs = client.search &.eq(tag, query)
+songs = client.search &.match(tag, query)
 
 client.with_command_list do
   songs.not_nil!.each do |song|
