@@ -1,5 +1,6 @@
 class MockMPDServer
-  forward_missing_to @server
+  delegate accept?, to: @server
+  delegate close, to: @server
 
   def initialize(host, port)
     @server = TCPServer.new(host, port)
