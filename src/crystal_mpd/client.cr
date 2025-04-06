@@ -399,6 +399,43 @@ module MPD
       end
     end
 
+    # Waits until there is a noteworthy change in one or more of MPD’s subsystems.
+    #
+    # As soon as there is one, it lists all changed systems, where subsystem is one of the following:
+    #
+    # * `database` - the song database has been modified after update.
+    # * `update` - a database update has started or finished. If the database was modified during the update, the database event is also emitted.
+    # * `stored_playlist` - a stored playlist has been modified, renamed, created or deleted
+    # * `playlist` - the queue (i.e. the current playlist) has been modified
+    # * `player` - the player has been started, stopped or seeked or tags of the currently playing song have changed (e.g. received from stream)
+    # * `mixer` - the volume has changed
+    # * `output` - an audio output has been added, removed or modified (e.g. renamed, enabled or disabled)
+    # * `database` - the song database has been modified after update.
+    # * `update` - a database update has started or finished. If the database was modified during the update, the database event is also emitted.
+    # * `stored_playlist` - a stored playlist has been modified, renamed, created or deleted
+    # * `playlist` - the queue (i.e. the current playlist) has been modified
+    # * `options` - options like repeat, random, crossfade, replay gain
+    # * `partition` - a partition was added, removed or changed
+    # * `sticker` - the sticker database has been modified
+    # * `subscription` - a client has subscribed or unsubscribed to a channel
+    # * `message` - a message was received on a channel this client is subscribed to; this event is only emitted when the client’s message queue is empty
+    # * `neighbor` - a neighbor was found or lost
+    # * `mount` - the mount list has changed
+    #
+    # If the optional `subsystems` argument is used,
+    # MPD will only send notifications when something changed in one of the specified subsytems.
+    def idle(subsystems : Array(String)? = nil)
+      synchronize do
+        if subsystems
+          write_command("idle #{subsystems.join(' ')}")
+        else
+          write_command("idle")
+        end
+
+        execute("fetch_list")
+      end
+    end
+
     # Show the currently queued (next) song.
     def nextsong : Object?
       if _status = status
