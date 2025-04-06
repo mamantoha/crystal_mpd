@@ -410,10 +410,6 @@ module MPD
     # * `player` - the player has been started, stopped or seeked or tags of the currently playing song have changed (e.g. received from stream)
     # * `mixer` - the volume has changed
     # * `output` - an audio output has been added, removed or modified (e.g. renamed, enabled or disabled)
-    # * `database` - the song database has been modified after update.
-    # * `update` - a database update has started or finished. If the database was modified during the update, the database event is also emitted.
-    # * `stored_playlist` - a stored playlist has been modified, renamed, created or deleted
-    # * `playlist` - the queue (i.e. the current playlist) has been modified
     # * `options` - options like repeat, random, crossfade, replay gain
     # * `partition` - a partition was added, removed or changed
     # * `sticker` - the sticker database has been modified
