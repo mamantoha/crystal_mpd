@@ -74,6 +74,19 @@ describe MPD do
     end
   end
 
+  it "nextsong should return a song", tags: "network" do
+    with_server do |_host, _port, wants_close|
+      client = MPD::Client.new
+
+      client.nextsong.try do |response|
+        response["file"].should eq("music/foo.mp3")
+        response["Artist"].should eq("Nirvana")
+      end
+    ensure
+      wants_close.send(nil)
+    end
+  end
+
   it "sends a find command and receives a response", tags: "network" do
     with_server do |_host, _port, wants_close|
       client = MPD::Client.new
