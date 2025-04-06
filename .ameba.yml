@@ -12,3 +12,7 @@ Lint/NotNil:
   - spec/crystal_mpd_spec.cr
   Enabled: true
   Severity: Warning
+
+Lint/DebugCalls:
+  Excluded:
+  - samples/*

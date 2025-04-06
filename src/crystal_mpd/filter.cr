@@ -120,7 +120,7 @@ module MPD
 
     # Logical NOT for nested filters
     def not(expr : Filter)
-      @parts << "(!#{expr.to_s})"
+      @parts << "(!#{expr})"
       self
     end
 
@@ -137,6 +137,10 @@ module MPD
       else
         "(#{@parts.join(" AND ")})"
       end
+    end
+
+    def to_s(io : IO) : Nil
+      io << to_s
     end
   end
 end
