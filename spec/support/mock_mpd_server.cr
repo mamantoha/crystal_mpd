@@ -14,10 +14,7 @@ class MockMPDServer
         expression = line.split(" ", 2)[1]
 
         if expression == "\"(Artist == \\\"Nirvana\\\")\" "
-          client.puts("file: music/foo.mp3")
-          client.puts("Title: Smells Like Teen Spirit")
-          client.puts("Artist: Nirvana")
-          client.puts("OK")
+          puts_song_object(client)
         else
           client.puts("OK")
         end
