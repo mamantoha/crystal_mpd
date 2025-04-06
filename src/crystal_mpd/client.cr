@@ -148,8 +148,8 @@ module MPD
     end
 
     private def get_status(status : Hash(String, String)) : Hash(Symbol, String?)
-      EVENTS_LIST.each_with_object({} of Symbol => String | Nil) do |event, hash|
-        hash[event] = status[event.to_s]?
+      EVENTS_LIST.each_with_object({} of Symbol => String | Nil) do |event, acc|
+        acc[event] = status[event.to_s]?
       end
     end
 

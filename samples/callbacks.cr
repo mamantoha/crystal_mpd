@@ -17,5 +17,5 @@ client.on :song do
 end
 
 loop do
-  sleep 1
+  sleep 1.second
 end
