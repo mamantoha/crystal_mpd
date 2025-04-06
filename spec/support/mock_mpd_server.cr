@@ -2,7 +2,7 @@ class MockMPDServer
   delegate accept?, to: @server
   delegate close, to: @server
 
-  def self.with(host = "localhost", port = 6600, &block : ->)
+  def self.with(host = "localhost", port = 6600, & : ->)
     wants_close = Channel(Nil).new
     server = new(host, port)
 

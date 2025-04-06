@@ -42,7 +42,7 @@ module MPD
       @port : Int32 = 6600,
       *,
       @with_callbacks = false,
-      @password : String? = nil,
+      @password : String? = nil
     )
       @command_list = CommandList.new
       @mutex = Mutex.new
@@ -512,7 +512,7 @@ module MPD
     end
 
     # :ditto:
-    def playlistsearch(*, sort : String? = nil, window : MPD::Range? = nil, &block : MPD::Filter ->)
+    def playlistsearch(*, sort : String? = nil, window : MPD::Range? = nil, & : MPD::Filter ->)
       filter = MPD::Filter.new
       yield filter
       sort ||= filter.sort
@@ -550,7 +550,7 @@ module MPD
     end
 
     # :ditto
-    def playlistfind(*, sort : String? = nil, window : MPD::Range? = nil, &block : MPD::Filter ->)
+    def playlistfind(*, sort : String? = nil, window : MPD::Range? = nil, & : MPD::Filter ->)
       filter = MPD::Filter.new
       yield filter
       sort ||= filter.sort
@@ -717,7 +717,7 @@ module MPD
     end
 
     # :ditto:
-    def searchaddpl(name : String, *, sort : String? = nil, window : MPD::Range? = nil, position : Int32 | String | Nil = nil, &block : MPD::Filter ->)
+    def searchaddpl(name : String, *, sort : String? = nil, window : MPD::Range? = nil, position : Int32 | String | Nil = nil, & : MPD::Filter ->)
       filter = MPD::Filter.new
       yield filter
       sort ||= filter.sort
@@ -745,7 +745,7 @@ module MPD
     end
 
     # :ditto:
-    def searchcount(*, group : String? = nil, &block : MPD::Filter ->)
+    def searchcount(*, group : String? = nil, & : MPD::Filter ->)
       filter = MPD::Filter.new
       yield filter
       searchcount(filter.to_s, group: group)
@@ -802,7 +802,7 @@ module MPD
     end
 
     # :ditto:
-    def searchplaylist(name : String, *, window : MPD::Range? = nil, &block : MPD::Filter ->)
+    def searchplaylist(name : String, *, window : MPD::Range? = nil, & : MPD::Filter ->)
       filter = MPD::Filter.new
       yield filter
       searchplaylist(name, filter, window: window)
@@ -974,7 +974,7 @@ module MPD
     end
 
     # :ditto:
-    def list(type : String, *, group : String? = nil, window : MPD::Range? = nil, &block : MPD::Filter ->)
+    def list(type : String, *, group : String? = nil, window : MPD::Range? = nil, & : MPD::Filter ->)
       filter = MPD::Filter.new
       yield filter
       list(type, filter.to_s, group: group, window: window)
@@ -1023,7 +1023,7 @@ module MPD
     end
 
     # :ditto:
-    def count(*, group : String? = nil, &block : MPD::Filter ->)
+    def count(*, group : String? = nil, & : MPD::Filter ->)
       filter = MPD::Filter.new
       yield filter
       count(filter, group: group)
@@ -1190,7 +1190,7 @@ module MPD
     end
 
     # :ditto:
-    def find(*, sort : String? = nil, window : MPD::Range? = nil, &block : MPD::Filter ->)
+    def find(*, sort : String? = nil, window : MPD::Range? = nil, & : MPD::Filter ->)
       filter = MPD::Filter.new
       yield filter
       sort ||= filter.sort
@@ -1223,7 +1223,7 @@ module MPD
     end
 
     # :ditto:
-    def search(*, sort : String? = nil, window : MPD::Range? = nil, &block : MPD::Filter ->)
+    def search(*, sort : String? = nil, window : MPD::Range? = nil, & : MPD::Filter ->)
       filter = MPD::Filter.new
       yield filter
       sort ||= filter.sort
@@ -1257,7 +1257,7 @@ module MPD
     end
 
     # :ditto:
-    def findadd(*, sort : String? = nil, window : MPD::Range? = nil, position : Int32 | String | Nil = nil, &block : MPD::Filter ->)
+    def findadd(*, sort : String? = nil, window : MPD::Range? = nil, position : Int32 | String | Nil = nil, & : MPD::Filter ->)
       filter = MPD::Filter.new
       yield filter
       sort ||= filter.sort
@@ -1291,7 +1291,7 @@ module MPD
     end
 
     # :ditto:
-    def searchadd(*, sort : String? = nil, window : MPD::Range? = nil, position : Int32 | String | Nil = nil, &block : MPD::Filter ->)
+    def searchadd(*, sort : String? = nil, window : MPD::Range? = nil, position : Int32 | String | Nil = nil, & : MPD::Filter ->)
       filter = MPD::Filter.new
       yield filter
       searchadd(filter.to_s, sort: sort, window: window, position: position)

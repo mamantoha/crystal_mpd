@@ -9,5 +9,6 @@ Lint/NotNil:
   Description: Identifies usage of `not_nil!` calls
   Excluded:
   - samples/make_playlist.cr
+  - spec/crystal_mpd_spec.cr
   Enabled: true
   Severity: Warning
