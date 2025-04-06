@@ -91,7 +91,7 @@ describe MPD do
     MockMPDServer.with do
       client = MPD::Client.new
 
-      client.find { |f| f.eq("Artist", "Nirvana") }.try do |result|
+      client.find(&.eq("Artist", "Nirvana")).try do |result|
         result.first["file"].should eq("music/foo.mp3")
         result.first["Artist"].should eq("Nirvana")
       end
