@@ -62,6 +62,18 @@ describe MPD do
     end
   end
 
+  it "sends a status command and receives a response", tags: "network" do
+    with_server do |_host, _port, wants_close|
+      client = MPD::Client.new
+
+      client.status.try do |response|
+        response["volume"].should eq("100")
+      end
+    ensure
+      wants_close.send(nil)
+    end
+  end
+
   it "sends a find command and receives a response", tags: "network" do
     with_server do |_host, _port, wants_close|
       client = MPD::Client.new
