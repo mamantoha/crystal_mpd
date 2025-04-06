@@ -5,7 +5,7 @@ describe MPD do
     (MPD::VERSION).should be_a(String)
   end
 
-  it "initialize new MPD client without params", tags: "network" do
+  it "initialize new MPD client without params", tags: "mock_mpd_server" do
     MockMPDServer.with do
       client = MPD::Client.new
 
@@ -25,7 +25,7 @@ describe MPD do
     end
   end
 
-  it "initialized MPD client should have version", tags: "network" do
+  it "initialized MPD client should have version", tags: "mock_mpd_server" do
     MockMPDServer.with do
       client = MPD::Client.new
 
@@ -33,7 +33,7 @@ describe MPD do
     end
   end
 
-  it "successfully disconnect MPD client", tags: "network" do
+  it "successfully disconnect MPD client", tags: "mock_mpd_server" do
     MockMPDServer.with do
       client = MPD::Client.new
       client.disconnect
@@ -43,7 +43,7 @@ describe MPD do
     end
   end
 
-  it "disconnect MPD client 2 times should not raise error", tags: "network" do
+  it "disconnect MPD client 2 times should not raise error", tags: "mock_mpd_server" do
     MockMPDServer.with do
       client = MPD::Client.new
       client.disconnect
@@ -54,7 +54,7 @@ describe MPD do
     end
   end
 
-  it "sends a status command and receives a response", tags: "network" do
+  it "sends a status command and receives a response", tags: "mock_mpd_server" do
     MockMPDServer.with do
       client = MPD::Client.new
 
@@ -64,7 +64,7 @@ describe MPD do
     end
   end
 
-  it "nextsong should return a song", tags: "network" do
+  it "nextsong should return a song", tags: "mock_mpd_server" do
     MockMPDServer.with do
       client = MPD::Client.new
 
@@ -75,7 +75,7 @@ describe MPD do
     end
   end
 
-  it "sends a find command and receives a response", tags: "network" do
+  it "sends a find command and receives a response", tags: "mock_mpd_server" do
     MockMPDServer.with do
       client = MPD::Client.new
       filter = MPD::Filter.new.eq("Artist", "Nirvana")
@@ -87,7 +87,7 @@ describe MPD do
     end
   end
 
-  it "sends a find command with a block and receives a response", tags: "network" do
+  it "sends a find command with a block and receives a response", tags: "mock_mpd_server" do
     MockMPDServer.with do
       client = MPD::Client.new
 
@@ -98,7 +98,7 @@ describe MPD do
     end
   end
 
-  it "raises an error when sorg not found", tags: "network" do
+  it "raises an error when sorg not found", tags: "mock_mpd_server" do
     MockMPDServer.with do
       client = MPD::Client.new
 
@@ -108,7 +108,7 @@ describe MPD do
     end
   end
 
-  describe "commands", tags: "network" do
+  describe "commands", tags: "mock_mpd_server" do
     it "#search" do
       MockMPDServer.with do
         client = MPD::Client.new
