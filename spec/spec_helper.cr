@@ -2,7 +2,7 @@ require "spec"
 require "../src/crystal_mpd"
 require "./support/mock_mpd_server"
 
-def with_server(host = "localhost", port = 6600, &)
+def with_mock_mpd_server(host = "localhost", port = 6600, &)
   wants_close = Channel(Nil).new
   server = MockMPDServer.new(host, port)
 
