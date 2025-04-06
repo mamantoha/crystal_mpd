@@ -27,8 +27,30 @@ module MPD
     NEXT         = "list_OK\n"
 
     EVENTS_LIST = [
-      :volume, :repeat, :random, :single, :consume, :playlist, :playlistlength, :mixrampdb, :state,
-      :song, :songid, :time, :elapsed, :bitrate, :duration, :audio, :nextsong, :nextsongid,
+      :partition,
+      :volume,
+      :repeat,
+      :random,
+      :single,
+      :consume,
+      :playlist,
+      :playlistlength,
+      :state,
+      :song,
+      :songid,
+      :nextsong,
+      :nextsongid,
+      :time,
+      :elapsed,
+      :duration,
+      :bitrate,
+      :xfade,
+      :mixrampdb,
+      :mixrampdelay,
+      :audio,
+      :updating_db,
+      :error,
+      :lastloadedplaylist,
     ]
 
     getter host, port, version
