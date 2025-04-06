@@ -268,10 +268,12 @@ Here's the full list of events:
 - `:random`
 - `:single`
 - `:consume`
+- `:partition`
 - `:playlist`
 - `:playlistlength`
 - `:mixrampdb`
 - `:state`
+- `:lastloadedplaylist`
 - `:song`
 - `:songid`
 - `:time`

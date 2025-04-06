@@ -231,6 +231,7 @@ module MPD
     # Reports the current status of the player and the volume level.
     #
     # Response:
+    # * `partition`: the name of the current partition
     # * `volume`: 0-100
     # * `repeat`: 0 or 1
     # * `random`: 0 or 1
@@ -244,14 +245,17 @@ module MPD
     # * `nextsong`: playlist song number of the next song to be played
     # * `nextsongid`: playlist songid of the next song to be played
     # * `time`: total time elapsed (of current playing/paused song)
-    # * `elapsed`: Total time elapsed within the current song, but with higher resolution.
+    # * `elapsed`: Total time elapsed within the current song, but with higher resolution
+    # * `duration`: Duration of the current song in seconds
     # * `bitrate`: instantaneous bitrate in kbps
     # * `xfade`: crossfade in seconds
     # * `mixrampdb`: mixramp threshold in dB
     # * `mixrampdelay`: mixrampdelay in seconds
     # * `audio`: sampleRate:bits:channels
+    # * `samplerate:bits:channels`
     # * `updating_db`: job id
     # * `error`: if there is an error, returns message here
+    # * `lastloadedplaylist`: last loaded stored playlist
     def status
       synchronize do
         write_command("status")
