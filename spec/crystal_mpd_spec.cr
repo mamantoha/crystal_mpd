@@ -38,8 +38,8 @@ describe MPD do
       client = MPD::Client.new
       client.disconnect
 
-      (client.version).should eq(nil)
-      (client.connected?).should eq(false)
+      (client.version).should be_nil
+      (client.connected?).should be_false
     end
   end
 
@@ -49,8 +49,8 @@ describe MPD do
       client.disconnect
       client.disconnect
 
-      (client.version).should eq(nil)
-      (client.connected?).should eq(false)
+      (client.version).should be_nil
+      (client.connected?).should be_false
     end
   end
 

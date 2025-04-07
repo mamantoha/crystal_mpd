@@ -136,14 +136,14 @@ module MPD
       spawn do
         old_status = {} of Event => String
 
-        self.status.try do |mpd_status|
+        status.try do |mpd_status|
           old_status = events_with_values(mpd_status)
         end
 
         loop do
           sleep @callbacks_timeout
 
-          self.status.try do |mpd_status|
+          status.try do |mpd_status|
             new_status = events_with_values(mpd_status)
 
             new_status.each do |key, val|
@@ -256,8 +256,6 @@ module MPD
       when "fetch_outputs"  then fetch_outputs
       when "fetch_database" then fetch_database
       when "fetch_plugins"  then fetch_plugins
-      else
-        nil
       end
     end
 
@@ -1868,7 +1866,7 @@ module MPD
 
     # :nodoc:
     private def escape(str : String)
-      str.gsub(%{\\}, %{\\\\}).gsub(%{"}, %{\\"})
+      str.gsub(%(\\), %(\\\\)).gsub(%("), %(\\"))
     end
   end
 end

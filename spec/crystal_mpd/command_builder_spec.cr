@@ -74,10 +74,10 @@ describe MPD::CommandBuilder do
       # client.find(%q{(Artist == "foo\'bar\"")})
       # DEBUG - mpd: request: `find "(Artist == \"foo\\'bar\\\"\")" `
 
-      expression = %q{(Artist == "foo\'bar\"")}
+      expression = %q((Artist == "foo\'bar\""))
       result = MPD::CommandBuilder.build("find", expression)
 
-      command = %q{find "(Artist == \"foo\\'bar\\\"\")"}
+      command = %q(find "(Artist == \"foo\\'bar\\\"\")")
       result.should eq command
     end
   end

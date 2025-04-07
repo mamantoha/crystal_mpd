@@ -135,9 +135,9 @@ describe MPD::Filter do
 
   describe "#escape" do
     it "escapes string values for MPD protocol correctly" do
-      filter = MPD::Filter.new.eq("Artist", %{foo'bar"})
+      filter = MPD::Filter.new.eq("Artist", %(foo'bar"))
 
-      expression = %q{(Artist == "foo\'bar\"")}
+      expression = %q((Artist == "foo\'bar\""))
       filter.to_s.should eq(expression)
     end
   end

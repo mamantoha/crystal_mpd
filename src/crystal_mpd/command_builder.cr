@@ -17,7 +17,7 @@ module MPD
           "#{key} #{value}"
         end
       when String
-        %{"#{arg.gsub(%{\\}, %{\\\\}).gsub(%{"}, %{\\"})}"}
+        %{"#{arg.gsub(%(\\), %(\\\\)).gsub(%("), %(\\"))}"}
       when Int32
         arg.to_s
       else
