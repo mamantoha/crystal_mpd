@@ -26,32 +26,32 @@ module MPD
     SUCCESS      = "OK\n"
     NEXT         = "list_OK\n"
 
-    EVENTS_LIST = [
-      :partition,
-      :volume,
-      :repeat,
-      :random,
-      :single,
-      :consume,
-      :playlist,
-      :playlistlength,
-      :state,
-      :song,
-      :songid,
-      :nextsong,
-      :nextsongid,
-      :time,
-      :elapsed,
-      :duration,
-      :bitrate,
-      :xfade,
-      :mixrampdb,
-      :mixrampdelay,
-      :audio,
-      :updating_db,
-      :error,
-      :lastloadedplaylist,
-    ]
+    enum Event
+      Partition
+      Volume
+      Repeat
+      Random
+      Single
+      Consume
+      Playlist
+      Playlistlength
+      State
+      Song
+      Songid
+      Nextsong
+      Nextsongid
+      Time
+      Elapsed
+      Duration
+      Bitrate
+      Xfade
+      Mixrampdb
+      Mixrampdelay
+      Audio
+      Updating_db
+      Error
+      Lastloadedplaylist
+    end
 
     getter host, port, version
     property callbacks_timeout : Time::Span = 1.second
@@ -68,7 +68,7 @@ module MPD
     )
       @command_list = CommandList.new
       @mutex = Mutex.new
-      @callbacks = {} of Symbol => Array(String -> Nil)
+      @callbacks = {} of Event => Array(String -> Nil)
 
       connect
     end
@@ -107,12 +107,12 @@ module MPD
     #   puts "State was change to #{state}"
     # end
     # ```
-    def on(event : Symbol, &block : String -> _)
+    def on(event : Event, &block : String -> _)
       (@callbacks[event] ||= [] of Proc(String, Nil)).push(block)
     end
 
     # Triggers an event, running it's callbacks.
-    private def emit(event : Symbol, arg : String)
+    private def emit(event : Event, arg : String)
       return unless @callbacks[event]?
 
       @callbacks[event].each(&.call(arg))
@@ -121,7 +121,7 @@ module MPD
     # Constructs a callback loop
     private def callback_thread
       spawn do
-        old_status = {} of Symbol => String
+        old_status = {} of Event => String
 
         if status = self.status
           old_status = get_status(status)
@@ -147,10 +147,14 @@ module MPD
       Fiber.yield
     end
 
-    private def get_status(status : Hash(String, String)) : Hash(Symbol, String?)
-      EVENTS_LIST.each_with_object({} of Symbol => String | Nil) do |event, acc|
-        acc[event] = status[event.to_s]?
+    private def get_status(status : Hash(String, String)) : Hash(Event, String?)
+      acc = {} of Event => String | Nil
+
+      Event.each do |member, _value|
+        acc[member] = status[member.to_s.downcase]?
       end
+
+      acc
     end
 
     # Check if the client is connected.
