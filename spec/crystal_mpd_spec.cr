@@ -114,10 +114,19 @@ describe MPD do
         client = MPD::Client.new
 
         begin
-          client.search &.eq("Artist", "Nirvana").sort("Track").window(...10)
+          client.search do |filter|
+            filter
+              .eq(:artist, "Linkin Park")
+              .match(:album, "Meteora.*")
+              .not_eq(:title, "Numb")
+              .sort(:track)
+              .window(..10)
+          end
         rescue ex : MPD::Error
           if line = ex.message.not_nil!.match(/`(.*)`/)
-            line[1].should eq("search \"(Artist == \\\"Nirvana\\\")\" sort Track window 0:10")
+            line[1].should eq(
+              "search \"((artist == \\\"Linkin Park\\\") AND (album =~ \\\"Meteora.*\\\") AND (title != \\\"Numb\\\"))\" sort track window 0:11"
+            )
           end
         end
       end

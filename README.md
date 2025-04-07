@@ -186,12 +186,12 @@ client.find(expression, sort: "Track", window: ..10)
 You can also use this block-based filter DSL like:
 
 ```crystal
-client.find(sort: "Track") do |filter|
+client.search do |filter|
   filter
-    .eq("Artist", "Linkin Park")
-    .match("Album", "Meteora.*")
-    .not_eq("Title", "Numb")
-    .sort("Track")
+    .eq(:artist, "Linkin Park")
+    .match(:album, "Meteora.*")
+    .not_eq(:title, "Numb")
+    .sort(:track)
     .window(..10)
 end
 ```
