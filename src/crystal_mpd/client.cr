@@ -1116,9 +1116,9 @@ module MPD
     # or song is repeated if the `repeat` mode is enabled.
     def single(state : Bool | String)
       synchronize do
-        state = state.is_a?(String) ? state : boolean(state)
+        mpd_state = state.is_a?(String) ? state : boolean(state)
 
-        write_command("single", state)
+        write_command("single", mpd_state)
         execute("fetch_nothing")
       end
     end
@@ -1128,9 +1128,9 @@ module MPD
     # When consume is activated, each song played is removed from playlist.
     def consume(state : Bool | String)
       synchronize do
-        state = state.is_a?(String) ? state : boolean(state)
+        mpd_state = state.is_a?(String) ? state : boolean(state)
 
-        write_command("consume", state)
+        write_command("consume", mpd_state)
         execute("fetch_nothing")
       end
     end
