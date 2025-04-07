@@ -128,7 +128,7 @@ module MPD
       end
 
       # Call any-event listeners
-      @on_any_callbacks.each { |cb| cb.call(event, arg) }
+      @on_any_callbacks.each(&.call(event, arg))
     end
 
     # Background fiber to poll MPD status and detect changes
