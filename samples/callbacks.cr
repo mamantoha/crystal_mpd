@@ -40,6 +40,5 @@ client.on_callback do |event, state|
   end
 end
 
-loop do
-  sleep 1.second
-end
+# Keep the program running
+loop { sleep 1.second }

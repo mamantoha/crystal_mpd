@@ -302,6 +302,7 @@ client.on :song do
   end
 end
 
+# Keep the program running
 loop { sleep 1.second }
 ```
 
@@ -328,6 +329,7 @@ client.on_callback do |event, value|
   end
 end
 
+# Keep the program running
 loop { sleep 1.second }
 ```
 
