@@ -308,6 +308,39 @@ loop { sleep 1.second }
 The above will connect to the server like normal, but this time it will create a new thread
 that loops until you issue an exit. This loop checks the server, then sleeps for 2 seconds, then loops.
 
+In addition to registering individual event listeners using `#on`, the MPD client also supports a global callback listener using `#on_callback`.
+
+This method allows you to handle all events in a single block and react based on the event type.
+
+```crystal
+client = MPD::Client.new(with_callbacks: true)
+
+client.on_callback do |event, value|
+  case event
+  when .state?
+    puts "State changed to #{value}"
+  when .song?
+    puts "Now playing: #{value}"
+  when .repeat?
+    puts "Repeat mode: #{value == "1" ? "On" : "Off"}"
+  else
+    puts "[#{event}] → #{value}"
+  end
+end
+
+loop { sleep 1.second }
+```
+
+You can combine `#on_callback` with specific `#on` handlers. For example:
+
+```crystal
+client.on(:state) { |val| puts "STATE: #{val}" }
+
+client.on_callback do |event, value|
+  puts "[ALL EVENTS] #{event} => #{value}"
+end
+```
+
 ### Binary responses
 
 Some commands can return binary data.

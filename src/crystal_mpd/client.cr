@@ -68,7 +68,12 @@ module MPD
     )
       @command_list = CommandList.new
       @mutex = Mutex.new
+
+      # Stores per-event callbacks like `on :state { ... }`
       @callbacks = {} of Event => Array(String -> Nil)
+
+      # Stores global "any event" callbacks like `on_callback { |event, state| ... }`
+      @on_any_callbacks = [] of Proc(Event, String, Nil)
 
       connect
     end
@@ -99,8 +104,7 @@ module MPD
       reset
     end
 
-    # This will register a block callback that will trigger whenever
-    # that specific event happens.
+    # Register a callback for a specific event (e.g., :state, :song, etc.)
     #
     # ```
     # mpd.on :state do |state|
@@ -111,14 +115,23 @@ module MPD
       (@callbacks[event] ||= [] of Proc(String, Nil)).push(block)
     end
 
-    # Triggers an event, running it's callbacks.
-    private def emit(event : Event, arg : String)
-      return unless @callbacks[event]?
-
-      @callbacks[event].each(&.call(arg))
+    # Register a global callback for *any* event. Useful for unified event handling.
+    def on_callback(&block : Event, String -> _)
+      @on_any_callbacks << block
     end
 
-    # Constructs a callback loop
+    # Emit event: calls both per-event and global callbacks
+    private def emit(event : Event, arg : String)
+      # Call specific event listeners
+      if cb_list = @callbacks[event]?
+        cb_list.each(&.call(arg))
+      end
+
+      # Call any-event listeners
+      @on_any_callbacks.each(&.call(event, arg))
+    end
+
+    # Background fiber to poll MPD status and detect changes
     private def callback_thread
       spawn do
         old_status = {} of Event => String
@@ -147,6 +160,7 @@ module MPD
       Fiber.yield
     end
 
+    # Extracts a hash of Event => value from MPD status response
     private def events_with_values(mpd_status : Hash(String, String)) : Hash(Event, String?)
       acc = {} of Event => String | Nil
 
