@@ -302,7 +302,7 @@ client.on :song do
   end
 end
 
-loop { sleep 1 }
+loop { sleep 1.second }
 ```
 
 The above will connect to the server like normal, but this time it will create a new thread
