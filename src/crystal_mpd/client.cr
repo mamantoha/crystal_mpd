@@ -123,15 +123,15 @@ module MPD
       spawn do
         old_status = {} of Event => String
 
-        if status = self.status
-          old_status = get_status(status)
+        self.status.try do |mpd_status|
+          old_status = events_with_values(mpd_status)
         end
 
         loop do
           sleep @callbacks_timeout
 
-          if status = self.status
-            new_status = get_status(status)
+          self.status.try do |mpd_status|
+            new_status = events_with_values(mpd_status)
 
             new_status.each do |key, val|
               next if val.nil? || val == old_status[key]?
@@ -147,11 +147,11 @@ module MPD
       Fiber.yield
     end
 
-    private def get_status(status : Hash(String, String)) : Hash(Event, String?)
+    private def events_with_values(mpd_status : Hash(String, String)) : Hash(Event, String?)
       acc = {} of Event => String | Nil
 
       Event.each do |member, _value|
-        acc[member] = status[member.to_s.downcase]?
+        acc[member] = mpd_status[member.to_s.downcase]?
       end
 
       acc
