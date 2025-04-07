@@ -16,6 +16,22 @@ client.on :song do
   end
 end
 
+client.on :random do |state|
+  puts "[#{Time.local}] Random mode was changed to #{state}"
+end
+
+client.on :single do |state|
+  puts "[#{Time.local}] Single mode was changed to #{state}"
+end
+
+client.on :repeat do |state|
+  puts "[#{Time.local}] Repeat mode was changed to #{state}"
+end
+
+# client.on :undef do
+#   # Error: expected argument #1 to 'MPD::Client#on' to match a member of enum MPD::Client::Event.
+# end
+
 loop do
   sleep 1.second
 end
