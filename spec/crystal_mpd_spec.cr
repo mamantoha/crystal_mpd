@@ -108,6 +108,15 @@ describe MPD do
     end
   end
 
+  it "check supported commands", tags: "mock_mpd_server" do
+    MockMPDServer.with do
+      client = MPD::Client.new
+
+      client.supports?("play").should be_truthy
+      client.supports?("update").should be_falsey
+    end
+  end
+
   describe "commands", tags: "mock_mpd_server" do
     it "#search" do
       MockMPDServer.with do

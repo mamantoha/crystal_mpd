@@ -87,11 +87,14 @@ module MPD
 
     # Attempts to reconnect to the MPD daemon.
     def reconnect
-      @socket = if host.starts_with?('/')
-                  UNIXSocket.new(host)
-                else
-                  TCPSocket.new(host, port)
-                end
+      @socket =
+        if host.starts_with?('/')
+          UNIXSocket.new(host)
+        else
+          TCPSocket.new(host, port)
+        end
+
+      @supported_commands = nil
 
       hello
       password
@@ -102,6 +105,14 @@ module MPD
     def disconnect
       @socket.try &.close
       reset
+    end
+
+    private def supported_commands : Array(String)
+      @supported_commands ||= (commands || [] of String)
+    end
+
+    def supports?(command : String | Symbol) : Bool
+      supported_commands.includes?(command.to_s)
     end
 
     # Register a callback for a specific event (e.g., :state, :song, etc.)

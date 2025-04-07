@@ -34,6 +34,8 @@ class MockMPDServer
     client.puts("OK MPD 0.24.2")
 
     while line = client.gets
+      line = line.chomp
+
       case line
       when .starts_with?("find ")
         expression = line.split(" ", 2)[1]
@@ -79,6 +81,9 @@ class MockMPDServer
         client.puts("audio: 44100:f:2")
         client.puts("nextsong: 24")
         client.puts("nextsongid: 54")
+        client.puts("OK")
+      when "commands"
+        client.puts("command: play")
         client.puts("OK")
       else
         # for debug purposes

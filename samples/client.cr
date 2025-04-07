@@ -45,6 +45,8 @@ puts client.currentsong
 # puts client.listfiles
 # puts client.listfiles("world/z")
 # puts client.commands
+# puts client.supports?("play")
+# puts client.supports?("update")
 # puts client.notcommands
 # puts client.rename("test", "new_test")
 # puts client.save("test")
