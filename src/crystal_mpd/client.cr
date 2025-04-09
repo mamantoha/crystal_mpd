@@ -1689,7 +1689,7 @@ module MPD
     # <8192 bytes>
     # OK
     # ```
-    private def fetch_binary(io : IO::Memory, offset = 0, *args) : Tuple(Hash(String, String), IO::Memory)
+    private def fetch_binary(io : IO::Memory, offset = 0, *args) : Tuple(Hash(String, String), IO::Memory)?
       data = {} of String => String
 
       synchronize do
@@ -1711,6 +1711,8 @@ module MPD
           data[key] = value
         end
       end
+
+      return if data.empty?
 
       size = data["size"].to_i
       binary = data["binary"].to_i
