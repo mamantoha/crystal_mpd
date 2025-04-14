@@ -543,7 +543,7 @@ module MPD
 
     # Search the queue for songs matching `filter`.
     # Parameters have the same meaning as for `find`, except that search is not case sensitive.
-    def playlistsearch(filter : String, *, sort : String? = nil, window : MPD::Range? = nil)
+    def playlistsearch(filter : String | MPD::Filter, *, sort : String? = nil, window : MPD::Range? = nil)
       synchronize do
         hash = {} of String => String | MPD::Range
 
@@ -553,11 +553,6 @@ module MPD
         write_command("playlistsearch", filter, hash)
         execute("fetch_songs")
       end
-    end
-
-    # :ditto:
-    def playlistsearch(filter : MPD::Filter, *, sort : String? = nil, window : MPD::Range? = nil)
-      playlistsearch(filter.to_s, sort: sort, window: window)
     end
 
     # :ditto:
@@ -581,7 +576,7 @@ module MPD
     # The type "Last-Modified" can sort by file modification time, and "prio" sorts by queue priority.
     #
     # `window` can be used to query only a portion of the real response.
-    def playlistfind(filter : String, *, sort : String? = nil, window : MPD::Range? = nil)
+    def playlistfind(filter : String | MPD::Filter, *, sort : String? = nil, window : MPD::Range? = nil)
       synchronize do
         hash = {} of String => String | MPD::Range
 
@@ -591,11 +586,6 @@ module MPD
         write_command("playlistfind", filter, hash)
         execute("fetch_songs")
       end
-    end
-
-    # :ditto
-    def playlistfind(filter : MPD::Filter, *, sort : String? = nil, window : MPD::Range? = nil)
-      playlistfind(filter.to_s, sort: sort, window: window)
     end
 
     # :ditto
@@ -747,7 +737,7 @@ module MPD
     #
     # The `position` parameter specifies where the songs will be inserted.
     # It can be relative to the current song as in `addid`.
-    def searchaddpl(name : String, filter : String, *, sort : String? = nil, window : MPD::Range? = nil, position : Int32 | String | Nil = nil)
+    def searchaddpl(name : String, filter : String | MPD::Filter, *, sort : String? = nil, window : MPD::Range? = nil, position : Int32 | String | Nil = nil)
       synchronize do
         hash = {} of String => String | MPD::Range
 
@@ -761,11 +751,6 @@ module MPD
     end
 
     # :ditto:
-    def searchaddpl(name : String, filter : MPD::Filter, *, sort : String? = nil, window : MPD::Range? = nil, position : Int32 | String | Nil = nil)
-      searchaddpl(name, filter.to_s, sort: sort, window: window, position: position)
-    end
-
-    # :ditto:
     def searchaddpl(name : String, *, sort : String? = nil, window : MPD::Range? = nil, position : Int32 | String | Nil = nil, & : MPD::Filter ->)
       filter = MPD::Filter.new
       yield filter
@@ -776,7 +761,7 @@ module MPD
 
     # Count the number of songs and their total playtime in the database matching `filter`.
     # Parameters have the same meaning as for `count` except the search is not case sensitive.
-    def searchcount(filter : String, *, group : String? = nil)
+    def searchcount(filter : String | MPD::Filter, *, group : String? = nil)
       synchronize do
         hash = {} of String => String | MPD::Range
 
@@ -786,11 +771,6 @@ module MPD
 
         execute("fetch_counts")
       end
-    end
-
-    # :ditto:
-    def searchcount(filter : MPD::Filter, *, group : String? = nil)
-      searchcount(filter.to_s, group: group)
     end
 
     # :ditto:
@@ -834,7 +814,7 @@ module MPD
 
     # Search the playlist for songs matching `filter`.
     # A range may be specified to list only a part of the playlist.
-    def searchplaylist(name : String, filter : String, *, window : MPD::Range? = nil)
+    def searchplaylist(name : String, filter : String | MPD::Filter, *, window : MPD::Range? = nil)
       synchronize do
         hash = {} of String => String | MPD::Range
 
@@ -843,11 +823,6 @@ module MPD
         write_command("searchplaylist", name, filter, hash)
         execute("fetch_songs")
       end
-    end
-
-    # :ditto:
-    def searchplaylist(name : String, filter : MPD::Filter, *, window : MPD::Range? = nil)
-      searchplaylist(name, filter, window: window)
     end
 
     # :ditto:
@@ -1005,7 +980,7 @@ module MPD
     # mpd.list("Artist")
     # mpd.list("filename", "((artist == 'Linkin Park') AND (date == '2003'))")
     # ```
-    def list(type : String, filter : String | Nil = nil, *, group : String? = nil, window : MPD::Range? = nil)
+    def list(type : String, filter : String | MPD::Filter | Nil = nil, *, group : String? = nil, window : MPD::Range? = nil)
       synchronize do
         hash = {} of String => String | MPD::Range
 
@@ -1015,11 +990,6 @@ module MPD
         write_command("list", type, filter, hash)
         execute("fetch_list")
       end
-    end
-
-    # :ditto:
-    def list(type : String, filter : MPD::Filter | Nil = nil, *, group : String? = nil, window : MPD::Range? = nil)
-      list(type, filter.to_s, group: group, window: window)
     end
 
     # :ditto:
@@ -1054,7 +1024,7 @@ module MPD
     # mpd.count("(genre != 'Pop')", group: "artist")
     # => [{"Artist" => "Artist 1", "songs" => "11", "playtime" => "2388"}, {"Artist" => "Artist 2", "songs" => "12", "playtime" => "2762"}]
     # ```
-    def count(filter : String, *, group : String? = nil)
+    def count(filter : String | MPD::Filter, *, group : String? = nil)
       synchronize do
         hash = {} of String => String | MPD::Range
 
@@ -1064,11 +1034,6 @@ module MPD
 
         execute("fetch_counts")
       end
-    end
-
-    # :ditto:
-    def count(filter : MPD::Filter, *, group : String? = nil)
-      count(filter, group: group)
     end
 
     # :ditto:
@@ -1221,7 +1186,7 @@ module MPD
     # mpd.find("(genre contains 'Rock')")
     # mpd.find("(genre contains_ci 'RocK')")
     # ```
-    def find(filter : String, *, sort : String? = nil, window : MPD::Range? = nil)
+    def find(filter : String | MPD::Filter, *, sort : String? = nil, window : MPD::Range? = nil)
       synchronize do
         hash = {} of String => String | MPD::Range
 
@@ -1231,11 +1196,6 @@ module MPD
         write_command("find", filter, hash)
         execute("fetch_songs")
       end
-    end
-
-    # :ditto:
-    def find(filter : MPD::Filter, *, sort : String? = nil, window : MPD::Range? = nil)
-      find(filter.to_s, sort: sort, window: window)
     end
 
     # :ditto:
@@ -1254,7 +1214,7 @@ module MPD
     # ```
     # mpd.search("(any =~ 'crystal')")
     # ```
-    def search(filter : String, *, sort : String? = nil, window : MPD::Range? = nil)
+    def search(filter : String | MPD::Filter, *, sort : String? = nil, window : MPD::Range? = nil)
       synchronize do
         hash = {} of String => String | MPD::Range
 
@@ -1264,11 +1224,6 @@ module MPD
         write_command("search", filter, hash)
         execute("fetch_songs")
       end
-    end
-
-    # :ditto:
-    def search(filter : MPD::Filter, *, sort : String? = nil, window : MPD::Range? = nil)
-      search(filter.to_s, sort: sort, window: window)
     end
 
     # :ditto:
@@ -1287,7 +1242,7 @@ module MPD
     # ```
     # mpd.findadd("(genre == 'Alternative Rock')")
     # ```
-    def findadd(filter : String, *, sort : String? = nil, window : MPD::Range? = nil, position : Int32 | String | Nil = nil)
+    def findadd(filter : String | MPD::Filter, *, sort : String? = nil, window : MPD::Range? = nil, position : Int32 | String | Nil = nil)
       synchronize do
         hash = {} of String => String | MPD::Range
 
@@ -1298,11 +1253,6 @@ module MPD
         write_command("findadd", filter, hash)
         execute("fetch_nothing")
       end
-    end
-
-    # :ditto:
-    def findadd(filter : MPD::Filter, *, sort : String? = nil, window : MPD::Range? = nil, position : Int32 | String | Nil = nil)
-      findadd(filter.to_s, sort: sort, window: window, position: position)
     end
 
     # :ditto:
@@ -1321,7 +1271,7 @@ module MPD
     #
     # The `position` parameter specifies where the songs will be inserted.
     # It can be relative to the current song as in `#addid`.
-    def searchadd(filter : String, *, sort : String? = nil, window : MPD::Range? = nil, position : Int32 | String | Nil = nil)
+    def searchadd(filter : String | MPD::Filter, *, sort : String? = nil, window : MPD::Range? = nil, position : Int32 | String | Nil = nil)
       synchronize do
         hash = {} of String => String | MPD::Range
 
@@ -1332,11 +1282,6 @@ module MPD
         write_command("searchadd", filter, hash)
         execute("fetch_nothing")
       end
-    end
-
-    # :ditto:
-    def searchadd(filter : MPD::Filter, *, sort : String? = nil, window : MPD::Range? = nil, position : Int32 | String | Nil = nil)
-      searchadd(filter.to_s, sort: sort, window: window, position: position)
     end
 
     # :ditto:

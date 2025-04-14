@@ -17,12 +17,18 @@ module MPD
           "#{key} #{value}"
         end
       when String
-        %{"#{arg.gsub(%(\\), %(\\\\)).gsub(%("), %(\\"))}"}
+        escape_string(arg)
+      when MPD::Filter
+        escape_string(arg.to_s)
       when Int32
         arg.to_s
       else
         ""
       end
+    end
+
+    private def self.escape_string(str)
+      %{"#{str.gsub(%(\\), %(\\\\)).gsub(%("), %(\\"))}"}
     end
 
     # Converts a Crystal Range into an MPD-compatible "START:END" string.
