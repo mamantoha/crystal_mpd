@@ -32,6 +32,11 @@ describe MPD::CommandBuilder do
       command.should eq("find \"(genre != 'Pop')\" sort -ArtistSort window 5:11")
     end
 
+    it "builds a command with a MPD::Filter argument" do
+      command = MPD::CommandBuilder.build("find", MPD::Filter.not_eq(:genre, "Pop"), {"sort" => "-ArtistSort", "window" => (5..10)})
+      command.should eq("find \"(genre != \\\"Pop\\\")\" sort -ArtistSort window 5:11")
+    end
+
     describe ".parse_range" do
       it "an inclusive range" do
         MPD::CommandBuilder.parse_range(0..3).should eq("0:4")
