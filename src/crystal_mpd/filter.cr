@@ -55,20 +55,20 @@ module MPD
     ]
 
     {% for operator in COMPARISON_OPS %}
-      def {{operator[:method].id}}(tag : String, value : String)
-        add(tag, "{{operator[:op].id}}", value)
+      def {{ operator[:method].id }}(tag : String, value : String)
+        add(tag, "{{ operator[:op].id }}", value)
       end
 
-      def {{operator[:method].id}}(tag : Tag, value : String)
-        add(tag.to_s.downcase, "{{operator[:op].id}}", value)
+      def {{ operator[:method].id }}(tag : Tag, value : String)
+        add(tag.to_s.downcase, "{{ operator[:op].id }}", value)
       end
 
-      def self.{{operator[:method].id}}(tag : String, value : String) : Filter
-        new.{{operator[:method].id}}(tag, value)
+      def self.{{ operator[:method].id }}(tag : String, value : String) : Filter
+        new.{{ operator[:method].id }}(tag, value)
       end
 
-      def self.{{operator[:method].id}}(tag : Tag, value : String) : Filter
-        new.{{operator[:method].id}}(tag.to_s.downcase, value)
+      def self.{{ operator[:method].id }}(tag : Tag, value : String) : Filter
+        new.{{ operator[:method].id }}(tag.to_s.downcase, value)
       end
     {% end %}
 
@@ -85,36 +85,36 @@ module MPD
     ]
 
     {% for operator in STRING_MATCH_OPS %}
-      def {{operator.id}}(tag : String, value : String)
-        add(tag, "{{operator.id}}", value)
+      def {{ operator.id }}(tag : String, value : String)
+        add(tag, "{{ operator.id }}", value)
       end
 
-      def {{operator.id}}(tag : Tag, value : String)
-        add(tag.to_s.downcase, "{{operator.id}}", value)
+      def {{ operator.id }}(tag : Tag, value : String)
+        add(tag.to_s.downcase, "{{ operator.id }}", value)
       end
 
-      def self.{{operator.id}}(tag : String, value : String)
-        new.{{operator.id}}(tag, value)
+      def self.{{ operator.id }}(tag : String, value : String)
+        new.{{ operator.id }}(tag, value)
       end
 
-      def self.{{operator.id}}(tag : Tag, value : String)
-        new.{{operator.id}}(tag.to_s.downcase, value)
+      def self.{{ operator.id }}(tag : Tag, value : String)
+        new.{{ operator.id }}(tag.to_s.downcase, value)
       end
 
-      def not_{{operator.id}}(tag : String, value : String)
-        add_neg(tag, "{{operator.id}}", value)
+      def not_{{ operator.id }}(tag : String, value : String)
+        add_neg(tag, "{{ operator.id }}", value)
       end
 
-      def not_{{operator.id}}(tag : Tag, value : String)
-        add_neg(tag.to_s.downcase, "{{operator.id}}", value)
+      def not_{{ operator.id }}(tag : Tag, value : String)
+        add_neg(tag.to_s.downcase, "{{ operator.id }}", value)
       end
 
-      def self.not_{{operator.id}}(tag : String, value : String)
-        new.not_{{operator.id}}(tag, value)
+      def self.not_{{ operator.id }}(tag : String, value : String)
+        new.not_{{ operator.id }}(tag, value)
       end
 
-      def self.not_{{operator.id}}(tag : Tag, value : String)
-        new.not_{{operator.id}}(tag.to_s.downcase, value)
+      def self.not_{{ operator.id }}(tag : Tag, value : String)
+        new.not_{{ operator.id }}(tag.to_s.downcase, value)
       end
     {% end %}
 

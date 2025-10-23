@@ -1562,12 +1562,12 @@ module MPD
     # :nodoc:
     macro execute(retval)
       if @command_list.active?
-        @command_list.add({{retval}})
+        @command_list.add({{ retval }})
 
         return
       end
 
-      {{retval.id}}
+      {{ retval.id }}
     end
 
     # :nodoc:
