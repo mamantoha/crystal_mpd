@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Crystal Docs 1.18.2">
+<meta name="crystal_docs.project_version" content="master">
+<meta name="crystal_docs.project_name" content="crystal_mpd">
+
+
+
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/doc.js"></script>
+
+  <meta name="repository-name" content="crystal_mpd">
+  <title>crystal_mpd master</title>
+  <script type="text/javascript">
+  CrystalDocs.base_path = "";
+  </script>
+</head>
+<body>
+
+<svg class="hidden">
+  <symbol id="octicon-link" viewBox="0 0 16 16">
+    <path fill="currentColor" fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
+  </symbol>
+</svg>
+<input type="checkbox" id="sidebar-btn">
+<label for="sidebar-btn" id="sidebar-btn-label">
+  <svg class="open" xmlns="http://www.w3.org/2000/svg" height="2em" width="2em" viewBox="0 0 512 512"><title>Open Sidebar</title><path fill="currentColor" d="M80 96v64h352V96H80zm0 112v64h352v-64H80zm0 112v64h352v-64H80z"></path></svg>
+  <svg class="close" xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 512 512"><title>Close Sidebar</title><path fill="currentColor" d="m118.6 73.4-45.2 45.2L210.7 256 73.4 393.4l45.2 45.2L256 301.3l137.4 137.3 45.2-45.2L301.3 256l137.3-137.4-45.2-45.2L256 210.7Z"></path></svg>
+</label>
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search..." spellcheck="false" aria-label="Search">
+    </div>
+
+    <div class="project-summary">
+      <h1 class="project-name">
+        <a href="index.html">
+          crystal_mpd
+        </a>
+      </h1>
+
+      <span class="project-version">
+        master
+      </span>
+    </div>
+  </div>
+
+  <div class="search-results hidden">
+    <ul class="search-list"></ul>
+  </div>
+
+  <div class="types-list">
+    <ul>
+  
+  <li class="parent " data-id="crystal_mpd/MPD" data-name="mpd">
+      <a href="MPD.html">MPD</a>
+      
+        <ul>
+  
+  <li class="parent " data-id="crystal_mpd/MPD/Client" data-name="mpd::client">
+      <a href="MPD/Client.html">Client</a>
+      
+        <ul>
+  
+  <li class=" " data-id="crystal_mpd/MPD/Client/Event" data-name="mpd::client::event">
+      <a href="MPD/Client/Event.html">Event</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="crystal_mpd/MPD/CommandBuilder" data-name="mpd::commandbuilder">
+      <a href="MPD/CommandBuilder.html">CommandBuilder</a>
+      
+    </li>
+  
+  <li class=" " data-id="crystal_mpd/MPD/CommandList" data-name="mpd::commandlist">
+      <a href="MPD/CommandList.html">CommandList</a>
+      
+    </li>
+  
+  <li class=" " data-id="crystal_mpd/MPD/Error" data-name="mpd::error">
+      <a href="MPD/Error.html">Error</a>
+      
+    </li>
+  
+  <li class=" " data-id="crystal_mpd/MPD/Filter" data-name="mpd::filter">
+      <a href="MPD/Filter.html">Filter</a>
+      
+    </li>
+  
+  <li class=" " data-id="crystal_mpd/MPD/Object" data-name="mpd::object">
+      <a href="MPD/Object.html">Object</a>
+      
+    </li>
+  
+  <li class=" " data-id="crystal_mpd/MPD/Objects" data-name="mpd::objects">
+      <a href="MPD/Objects.html">Objects</a>
+      
+    </li>
+  
+  <li class=" " data-id="crystal_mpd/MPD/Pair" data-name="mpd::pair">
+      <a href="MPD/Pair.html">Pair</a>
+      
+    </li>
+  
+  <li class=" " data-id="crystal_mpd/MPD/Pairs" data-name="mpd::pairs">
+      <a href="MPD/Pairs.html">Pairs</a>
+      
+    </li>
+  
+  <li class=" " data-id="crystal_mpd/MPD/Range" data-name="mpd::range">
+      <a href="MPD/Range.html">Range</a>
+      
+    </li>
+  
+  <li class=" " data-id="crystal_mpd/MPD/Tag" data-name="mpd::tag">
+      <a href="MPD/Tag.html">Tag</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+  </div>
+</div>
+
+
+<div class="main-content">
+<h1><a id="mpdclient" class="anchor" href="#mpdclient">  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>MPD::Client</h1>
+<p><img src="https://github.com/mamantoha/crystal_mpd/workflows/Crystal%20CI/badge.svg" alt="Crystal CI" />
+<a href="https://github.com/mamantoha/crystal_mpd/releases"><img src="https://img.shields.io/github/release/mamantoha/crystal_mpd.svg" alt="GitHub release" /></a>
+<a href="https://mamantoha.github.io/crystal_mpd/"><img src="https://img.shields.io/badge/docs-available-brightgreen.svg" alt="Docs" /></a>
+<a href="https://github.com/mamantoha/crystal_mpd/blob/master/LICENSE"><img src="https://img.shields.io/github/license/mamantoha/crystal_mpd.svg" alt="License" /></a></p>
+<p>Concurrent <a href="https://www.musicpd.org/">Music Player Daemon</a> client written entirely in Crystal.</p>
+<h2><a id="main-features" class="anchor" href="#main-features">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Main features</h2>
+<ul>
+<li>Filtering DSL</li>
+<li>Range support</li>
+<li>Callbacks</li>
+<li>Command lists support</li>
+<li>Binary responses</li>
+<li>Client to client communicate</li>
+<li>Logging</li>
+<li>Handle exceptions</li>
+</ul>
+<h2><a id="installation" class="anchor" href="#installation">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Installation</h2>
+<p>Add this to your application's <code>shard.yml</code>:</p>
+<pre><code class="language-yaml">dependencies:
+  crystal_mpd:
+    github: mamantoha/crystal_mpd</code></pre>
+<h2><a id="usage" class="anchor" href="#usage">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Usage</h2>
+<pre><code class="language-crystal"><span class="k">require</span> <span class="s">&quot;crystal_mpd&quot;</span></code></pre>
+<p>All functionality is contained in the <code><a href="MPD/Client.html">MPD::Client</a></code> class.
+Creating an instance of this class is as simple as:</p>
+<pre><code class="language-crystal">client <span class="o">=</span> <span class="t">MPD</span><span class="t">::</span><span class="t">Client</span>.new(<span class="s">&quot;localhost&quot;</span>, <span class="n">6600</span>)</code></pre>
+<p>You can also omit the <code>host</code> and <code>port</code>, and it will use the defaults:</p>
+<pre><code class="language-crystal">client <span class="o">=</span> <span class="t">MPD</span><span class="t">::</span><span class="t">Client</span>.new(<span class="s">&quot;localhost&quot;</span>)
+client <span class="o">=</span> <span class="t">MPD</span><span class="t">::</span><span class="t">Client</span>.new</code></pre>
+<p>You can connect to a local socket (UNIX domain socket), specify an absolute path:</p>
+<pre><code class="language-crystal">client <span class="o">=</span> <span class="t">MPD</span><span class="t">::</span><span class="t">Client</span>.new(<span class="s">&quot;/run/mpd/socket&quot;</span>)</code></pre>
+<p>If a password specified for access to MPD:</p>
+<pre><code class="language-crystal">client <span class="o">=</span> <span class="t">MPD</span><span class="t">::</span><span class="t">Client</span>.new(<span class="s">&quot;localhost&quot;</span>, password: <span class="s">&quot;password&quot;</span>)</code></pre>
+<p>The client library can be used as follows:</p>
+<pre><code class="language-crystal">puts client.version <span class="c"># print the mpd version</span>
+client.play(<span class="n">2</span>)      <span class="c"># begins playing the playlist at song number 2</span>
+puts client.status  <span class="c"># print the current status of the player and the volume level</span>
+client.close        <span class="c"># send the close command</span>
+client.disconect    <span class="c"># disconnect from the server</span></code></pre>
+<p>Check <code><a href="MPD/Client.html">MPD::Client</a></code> <a href="https://mamantoha.github.io/crystal_mpd/MPD/Client.html">source</a> for supported commands.</p>
+<p>To use all <code>crystal_mpd</code> functions you should use the latest stable MPD version (0.24.x).</p>
+<h3><a id="command-lists" class="anchor" href="#command-lists">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Command lists</h3>
+<p>Command lists <a href="https://mpd.readthedocs.io/en/latest/protocol.html#command-lists">documentation</a>.</p>
+<p>To facilitate faster adding of files etc. you can pass a list of commands all at once using a command list.
+The command list begins with <code>command_list_ok_begin</code> and ends with <code>command_list_end</code>.</p>
+<p>It does not execute any commands until the list has ended.
+The return value is whatever the return for a list of commands is. On success for all commands, <code>OK</code> is returned.</p>
+<p>If a command fails, no more commands are executed and the appropriate ACK error is returned.</p>
+<p>If <code>command_list_ok_begin</code> is used, <code>list_OK</code> is returned for each successful command executed in the command list.</p>
+<pre><code class="language-crystal">client.command_list_ok_begin <span class="c"># start a command list</span>
+client.update                <span class="c"># insert the update command into the list</span>
+client.status                <span class="c"># insert the status command into the list</span>
+client.command_list_end      <span class="c"># result will be a Array with the results</span></code></pre>
+<p>or</p>
+<pre><code class="language-crystal">client.with_command_list <span class="k">do</span>
+  client.update
+  client.status
+<span class="k">end</span></code></pre>
+<h3><a id="ranges" class="anchor" href="#ranges">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Ranges</h3>
+<p>Ranges <a href="https://mpd.readthedocs.io/en/latest/protocol.html#ranges">documentation</a>.</p>
+<p>Some MPD commands (e.g. <code>move</code>, <code>delete</code>, <code>load</code>, <code>shuffle</code>, <code>playlistinfo</code>) support integer ranges in the format <code>START:END</code>, specifying a slice of songs. This is handled in <code>crystal_mpd</code> via <code><a href="MPD/Range.html">MPD::Range</a></code>, which supports both inclusive (<code>1..10</code>) and exclusive (<code>1...10</code>) ranges.</p>
+<p>Note: MPD treats <code>END</code> as exclusive, so we internally adjust inclusive ranges to match this behavior.
+Also note that in MPD, song indexes start at 0 — the same as in Crystal.</p>
+<pre><code class="language-crystal"><span class="c"># Move first 3 songs to position 10, 11, and 12</span>
+client.move(<span class="n">0</span>..<span class="n">2</span>, <span class="n">10</span>)
+
+<span class="c"># Delete songs 0 and 1 (but NOT 2)</span>
+client.delete(<span class="n">0</span>...<span class="n">2</span>)
+
+<span class="c"># Delete songs 0, 1, and 2</span>
+client.delete(<span class="n">0</span>..<span class="n">2</span>)</code></pre>
+<p>End-less ranges also span to the end of the list:</p>
+<pre><code class="language-crystal"><span class="c"># Delete all songs from the playlist starting from index 10</span>
+client.delete(<span class="n">10</span>..)
+<span class="c"># or using exclusive range (same effect)</span>
+client.delete(<span class="n">10</span>...)</code></pre>
+<p>Begin-less ranges default the start to 0:</p>
+<pre><code class="language-crystal"><span class="c"># Delete songs 0, 1, and 2</span>
+client.delete(..<span class="n">2</span>)
+
+<span class="c"># Delete songs 0 and 1</span>
+client.delete(...<span class="n">2</span>)</code></pre>
+<h3><a id="filters" class="anchor" href="#filters">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Filters</h3>
+<p>Filters <a href="https://mpd.readthedocs.io/en/latest/protocol.html#filters">documentation</a></p>
+<p>All commands which search for songs (<code>playlistsearch</code>, <code>playlistfind</code>, <code>searchaddpl</code>, <code>searchcount</code>, <code>searchplaylist</code>, <code>list</code>, <code>count</code>, <code>find</code>, <code>search</code>, <code>findadd</code>, <code>searchadd</code>) share a common filter syntax.</p>
+<p>The <code>find</code> commands are case sensitive, which <code>search</code> and related commands ignore case.</p>
+<pre><code class="language-crystal">client.search(<span class="s">&quot;(any =~ &#39;crystal&#39;)&quot;</span>)
+client.searchaddpl(<span class="s">&quot;alt_rock&quot;</span>, <span class="s">&quot;(genre == &#39;Alternative Rock&#39;)&quot;</span>, sort: <span class="s">&quot;-ArtistSort&quot;</span>, window: (<span class="n">5</span>..<span class="n">10</span>))
+client.list(<span class="s">&quot;filename&quot;</span>, <span class="s">&quot;((artist == &#39;Linkin Park&#39;) AND (date == &#39;2003&#39;))&quot;</span>)</code></pre>
+<h4><a id="build-mpd-query-expressions-in-crystal" class="anchor" href="#build-mpd-query-expressions-in-crystal">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Build MPD query expressions in Crystal</h4>
+<p>The <code><a href="MPD/Filter.html">MPD::Filter</a></code> class helps you construct complex MPD filter expressions using a fluent and chainable DSL — fully compatible with MPD filter syntax.</p>
+<p>You can build expressions using chainable methods like <code>#eq</code>, <code>#contains</code>, <code>#not_eq</code>, and logical <code>#not</code>.</p>
+<pre><code class="language-crystal">filter <span class="o">=</span>
+  <span class="t">MPD</span><span class="t">::</span><span class="t">Filter</span>
+    .eq(<span class="s">&quot;Artist&quot;</span>, <span class="s">&quot;Linkin Park&quot;</span>)
+    .contains(<span class="s">&quot;Album&quot;</span>, <span class="s">&quot;Meteora&quot;</span>)
+    .not_eq(<span class="s">&quot;Title&quot;</span>, <span class="s">&quot;Numb&quot;</span>)
+    .sort(<span class="s">&quot;Track&quot;</span>)
+    .window(..<span class="n">10</span>)
+
+client.find(filter)</code></pre>
+<p>This is equivalent to:</p>
+<pre><code class="language-crystal">expression <span class="o">=</span> <span class="s">&quot;((Artist == &#39;Linkin Park&#39;) AND (Album contains &#39;Meteora&#39;) AND (Title != &#39;Numb&#39;))&quot;</span>
+
+client.find(expression, sort: <span class="s">&quot;Track&quot;</span>, window: ..<span class="n">10</span>)</code></pre>
+<p>You can also use this block-based filter DSL like:</p>
+<pre><code class="language-crystal">client.search <span class="k">do</span> <span class="o">|</span>filter<span class="o">|</span>
+  filter
+    .eq(<span class="n">:artist</span>, <span class="s">&quot;Linkin Park&quot;</span>)
+    .match(<span class="n">:album</span>, <span class="s">&quot;Meteora.*&quot;</span>)
+    .not_eq(<span class="n">:title</span>, <span class="s">&quot;Numb&quot;</span>)
+    .sort(<span class="n">:track</span>)
+    .window(..<span class="n">10</span>)
+<span class="k">end</span></code></pre>
+<h5><a id="supported-methods" class="anchor" href="#supported-methods">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Supported methods</h5>
+<p>| Method                        | MPD Equivalent                    |
+| ----------------------------- | --------------------------------- |
+| <code>eq(tag, value)</code>              | <code>(tag == 'value')</code>                |
+| <code>not_eq(tag, value)</code>          | <code>(tag != 'value')</code>                |
+| <code>match(tag, value)</code>           | <code>(tag =~ 'value')</code>                |
+| <code>not_match(tag, value)</code>       | <code>(tag !~ 'value')</code>                |
+| <code>eq_cs(tag, value)</code>           | <code>(tag eq_cs 'value')</code>             |
+| <code>eq_ci(tag, value)</code>           | <code>(tag eq_ci 'value')</code>             |
+| <code>not_eq_cs(tag, value)</code>       | <code>(!(tag eq_cs 'value'))</code>          |
+| <code>not_eq_ci(tag, value)</code>       | <code>(!(tag eq_ci 'value'))</code>          |
+| <code>contains(tag, value)</code>        | <code>(tag contains 'value')</code>          |
+| <code>not_contains(tag, value)</code>    | <code>(!(tag contains 'value'))</code>       |
+| <code>contains_cs(tag, value)</code>     | <code>(tag contains_cs 'value')</code>       |
+| <code>contains_ci(tag, value)</code>     | <code>(tag contains_ci 'value')</code>       |
+| <code>not_contains_cs(tag, value)</code> | <code>(!(tag contains_cs 'value'))</code>    |
+| <code>not_contains_ci(tag, value)</code> | <code>(!(tag contains_ci 'value'))</code>    |
+| <code>starts_with(tag, value)</code>     | <code>(tag starts_with 'value')</code>       |
+| <code>not_starts_with(tag, value)</code> | <code>(!(tag starts_with 'value'))</code>    |
+| <code>starts_with_cs(tag, value)</code>  | <code>(tag starts_with_cs 'value')</code>    |
+| <code>starts_with_ci(tag, value)</code>  | <code>(tag starts_with_ci 'value')</code>    |
+| <code>not_starts_with_cs(tag,val)</code> | <code>(!(tag starts_with_cs 'value'))</code> |
+| <code>not_starts_with_ci(tag,val)</code> | <code>(!(tag starts_with_ci 'value'))</code> |
+| <code>not(filter)</code>                 | <code>(!...)</code>                          |</p>
+<p>Chaining multiple filters implies logical <code>AND</code>.</p>
+<p>Negate an expression with <code>#not</code>.</p>
+<pre><code class="language-crystal">inner <span class="o">=</span> <span class="t">MPD</span><span class="t">::</span><span class="t">Filter</span>.eq(<span class="s">&quot;Genre&quot;</span>, <span class="s">&quot;Pop&quot;</span>)
+outer <span class="o">=</span> <span class="t">MPD</span><span class="t">::</span><span class="t">Filter</span>.not(inner)
+<span class="c"># =&gt; &quot;(!(Genre == \&quot;Pop\&quot;))&quot;</span></code></pre>
+<p>which is equivalent to</p>
+<pre><code class="language-crystal"><span class="t">MPD</span><span class="t">::</span><span class="t">Filter</span>.not_eq(<span class="s">&quot;Genre&quot;</span>, <span class="s">&quot;Pop&quot;</span>)
+<span class="c"># =&gt; &quot;(Genre != \&quot;Pop\&quot;)&quot;</span></code></pre>
+<h3><a id="callbacks" class="anchor" href="#callbacks">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Callbacks</h3>
+<p>Callbacks are a simple way to make your client respond to events, rather that have to continuously ask the server for updates. This is done by having a background thread continuously check the server for changes.</p>
+<p>To make use of callbacks, you need to:</p>
+<ol>
+<li>
+<p>Create a MPD client instance with callbacks enabled.</p>
+<pre><code class="language-crystal">client <span class="o">=</span> <span class="t">MPD</span><span class="t">::</span><span class="t">Client</span>.new(with_callbacks: <span class="n">true</span>)</code></pre>
+</li>
+<li>
+<p>Setup a callback to be called when something happens.</p>
+<pre><code class="language-crystal">client.on <span class="n">:state</span> <span class="k">do</span> <span class="o">|</span>state<span class="o">|</span>
+  puts <span class="s">&quot;[</span><span class="i">#{</span><span class="t">Time</span>.local<span class="i">}</span><span class="s">] State was change to </span><span class="i">#{</span>state<span class="i">}</span><span class="s">&quot;</span>
+<span class="k">end</span></code></pre>
+</li>
+</ol>
+<p><code>crystal_mpd</code> supports callbacks for any of the keys returned by <code>MPD::Client#status</code>.</p>
+<p>Here's the full list of events:</p>
+<ul>
+<li><code>:partition</code></li>
+<li><code>:volume</code></li>
+<li><code>:repeat</code></li>
+<li><code>:random</code></li>
+<li><code>:single</code></li>
+<li><code>:consume</code></li>
+<li><code>:playlist</code></li>
+<li><code>:playlistlength</code></li>
+<li><code>:state</code></li>
+<li><code>:song</code></li>
+<li><code>:songid</code></li>
+<li><code>:nextsong</code></li>
+<li><code>:nextsongid</code></li>
+<li><code>:time</code></li>
+<li><code>:elapsed</code></li>
+<li><code>:duration</code></li>
+<li><code>:bitrate</code></li>
+<li><code>:xfade</code></li>
+<li><code>:mixrampdb</code></li>
+<li><code>:mixrampdelay</code></li>
+<li><code>:audio</code></li>
+<li><code>:updating_db</code></li>
+<li><code>:error</code></li>
+<li><code>:lastloadedplaylist</code></li>
+</ul>
+<pre><code class="language-crystal">client <span class="o">=</span> <span class="t">MPD</span><span class="t">::</span><span class="t">Client</span>.new(with_callbacks: <span class="n">true</span>)
+client.callbacks_timeout <span class="o">=</span> <span class="n">2</span>.seconds
+
+client.on <span class="n">:state</span> <span class="k">do</span> <span class="o">|</span>state<span class="o">|</span>
+  puts <span class="s">&quot;[</span><span class="i">#{</span><span class="t">Time</span>.local<span class="i">}</span><span class="s">] State was change to </span><span class="i">#{</span>state<span class="i">}</span><span class="s">&quot;</span>
+<span class="k">end</span>
+
+client.on <span class="n">:song</span> <span class="k">do</span>
+  <span class="k">if</span> (current_song <span class="o">=</span> client.currentsong)
+    puts <span class="s">&quot;[</span><span class="i">#{</span><span class="t">Time</span>.local<span class="i">}</span><span class="s">] 🎵 </span><span class="i">#{</span>current_song[<span class="s">&quot;Artist&quot;</span>]<span class="i">}</span><span class="s"> - </span><span class="i">#{</span>current_song[<span class="s">&quot;Title&quot;</span>]<span class="i">}</span><span class="s">&quot;</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="c"># Keep the program running</span>
+loop { sleep <span class="n">1</span>.second }</code></pre>
+<p>The above will connect to the server like normal, but this time it will create a new thread
+that loops until you issue an exit. This loop checks the server, then sleeps for 2 seconds, then loops.</p>
+<p>In addition to registering individual event listeners using <code>#on</code>, the MPD client also supports a global callback listener using <code>#on_callback</code>.</p>
+<p>This method allows you to handle all events in a single block and react based on the event type.</p>
+<pre><code class="language-crystal">client <span class="o">=</span> <span class="t">MPD</span><span class="t">::</span><span class="t">Client</span>.new(with_callbacks: <span class="n">true</span>)
+
+client.on_callback <span class="k">do</span> <span class="o">|</span>event, value<span class="o">|</span>
+  <span class="k">case</span> event
+  <span class="k">when</span> .state?
+    puts <span class="s">&quot;State changed to </span><span class="i">#{</span>value<span class="i">}</span><span class="s">&quot;</span>
+  <span class="k">when</span> .song?
+    puts <span class="s">&quot;Now playing: </span><span class="i">#{</span>value<span class="i">}</span><span class="s">&quot;</span>
+  <span class="k">when</span> .repeat?
+    puts <span class="s">&quot;Repeat mode: </span><span class="i">#{</span>value <span class="o">==</span> <span class="s">&quot;1&quot;</span> ? <span class="s">&quot;On&quot;</span> : <span class="s">&quot;Off&quot;</span><span class="i">}</span><span class="s">&quot;</span>
+  <span class="k">else</span>
+    puts <span class="s">&quot;[</span><span class="i">#{</span>event<span class="i">}</span><span class="s">] → </span><span class="i">#{</span>value<span class="i">}</span><span class="s">&quot;</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="c"># Keep the program running</span>
+loop { sleep <span class="n">1</span>.second }</code></pre>
+<p>You can combine <code>#on_callback</code> with specific <code>#on</code> handlers. For example:</p>
+<pre><code class="language-crystal">client.on(<span class="n">:state</span>) { <span class="o">|</span>val<span class="o">|</span> puts <span class="s">&quot;STATE: </span><span class="i">#{</span>val<span class="i">}</span><span class="s">&quot;</span> }
+
+client.on_callback <span class="k">do</span> <span class="o">|</span>event, value<span class="o">|</span>
+  puts <span class="s">&quot;[ALL EVENTS] </span><span class="i">#{</span>event<span class="i">}</span><span class="s"> =&gt; </span><span class="i">#{</span>value<span class="i">}</span><span class="s">&quot;</span>
+<span class="k">end</span></code></pre>
+<h3><a id="binary-responses" class="anchor" href="#binary-responses">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Binary responses</h3>
+<p>Some commands can return binary data.</p>
+<pre><code class="language-crystal">client <span class="o">=</span> <span class="t">MPD</span><span class="t">::</span><span class="t">Client</span>.new
+
+<span class="k">if</span> (current_song <span class="o">=</span> client.currentsong)
+  <span class="k">if</span> (response <span class="o">=</span> client.albumart(current_song[<span class="s">&quot;file&quot;</span>]))
+    data, binary <span class="o">=</span> response
+    <span class="c"># data # =&gt; {&quot;size&quot; =&gt; &quot;30219&quot;, &quot;type&quot; =&gt; &quot;image/jpeg&quot;, &quot;binary&quot; =&gt; &quot;5643&quot;}</span>
+
+    extension <span class="o">=</span> <span class="t">MIME</span>.extensions(data[<span class="s">&quot;type&quot;</span>]).first? <span class="o">||</span> <span class="s">&quot;.png&quot;</span>
+
+    file <span class="o">=</span> <span class="t">File</span>.open(<span class="s">&quot;cover</span><span class="i">#{</span>extension<span class="i">}</span><span class="s">&quot;</span>, <span class="s">&quot;w&quot;</span>)
+    file.write(binary.to_slice)
+  <span class="k">end</span>
+<span class="k">end</span></code></pre>
+<p>The above will locate album art for the current song and save image to <code>cover.jpg</code> file.</p>
+<h3><a id="client-to-client-communication" class="anchor" href="#client-to-client-communication">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Client-to-Client communication</h3>
+<p><code>crystal_mpd</code> supports MPD's built-in client-to-client messaging system via channels.
+This allows clients to exchange messages in real time through the MPD server.</p>
+<h4><a id="supported-methods-1" class="anchor" href="#supported-methods-1">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Supported Methods</h4>
+<pre><code class="language-crystal">client.subscribe(<span class="s">&quot;my_channel&quot;</span>)          <span class="c"># Subscribes to a channel</span>
+client.unsubscribe(<span class="s">&quot;my_channel&quot;</span>)        <span class="c"># Unsubscribes from a channel</span>
+client.channels                         <span class="c"># Returns a list of all existing channels</span>
+client.readmessages                     <span class="c"># Reads messages sent to subscribed channels</span>
+client.sendmessage(<span class="s">&quot;my_channel&quot;</span>, <span class="s">&quot;Hi!&quot;</span>) <span class="c"># Sends a message to a specific channel</span></code></pre>
+<h4><a id="example" class="anchor" href="#example">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Example</h4>
+<pre><code class="language-crystal">client.subscribe(<span class="s">&quot;notifications&quot;</span>)
+
+<span class="c"># Somewhere else, another client sends a message</span>
+client.sendmessage(<span class="s">&quot;notifications&quot;</span>, <span class="s">&quot;System update available&quot;</span>)
+
+<span class="c"># The first client reads the message</span>
+messages <span class="o">=</span> client.readmessages
+puts messages
+<span class="c"># =&gt; [{&quot;channel&quot; =&gt; &quot;notifications&quot;, &quot;message&quot; =&gt; &quot;System update available&quot;}]</span></code></pre>
+<h3><a id="logging" class="anchor" href="#logging">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Logging</h3>
+<pre><code class="language-crystal"><span class="k">require</span> <span class="s">&quot;crystal_mpd&quot;</span>
+
+client <span class="o">=</span> <span class="t">MPD</span><span class="t">::</span><span class="t">Client</span>.new
+
+<span class="t">MPD</span><span class="t">::</span><span class="t">Log</span>.level <span class="o">=</span> <span class="n">:debug</span>
+<span class="t">MPD</span><span class="t">::</span><span class="t">Log</span>.backend <span class="o">=</span> <span class="t">::</span><span class="t">Log</span><span class="t">::</span><span class="t">IOBackend</span>.new</code></pre>
+<h2><a id="development" class="anchor" href="#development">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Development</h2>
+<p>Install dependencies:</p>
+<pre><code class="language-console">shards</code></pre>
+<p>To run test:</p>
+<pre><code class="language-console">crystal spec</code></pre>
+<h2><a id="whos-using-mpdclient" class="anchor" href="#whos-using-mpdclient">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Who's using <code><a href="MPD/Client.html">MPD::Client</a></code></h2>
+<p>If you're using <code><a href="MPD/Client.html">MPD::Client</a></code> and would like to have your application added to this list, just submit a PR!</p>
+<ul>
+<li><a href="https://github.com/mamantoha/cryMPD">cryMPD</a> - control MPD audio playing in the browser</li>
+</ul>
+<h2><a id="contributing" class="anchor" href="#contributing">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Contributing</h2>
+<ol>
+<li>Fork it (<a href="https://github.com/mamantoha/crystal_mpd/fork">https://github.com/mamantoha/crystal_mpd/fork</a>)</li>
+<li>Create your feature branch (git checkout -b my-new-feature)</li>
+<li>Commit your changes (git commit -am 'Add some feature')</li>
+<li>Push to the branch (git push origin my-new-feature)</li>
+<li>Create a new Pull Request</li>
+</ol>
+<h2><a id="contributors" class="anchor" href="#contributors">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Contributors</h2>
+<ul>
+<li><a href="https://github.com/mamantoha">mamantoha</a> Anton Maminov - creator, maintainer</li>
+</ul>
+<h2><a id="license" class="anchor" href="#license">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>License</h2>
+<p>Copyright: 2018-2025 Anton Maminov (<a href="mailto:anton.maminov@gmail.com">anton.maminov@gmail.com</a>)</p>
+<p>This library is distributed under the MIT license. Please see the LICENSE file.</p>
+</div>
+</body>
+</html>

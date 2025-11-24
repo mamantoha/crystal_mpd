@@ -1,0 +1,1469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Crystal Docs 1.18.2">
+<meta name="crystal_docs.project_version" content="master">
+<meta name="crystal_docs.project_name" content="crystal_mpd">
+
+
+
+<link href="../css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../js/doc.js"></script>
+
+  <meta name="repository-name" content="crystal_mpd">
+  <title>MPD::Tag - crystal_mpd master</title>
+  <script type="text/javascript">
+    CrystalDocs.base_path = "../";
+  </script>
+</head>
+<body>
+
+<svg class="hidden">
+  <symbol id="octicon-link" viewBox="0 0 16 16">
+    <path fill="currentColor" fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
+  </symbol>
+</svg>
+<input type="checkbox" id="sidebar-btn">
+<label for="sidebar-btn" id="sidebar-btn-label">
+  <svg class="open" xmlns="http://www.w3.org/2000/svg" height="2em" width="2em" viewBox="0 0 512 512"><title>Open Sidebar</title><path fill="currentColor" d="M80 96v64h352V96H80zm0 112v64h352v-64H80zm0 112v64h352v-64H80z"></path></svg>
+  <svg class="close" xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 512 512"><title>Close Sidebar</title><path fill="currentColor" d="m118.6 73.4-45.2 45.2L210.7 256 73.4 393.4l45.2 45.2L256 301.3l137.4 137.3 45.2-45.2L301.3 256l137.3-137.4-45.2-45.2L256 210.7Z"></path></svg>
+</label>
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search..." spellcheck="false" aria-label="Search">
+    </div>
+
+    <div class="project-summary">
+      <h1 class="project-name">
+        <a href="../index.html">
+          crystal_mpd
+        </a>
+      </h1>
+
+      <span class="project-version">
+        master
+      </span>
+    </div>
+  </div>
+
+  <div class="search-results hidden">
+    <ul class="search-list"></ul>
+  </div>
+
+  <div class="types-list">
+    <ul>
+  
+  <li class="parent open current" data-id="crystal_mpd/MPD" data-name="mpd">
+      <a href="../MPD.html">MPD</a>
+      
+        <ul>
+  
+  <li class="parent " data-id="crystal_mpd/MPD/Client" data-name="mpd::client">
+      <a href="../MPD/Client.html">Client</a>
+      
+        <ul>
+  
+  <li class=" " data-id="crystal_mpd/MPD/Client/Event" data-name="mpd::client::event">
+      <a href="../MPD/Client/Event.html">Event</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="crystal_mpd/MPD/CommandBuilder" data-name="mpd::commandbuilder">
+      <a href="../MPD/CommandBuilder.html">CommandBuilder</a>
+      
+    </li>
+  
+  <li class=" " data-id="crystal_mpd/MPD/CommandList" data-name="mpd::commandlist">
+      <a href="../MPD/CommandList.html">CommandList</a>
+      
+    </li>
+  
+  <li class=" " data-id="crystal_mpd/MPD/Error" data-name="mpd::error">
+      <a href="../MPD/Error.html">Error</a>
+      
+    </li>
+  
+  <li class=" " data-id="crystal_mpd/MPD/Filter" data-name="mpd::filter">
+      <a href="../MPD/Filter.html">Filter</a>
+      
+    </li>
+  
+  <li class=" " data-id="crystal_mpd/MPD/Object" data-name="mpd::object">
+      <a href="../MPD/Object.html">Object</a>
+      
+    </li>
+  
+  <li class=" " data-id="crystal_mpd/MPD/Objects" data-name="mpd::objects">
+      <a href="../MPD/Objects.html">Objects</a>
+      
+    </li>
+  
+  <li class=" " data-id="crystal_mpd/MPD/Pair" data-name="mpd::pair">
+      <a href="../MPD/Pair.html">Pair</a>
+      
+    </li>
+  
+  <li class=" " data-id="crystal_mpd/MPD/Pairs" data-name="mpd::pairs">
+      <a href="../MPD/Pairs.html">Pairs</a>
+      
+    </li>
+  
+  <li class=" " data-id="crystal_mpd/MPD/Range" data-name="mpd::range">
+      <a href="../MPD/Range.html">Range</a>
+      
+    </li>
+  
+  <li class=" current" data-id="crystal_mpd/MPD/Tag" data-name="mpd::tag">
+      <a href="../MPD/Tag.html">Tag</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+  </div>
+</div>
+
+
+<div class="main-content">
+<h1 class="type-name">
+
+  <span class="kind">
+    enum
+  </span> MPD::<wbr>Tag
+
+</h1>
+
+
+
+
+
+  <h2>
+    <a id="overview" class="anchor" href="#overview">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Overview
+  </h2>
+
+  <p>https://mpd.readthedocs.io/en/latest/protocol.html#tags</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2>
+    <a id="defined-in" class="anchor" href="#defined-in">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Defined in:
+  </h2>
+  
+    
+      <a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/tag.cr#L3" target="_blank">
+        crystal_mpd/tag.cr
+      </a>
+    
+    <br/>
+  
+
+
+
+  
+    <h2>
+      <a id="enum-members" class="anchor" href="#enum-members">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+      Enum Members
+    </h2>
+  
+  <dl>
+    
+      <dt class="entry-const" id="Artist">
+        <strong>Artist</strong> = <code><span class="n">0</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Artistsort">
+        <strong>Artistsort</strong> = <code><span class="n">1</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Album">
+        <strong>Album</strong> = <code><span class="n">2</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Albumsort">
+        <strong>Albumsort</strong> = <code><span class="n">3</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Albumartist">
+        <strong>Albumartist</strong> = <code><span class="n">4</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Albumartistsort">
+        <strong>Albumartistsort</strong> = <code><span class="n">5</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Title">
+        <strong>Title</strong> = <code><span class="n">6</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Titlesort">
+        <strong>Titlesort</strong> = <code><span class="n">7</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Track">
+        <strong>Track</strong> = <code><span class="n">8</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Name">
+        <strong>Name</strong> = <code><span class="n">9</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Genre">
+        <strong>Genre</strong> = <code><span class="n">10</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Mood">
+        <strong>Mood</strong> = <code><span class="n">11</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Date">
+        <strong>Date</strong> = <code><span class="n">12</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Originaldate">
+        <strong>Originaldate</strong> = <code><span class="n">13</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Composer">
+        <strong>Composer</strong> = <code><span class="n">14</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Composersort">
+        <strong>Composersort</strong> = <code><span class="n">15</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Performer">
+        <strong>Performer</strong> = <code><span class="n">16</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Conductor">
+        <strong>Conductor</strong> = <code><span class="n">17</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Work">
+        <strong>Work</strong> = <code><span class="n">18</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Ensemble">
+        <strong>Ensemble</strong> = <code><span class="n">19</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Movement">
+        <strong>Movement</strong> = <code><span class="n">20</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Movementnumber">
+        <strong>Movementnumber</strong> = <code><span class="n">21</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Showmovement">
+        <strong>Showmovement</strong> = <code><span class="n">22</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Location">
+        <strong>Location</strong> = <code><span class="n">23</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Grouping">
+        <strong>Grouping</strong> = <code><span class="n">24</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Comment">
+        <strong>Comment</strong> = <code><span class="n">25</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Disc">
+        <strong>Disc</strong> = <code><span class="n">26</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Label">
+        <strong>Label</strong> = <code><span class="n">27</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Musicbrainz_artistid">
+        <strong>Musicbrainz_artistid</strong> = <code><span class="n">28</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Musicbrainz_albumid">
+        <strong>Musicbrainz_albumid</strong> = <code><span class="n">29</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Musicbrainz_albumartistid">
+        <strong>Musicbrainz_albumartistid</strong> = <code><span class="n">30</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Musicbrainz_trackid">
+        <strong>Musicbrainz_trackid</strong> = <code><span class="n">31</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Musicbrainz_releasegroupid">
+        <strong>Musicbrainz_releasegroupid</strong> = <code><span class="n">32</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Musicbrainz_releasetrackid">
+        <strong>Musicbrainz_releasetrackid</strong> = <code><span class="n">33</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Musicbrainz_workid">
+        <strong>Musicbrainz_workid</strong> = <code><span class="n">34</span></code>
+      </dt>
+      
+    
+  </dl>
+
+
+
+  
+
+  
+
+  
+
+  
+  <h2>
+    <a id="instance-method-summary" class="anchor" href="#instance-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#album%3F-instance-method" class="signature"><strong>#album?</strong></a>
+        
+          <div class="summary"><p>Returns <code>true</code> if this enum value equals <code><a href="../MPD/Tag.html#Album">Album</a></code></p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#albumartist%3F-instance-method" class="signature"><strong>#albumartist?</strong></a>
+        
+          <div class="summary"><p>Returns <code>true</code> if this enum value equals <code><a href="../MPD/Tag.html#Albumartist">Albumartist</a></code></p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#albumartistsort%3F-instance-method" class="signature"><strong>#albumartistsort?</strong></a>
+        
+          <div class="summary"><p>Returns <code>true</code> if this enum value equals <code><a href="../MPD/Tag.html#Albumartistsort">Albumartistsort</a></code></p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#albumsort%3F-instance-method" class="signature"><strong>#albumsort?</strong></a>
+        
+          <div class="summary"><p>Returns <code>true</code> if this enum value equals <code><a href="../MPD/Tag.html#Albumsort">Albumsort</a></code></p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#artist%3F-instance-method" class="signature"><strong>#artist?</strong></a>
+        
+          <div class="summary"><p>Returns <code>true</code> if this enum value equals <code><a href="../MPD/Tag.html#Artist">Artist</a></code></p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#artistsort%3F-instance-method" class="signature"><strong>#artistsort?</strong></a>
+        
+          <div class="summary"><p>Returns <code>true</code> if this enum value equals <code><a href="../MPD/Tag.html#Artistsort">Artistsort</a></code></p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#comment%3F-instance-method" class="signature"><strong>#comment?</strong></a>
+        
+          <div class="summary"><p>Returns <code>true</code> if this enum value equals <code><a href="../MPD/Tag.html#Comment">Comment</a></code></p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#composer%3F-instance-method" class="signature"><strong>#composer?</strong></a>
+        
+          <div class="summary"><p>Returns <code>true</code> if this enum value equals <code><a href="../MPD/Tag.html#Composer">Composer</a></code></p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#composersort%3F-instance-method" class="signature"><strong>#composersort?</strong></a>
+        
+          <div class="summary"><p>Returns <code>true</code> if this enum value equals <code><a href="../MPD/Tag.html#Composersort">Composersort</a></code></p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#conductor%3F-instance-method" class="signature"><strong>#conductor?</strong></a>
+        
+          <div class="summary"><p>Returns <code>true</code> if this enum value equals <code><a href="../MPD/Tag.html#Conductor">Conductor</a></code></p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#date%3F-instance-method" class="signature"><strong>#date?</strong></a>
+        
+          <div class="summary"><p>Returns <code>true</code> if this enum value equals <code><a href="../MPD/Tag.html#Date">Date</a></code></p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#disc%3F-instance-method" class="signature"><strong>#disc?</strong></a>
+        
+          <div class="summary"><p>Returns <code>true</code> if this enum value equals <code><a href="../MPD/Tag.html#Disc">Disc</a></code></p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#ensemble%3F-instance-method" class="signature"><strong>#ensemble?</strong></a>
+        
+          <div class="summary"><p>Returns <code>true</code> if this enum value equals <code><a href="../MPD/Tag.html#Ensemble">Ensemble</a></code></p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#genre%3F-instance-method" class="signature"><strong>#genre?</strong></a>
+        
+          <div class="summary"><p>Returns <code>true</code> if this enum value equals <code><a href="../MPD/Tag.html#Genre">Genre</a></code></p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#grouping%3F-instance-method" class="signature"><strong>#grouping?</strong></a>
+        
+          <div class="summary"><p>Returns <code>true</code> if this enum value equals <code><a href="../MPD/Tag.html#Grouping">Grouping</a></code></p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#label%3F-instance-method" class="signature"><strong>#label?</strong></a>
+        
+          <div class="summary"><p>Returns <code>true</code> if this enum value equals <code><a href="../MPD/Tag.html#Label">Label</a></code></p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#location%3F-instance-method" class="signature"><strong>#location?</strong></a>
+        
+          <div class="summary"><p>Returns <code>true</code> if this enum value equals <code><a href="../MPD/Tag.html#Location">Location</a></code></p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#mood%3F-instance-method" class="signature"><strong>#mood?</strong></a>
+        
+          <div class="summary"><p>Returns <code>true</code> if this enum value equals <code><a href="../MPD/Tag.html#Mood">Mood</a></code></p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#movement%3F-instance-method" class="signature"><strong>#movement?</strong></a>
+        
+          <div class="summary"><p>Returns <code>true</code> if this enum value equals <code><a href="../MPD/Tag.html#Movement">Movement</a></code></p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#movementnumber%3F-instance-method" class="signature"><strong>#movementnumber?</strong></a>
+        
+          <div class="summary"><p>Returns <code>true</code> if this enum value equals <code><a href="../MPD/Tag.html#Movementnumber">Movementnumber</a></code></p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#musicbrainz_albumartistid%3F-instance-method" class="signature"><strong>#musicbrainz_albumartistid?</strong></a>
+        
+          <div class="summary"><p>Returns <code>true</code> if this enum value equals <code><a href="../MPD/Tag.html#Musicbrainz_albumartistid">Musicbrainz_albumartistid</a></code></p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#musicbrainz_albumid%3F-instance-method" class="signature"><strong>#musicbrainz_albumid?</strong></a>
+        
+          <div class="summary"><p>Returns <code>true</code> if this enum value equals <code><a href="../MPD/Tag.html#Musicbrainz_albumid">Musicbrainz_albumid</a></code></p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#musicbrainz_artistid%3F-instance-method" class="signature"><strong>#musicbrainz_artistid?</strong></a>
+        
+          <div class="summary"><p>Returns <code>true</code> if this enum value equals <code><a href="../MPD/Tag.html#Musicbrainz_artistid">Musicbrainz_artistid</a></code></p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#musicbrainz_releasegroupid%3F-instance-method" class="signature"><strong>#musicbrainz_releasegroupid?</strong></a>
+        
+          <div class="summary"><p>Returns <code>true</code> if this enum value equals <code><a href="../MPD/Tag.html#Musicbrainz_releasegroupid">Musicbrainz_releasegroupid</a></code></p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#musicbrainz_releasetrackid%3F-instance-method" class="signature"><strong>#musicbrainz_releasetrackid?</strong></a>
+        
+          <div class="summary"><p>Returns <code>true</code> if this enum value equals <code><a href="../MPD/Tag.html#Musicbrainz_releasetrackid">Musicbrainz_releasetrackid</a></code></p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#musicbrainz_trackid%3F-instance-method" class="signature"><strong>#musicbrainz_trackid?</strong></a>
+        
+          <div class="summary"><p>Returns <code>true</code> if this enum value equals <code><a href="../MPD/Tag.html#Musicbrainz_trackid">Musicbrainz_trackid</a></code></p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#musicbrainz_workid%3F-instance-method" class="signature"><strong>#musicbrainz_workid?</strong></a>
+        
+          <div class="summary"><p>Returns <code>true</code> if this enum value equals <code><a href="../MPD/Tag.html#Musicbrainz_workid">Musicbrainz_workid</a></code></p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#name%3F-instance-method" class="signature"><strong>#name?</strong></a>
+        
+          <div class="summary"><p>Returns <code>true</code> if this enum value equals <code><a href="../MPD/Tag.html#Name">Name</a></code></p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#originaldate%3F-instance-method" class="signature"><strong>#originaldate?</strong></a>
+        
+          <div class="summary"><p>Returns <code>true</code> if this enum value equals <code><a href="../MPD/Tag.html#Originaldate">Originaldate</a></code></p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#performer%3F-instance-method" class="signature"><strong>#performer?</strong></a>
+        
+          <div class="summary"><p>Returns <code>true</code> if this enum value equals <code><a href="../MPD/Tag.html#Performer">Performer</a></code></p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#showmovement%3F-instance-method" class="signature"><strong>#showmovement?</strong></a>
+        
+          <div class="summary"><p>Returns <code>true</code> if this enum value equals <code><a href="../MPD/Tag.html#Showmovement">Showmovement</a></code></p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#title%3F-instance-method" class="signature"><strong>#title?</strong></a>
+        
+          <div class="summary"><p>Returns <code>true</code> if this enum value equals <code><a href="../MPD/Tag.html#Title">Title</a></code></p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#titlesort%3F-instance-method" class="signature"><strong>#titlesort?</strong></a>
+        
+          <div class="summary"><p>Returns <code>true</code> if this enum value equals <code><a href="../MPD/Tag.html#Titlesort">Titlesort</a></code></p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#track%3F-instance-method" class="signature"><strong>#track?</strong></a>
+        
+          <div class="summary"><p>Returns <code>true</code> if this enum value equals <code><a href="../MPD/Tag.html#Track">Track</a></code></p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#work%3F-instance-method" class="signature"><strong>#work?</strong></a>
+        
+          <div class="summary"><p>Returns <code>true</code> if this enum value equals <code><a href="../MPD/Tag.html#Work">Work</a></code></p></div>
+        
+      </li>
+    
+  </ul>
+
+
+
+  <div class="methods-inherited">
+    
+      
+
+
+      
+
+
+      
+
+
+      
+
+
+    
+      
+
+
+      
+
+
+      
+
+
+      
+
+
+    
+      
+
+
+      
+
+
+      
+
+
+      
+
+
+    
+      
+
+
+      
+
+
+      
+
+
+      
+
+
+    
+  </div>
+
+  
+
+  
+
+  
+
+  
+  <h2>
+    <a id="instance-method-detail" class="anchor" href="#instance-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="album?-instance-method">
+      <div class="signature">
+        
+        def <strong>album?</strong>
+
+        <a class="method-permalink" href="#album%3F-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns <code>true</code> if this enum value equals <code><a href="../MPD/Tag.html#Album">Album</a></code></p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/tag.cr#L6" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="albumartist?-instance-method">
+      <div class="signature">
+        
+        def <strong>albumartist?</strong>
+
+        <a class="method-permalink" href="#albumartist%3F-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns <code>true</code> if this enum value equals <code><a href="../MPD/Tag.html#Albumartist">Albumartist</a></code></p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/tag.cr#L8" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="albumartistsort?-instance-method">
+      <div class="signature">
+        
+        def <strong>albumartistsort?</strong>
+
+        <a class="method-permalink" href="#albumartistsort%3F-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns <code>true</code> if this enum value equals <code><a href="../MPD/Tag.html#Albumartistsort">Albumartistsort</a></code></p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/tag.cr#L9" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="albumsort?-instance-method">
+      <div class="signature">
+        
+        def <strong>albumsort?</strong>
+
+        <a class="method-permalink" href="#albumsort%3F-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns <code>true</code> if this enum value equals <code><a href="../MPD/Tag.html#Albumsort">Albumsort</a></code></p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/tag.cr#L7" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="artist?-instance-method">
+      <div class="signature">
+        
+        def <strong>artist?</strong>
+
+        <a class="method-permalink" href="#artist%3F-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns <code>true</code> if this enum value equals <code><a href="../MPD/Tag.html#Artist">Artist</a></code></p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/tag.cr#L4" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="artistsort?-instance-method">
+      <div class="signature">
+        
+        def <strong>artistsort?</strong>
+
+        <a class="method-permalink" href="#artistsort%3F-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns <code>true</code> if this enum value equals <code><a href="../MPD/Tag.html#Artistsort">Artistsort</a></code></p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/tag.cr#L5" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="comment?-instance-method">
+      <div class="signature">
+        
+        def <strong>comment?</strong>
+
+        <a class="method-permalink" href="#comment%3F-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns <code>true</code> if this enum value equals <code><a href="../MPD/Tag.html#Comment">Comment</a></code></p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/tag.cr#L29" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="composer?-instance-method">
+      <div class="signature">
+        
+        def <strong>composer?</strong>
+
+        <a class="method-permalink" href="#composer%3F-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns <code>true</code> if this enum value equals <code><a href="../MPD/Tag.html#Composer">Composer</a></code></p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/tag.cr#L18" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="composersort?-instance-method">
+      <div class="signature">
+        
+        def <strong>composersort?</strong>
+
+        <a class="method-permalink" href="#composersort%3F-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns <code>true</code> if this enum value equals <code><a href="../MPD/Tag.html#Composersort">Composersort</a></code></p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/tag.cr#L19" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="conductor?-instance-method">
+      <div class="signature">
+        
+        def <strong>conductor?</strong>
+
+        <a class="method-permalink" href="#conductor%3F-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns <code>true</code> if this enum value equals <code><a href="../MPD/Tag.html#Conductor">Conductor</a></code></p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/tag.cr#L21" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="date?-instance-method">
+      <div class="signature">
+        
+        def <strong>date?</strong>
+
+        <a class="method-permalink" href="#date%3F-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns <code>true</code> if this enum value equals <code><a href="../MPD/Tag.html#Date">Date</a></code></p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/tag.cr#L16" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="disc?-instance-method">
+      <div class="signature">
+        
+        def <strong>disc?</strong>
+
+        <a class="method-permalink" href="#disc%3F-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns <code>true</code> if this enum value equals <code><a href="../MPD/Tag.html#Disc">Disc</a></code></p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/tag.cr#L30" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="ensemble?-instance-method">
+      <div class="signature">
+        
+        def <strong>ensemble?</strong>
+
+        <a class="method-permalink" href="#ensemble%3F-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns <code>true</code> if this enum value equals <code><a href="../MPD/Tag.html#Ensemble">Ensemble</a></code></p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/tag.cr#L23" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="genre?-instance-method">
+      <div class="signature">
+        
+        def <strong>genre?</strong>
+
+        <a class="method-permalink" href="#genre%3F-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns <code>true</code> if this enum value equals <code><a href="../MPD/Tag.html#Genre">Genre</a></code></p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/tag.cr#L14" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="grouping?-instance-method">
+      <div class="signature">
+        
+        def <strong>grouping?</strong>
+
+        <a class="method-permalink" href="#grouping%3F-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns <code>true</code> if this enum value equals <code><a href="../MPD/Tag.html#Grouping">Grouping</a></code></p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/tag.cr#L28" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="label?-instance-method">
+      <div class="signature">
+        
+        def <strong>label?</strong>
+
+        <a class="method-permalink" href="#label%3F-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns <code>true</code> if this enum value equals <code><a href="../MPD/Tag.html#Label">Label</a></code></p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/tag.cr#L31" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="location?-instance-method">
+      <div class="signature">
+        
+        def <strong>location?</strong>
+
+        <a class="method-permalink" href="#location%3F-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns <code>true</code> if this enum value equals <code><a href="../MPD/Tag.html#Location">Location</a></code></p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/tag.cr#L27" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="mood?-instance-method">
+      <div class="signature">
+        
+        def <strong>mood?</strong>
+
+        <a class="method-permalink" href="#mood%3F-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns <code>true</code> if this enum value equals <code><a href="../MPD/Tag.html#Mood">Mood</a></code></p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/tag.cr#L15" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="movement?-instance-method">
+      <div class="signature">
+        
+        def <strong>movement?</strong>
+
+        <a class="method-permalink" href="#movement%3F-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns <code>true</code> if this enum value equals <code><a href="../MPD/Tag.html#Movement">Movement</a></code></p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/tag.cr#L24" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="movementnumber?-instance-method">
+      <div class="signature">
+        
+        def <strong>movementnumber?</strong>
+
+        <a class="method-permalink" href="#movementnumber%3F-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns <code>true</code> if this enum value equals <code><a href="../MPD/Tag.html#Movementnumber">Movementnumber</a></code></p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/tag.cr#L25" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="musicbrainz_albumartistid?-instance-method">
+      <div class="signature">
+        
+        def <strong>musicbrainz_albumartistid?</strong>
+
+        <a class="method-permalink" href="#musicbrainz_albumartistid%3F-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns <code>true</code> if this enum value equals <code><a href="../MPD/Tag.html#Musicbrainz_albumartistid">Musicbrainz_albumartistid</a></code></p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/tag.cr#L34" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="musicbrainz_albumid?-instance-method">
+      <div class="signature">
+        
+        def <strong>musicbrainz_albumid?</strong>
+
+        <a class="method-permalink" href="#musicbrainz_albumid%3F-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns <code>true</code> if this enum value equals <code><a href="../MPD/Tag.html#Musicbrainz_albumid">Musicbrainz_albumid</a></code></p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/tag.cr#L33" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="musicbrainz_artistid?-instance-method">
+      <div class="signature">
+        
+        def <strong>musicbrainz_artistid?</strong>
+
+        <a class="method-permalink" href="#musicbrainz_artistid%3F-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns <code>true</code> if this enum value equals <code><a href="../MPD/Tag.html#Musicbrainz_artistid">Musicbrainz_artistid</a></code></p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/tag.cr#L32" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="musicbrainz_releasegroupid?-instance-method">
+      <div class="signature">
+        
+        def <strong>musicbrainz_releasegroupid?</strong>
+
+        <a class="method-permalink" href="#musicbrainz_releasegroupid%3F-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns <code>true</code> if this enum value equals <code><a href="../MPD/Tag.html#Musicbrainz_releasegroupid">Musicbrainz_releasegroupid</a></code></p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/tag.cr#L36" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="musicbrainz_releasetrackid?-instance-method">
+      <div class="signature">
+        
+        def <strong>musicbrainz_releasetrackid?</strong>
+
+        <a class="method-permalink" href="#musicbrainz_releasetrackid%3F-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns <code>true</code> if this enum value equals <code><a href="../MPD/Tag.html#Musicbrainz_releasetrackid">Musicbrainz_releasetrackid</a></code></p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/tag.cr#L37" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="musicbrainz_trackid?-instance-method">
+      <div class="signature">
+        
+        def <strong>musicbrainz_trackid?</strong>
+
+        <a class="method-permalink" href="#musicbrainz_trackid%3F-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns <code>true</code> if this enum value equals <code><a href="../MPD/Tag.html#Musicbrainz_trackid">Musicbrainz_trackid</a></code></p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/tag.cr#L35" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="musicbrainz_workid?-instance-method">
+      <div class="signature">
+        
+        def <strong>musicbrainz_workid?</strong>
+
+        <a class="method-permalink" href="#musicbrainz_workid%3F-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns <code>true</code> if this enum value equals <code><a href="../MPD/Tag.html#Musicbrainz_workid">Musicbrainz_workid</a></code></p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/tag.cr#L38" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="name?-instance-method">
+      <div class="signature">
+        
+        def <strong>name?</strong>
+
+        <a class="method-permalink" href="#name%3F-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns <code>true</code> if this enum value equals <code><a href="../MPD/Tag.html#Name">Name</a></code></p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/tag.cr#L13" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="originaldate?-instance-method">
+      <div class="signature">
+        
+        def <strong>originaldate?</strong>
+
+        <a class="method-permalink" href="#originaldate%3F-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns <code>true</code> if this enum value equals <code><a href="../MPD/Tag.html#Originaldate">Originaldate</a></code></p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/tag.cr#L17" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="performer?-instance-method">
+      <div class="signature">
+        
+        def <strong>performer?</strong>
+
+        <a class="method-permalink" href="#performer%3F-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns <code>true</code> if this enum value equals <code><a href="../MPD/Tag.html#Performer">Performer</a></code></p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/tag.cr#L20" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="showmovement?-instance-method">
+      <div class="signature">
+        
+        def <strong>showmovement?</strong>
+
+        <a class="method-permalink" href="#showmovement%3F-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns <code>true</code> if this enum value equals <code><a href="../MPD/Tag.html#Showmovement">Showmovement</a></code></p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/tag.cr#L26" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="title?-instance-method">
+      <div class="signature">
+        
+        def <strong>title?</strong>
+
+        <a class="method-permalink" href="#title%3F-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns <code>true</code> if this enum value equals <code><a href="../MPD/Tag.html#Title">Title</a></code></p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/tag.cr#L10" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="titlesort?-instance-method">
+      <div class="signature">
+        
+        def <strong>titlesort?</strong>
+
+        <a class="method-permalink" href="#titlesort%3F-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns <code>true</code> if this enum value equals <code><a href="../MPD/Tag.html#Titlesort">Titlesort</a></code></p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/tag.cr#L11" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="track?-instance-method">
+      <div class="signature">
+        
+        def <strong>track?</strong>
+
+        <a class="method-permalink" href="#track%3F-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns <code>true</code> if this enum value equals <code><a href="../MPD/Tag.html#Track">Track</a></code></p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/tag.cr#L12" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="work?-instance-method">
+      <div class="signature">
+        
+        def <strong>work?</strong>
+
+        <a class="method-permalink" href="#work%3F-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns <code>true</code> if this enum value equals <code><a href="../MPD/Tag.html#Work">Work</a></code></p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/tag.cr#L22" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+
+</div>
+
+</body>
+</html>

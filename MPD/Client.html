@@ -1,0 +1,4005 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Crystal Docs 1.18.2">
+<meta name="crystal_docs.project_version" content="master">
+<meta name="crystal_docs.project_name" content="crystal_mpd">
+
+
+
+<link href="../css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../js/doc.js"></script>
+
+  <meta name="repository-name" content="crystal_mpd">
+  <title>MPD::Client - crystal_mpd master</title>
+  <script type="text/javascript">
+    CrystalDocs.base_path = "../";
+  </script>
+</head>
+<body>
+
+<svg class="hidden">
+  <symbol id="octicon-link" viewBox="0 0 16 16">
+    <path fill="currentColor" fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
+  </symbol>
+</svg>
+<input type="checkbox" id="sidebar-btn">
+<label for="sidebar-btn" id="sidebar-btn-label">
+  <svg class="open" xmlns="http://www.w3.org/2000/svg" height="2em" width="2em" viewBox="0 0 512 512"><title>Open Sidebar</title><path fill="currentColor" d="M80 96v64h352V96H80zm0 112v64h352v-64H80zm0 112v64h352v-64H80z"></path></svg>
+  <svg class="close" xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 512 512"><title>Close Sidebar</title><path fill="currentColor" d="m118.6 73.4-45.2 45.2L210.7 256 73.4 393.4l45.2 45.2L256 301.3l137.4 137.3 45.2-45.2L301.3 256l137.3-137.4-45.2-45.2L256 210.7Z"></path></svg>
+</label>
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search..." spellcheck="false" aria-label="Search">
+    </div>
+
+    <div class="project-summary">
+      <h1 class="project-name">
+        <a href="../index.html">
+          crystal_mpd
+        </a>
+      </h1>
+
+      <span class="project-version">
+        master
+      </span>
+    </div>
+  </div>
+
+  <div class="search-results hidden">
+    <ul class="search-list"></ul>
+  </div>
+
+  <div class="types-list">
+    <ul>
+  
+  <li class="parent open current" data-id="crystal_mpd/MPD" data-name="mpd">
+      <a href="../MPD.html">MPD</a>
+      
+        <ul>
+  
+  <li class="parent open current" data-id="crystal_mpd/MPD/Client" data-name="mpd::client">
+      <a href="../MPD/Client.html">Client</a>
+      
+        <ul>
+  
+  <li class=" " data-id="crystal_mpd/MPD/Client/Event" data-name="mpd::client::event">
+      <a href="../MPD/Client/Event.html">Event</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="crystal_mpd/MPD/CommandBuilder" data-name="mpd::commandbuilder">
+      <a href="../MPD/CommandBuilder.html">CommandBuilder</a>
+      
+    </li>
+  
+  <li class=" " data-id="crystal_mpd/MPD/CommandList" data-name="mpd::commandlist">
+      <a href="../MPD/CommandList.html">CommandList</a>
+      
+    </li>
+  
+  <li class=" " data-id="crystal_mpd/MPD/Error" data-name="mpd::error">
+      <a href="../MPD/Error.html">Error</a>
+      
+    </li>
+  
+  <li class=" " data-id="crystal_mpd/MPD/Filter" data-name="mpd::filter">
+      <a href="../MPD/Filter.html">Filter</a>
+      
+    </li>
+  
+  <li class=" " data-id="crystal_mpd/MPD/Object" data-name="mpd::object">
+      <a href="../MPD/Object.html">Object</a>
+      
+    </li>
+  
+  <li class=" " data-id="crystal_mpd/MPD/Objects" data-name="mpd::objects">
+      <a href="../MPD/Objects.html">Objects</a>
+      
+    </li>
+  
+  <li class=" " data-id="crystal_mpd/MPD/Pair" data-name="mpd::pair">
+      <a href="../MPD/Pair.html">Pair</a>
+      
+    </li>
+  
+  <li class=" " data-id="crystal_mpd/MPD/Pairs" data-name="mpd::pairs">
+      <a href="../MPD/Pairs.html">Pairs</a>
+      
+    </li>
+  
+  <li class=" " data-id="crystal_mpd/MPD/Range" data-name="mpd::range">
+      <a href="../MPD/Range.html">Range</a>
+      
+    </li>
+  
+  <li class=" " data-id="crystal_mpd/MPD/Tag" data-name="mpd::tag">
+      <a href="../MPD/Tag.html">Tag</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+  </div>
+</div>
+
+
+<div class="main-content">
+<h1 class="type-name">
+
+  <span class="kind">
+    class
+  </span> MPD::<wbr>Client
+
+</h1>
+
+
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../MPD/Client.html">MPD::Client</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
+
+
+
+
+  <h2>
+    <a id="overview" class="anchor" href="#overview">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Overview
+  </h2>
+
+  <p>An MPD Client.</p>
+<h3><a id="one-shot-usage" class="anchor" href="#one-shot-usage">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>One-shot usage</h3>
+<pre><code class="language-crystal"><span class="k">require</span> <span class="s">&quot;crystal_mpd&quot;</span>
+
+mpd <span class="o">=</span> <span class="t">MPD</span><span class="t">::</span><span class="t">Client</span>.new(<span class="s">&quot;localhost&quot;</span>, <span class="n">6600</span>)
+puts mpd.version
+puts mpd.status
+puts mpd.stats
+mpd.disconnect</code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2>
+    <a id="defined-in" class="anchor" href="#defined-in">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Defined in:
+  </h2>
+  
+    
+      <a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L21" target="_blank">
+        crystal_mpd/client.cr
+      </a>
+    
+    <br/>
+  
+
+
+
+  
+    <h2>
+      <a id="constant-summary" class="anchor" href="#constant-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+      Constant Summary
+    </h2>
+  
+  <dl>
+    
+      <dt class="entry-const" id="ERROR_PREFIX">
+        <strong>ERROR_PREFIX</strong> = <code><span class="s">&quot;ACK &quot;</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="HELLO_PREFIX">
+        <strong>HELLO_PREFIX</strong> = <code><span class="s">&quot;OK MPD &quot;</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="NEXT">
+        <strong>NEXT</strong> = <code><span class="s">&quot;list_OK\n&quot;</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="SUCCESS">
+        <strong>SUCCESS</strong> = <code><span class="s">&quot;OK\n&quot;</span></code>
+      </dt>
+      
+    
+  </dl>
+
+
+
+  
+  <h2>
+    <a id="constructors" class="anchor" href="#constructors">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructors
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#new%28host%3AString%3D%22localhost%22%2Cport%3AInt32%3D6600%2C%2A%2Cwith_callbacks%3ABool%3Dfalse%2Cpassword%3AString%7CNil%3Dnil%29-class-method" class="signature"><strong>.new</strong>(host : String = <span class="s">&quot;localhost&quot;</span>, port : Int32 = <span class="n">6600</span>, *, with_callbacks : Bool = <span class="n">false</span>, password : String | Nil = <span class="n">nil</span>)</a>
+        
+          <div class="summary"><p>Creates a new MPD client.</p></div>
+        
+      </li>
+    
+  </ul>
+
+
+  
+
+  
+
+  
+  <h2>
+    <a id="instance-method-summary" class="anchor" href="#instance-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#add%28uri%3AString%2Cposition%3AInt32%7CString%7CNil%3Dnil%29-instance-method" class="signature"><strong>#add</strong>(uri : String, position : Int32 | String | Nil = <span class="n">nil</span>)</a>
+        
+          <div class="summary"><p>Adds the file <code>uri</code> to the playlist (directories add recursively).</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#addid%28uri%3AString%2Cposition%3AInt32%7CString%7CNil%3Dnil%29-instance-method" class="signature"><strong>#addid</strong>(uri : String, position : Int32 | String | Nil = <span class="n">nil</span>)</a>
+        
+          <div class="summary"><p>Adds a song to the playlist (non-recursive) and returns the song id.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#albumart%28uri%3AString%29-instance-method" class="signature"><strong>#albumart</strong>(uri : String)</a>
+        
+          <div class="summary"><p>Locate album art for the given song</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#callbacks_timeout%3ATime%3A%3ASpan-instance-method" class="signature"><strong>#callbacks_timeout</strong> : Time::Span</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#callbacks_timeout%3D%28callbacks_timeout%3ATime%3A%3ASpan%29-instance-method" class="signature"><strong>#callbacks_timeout=</strong>(callbacks_timeout : Time::Span)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#channels-instance-method" class="signature"><strong>#channels</strong></a>
+        
+          <div class="summary"><p>Obtain a list of all channels.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#clear-instance-method" class="signature"><strong>#clear</strong></a>
+        
+          <div class="summary"><p>Clears the current playlist.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#close-instance-method" class="signature"><strong>#close</strong></a>
+        
+          <div class="summary"><p>Closes the connection to MPD.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#command_list_end-instance-method" class="signature"><strong>#command_list_end</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#command_list_ok_begin-instance-method" class="signature"><strong>#command_list_ok_begin</strong></a>
+        
+          <div class="summary"><p>https://mpd.readthedocs.io/en/latest/protocol.html#command-lists</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#commands-instance-method" class="signature"><strong>#commands</strong></a>
+        
+          <div class="summary"><p>Shows which commands the current user has access to.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#config-instance-method" class="signature"><strong>#config</strong></a>
+        
+          <div class="summary"><p>Dumps configuration values that may be interesting for the client.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#connect-instance-method" class="signature"><strong>#connect</strong></a>
+        
+          <div class="summary"><p>Connect to the MPD daemon unless conected.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#connected%3F-instance-method" class="signature"><strong>#connected?</strong></a>
+        
+          <div class="summary"><p>Check if the client is connected.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#consume%28state%3ABool%7CString%29-instance-method" class="signature"><strong>#consume</strong>(state : Bool | String)</a>
+        
+          <div class="summary"><p>Sets consume state to <code>state</code>, <code>state</code> should be <code>false</code>, <code>true</code> or <code>&quot;oneshot&quot;</code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#count%28filter%3AString%7CMPD%3A%3AFilter%2C%2A%2Cgroup%3AString%7CNil%3Dnil%29-instance-method" class="signature"><strong>#count</strong>(filter : String | MPD::Filter, *, group : String | Nil = <span class="n">nil</span>)</a>
+        
+          <div class="summary"><p>Count the number of songs and their total playtime in the database matching <code>filter</code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#count%28%2A%2Cgroup%3AString%7CNil%3Dnil%2C%26%3AMPD%3A%3AFilter-%3E%29-instance-method" class="signature"><strong>#count</strong>(*, group : String | Nil = <span class="n">nil</span>, & : MPD::Filter -> )</a>
+        
+          <div class="summary"><p>Count the number of songs and their total playtime in the database matching <code>filter</code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#crop-instance-method" class="signature"><strong>#crop</strong></a>
+        
+          <div class="summary"><p>Delete all playlist entries except the one currently playing</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#currentsong-instance-method" class="signature"><strong>#currentsong</strong></a>
+        
+          <div class="summary"><p>Displays the song info of the current song (same song that is identified in <code><a href="../MPD/Client.html#status-instance-method">#status</a></code>).</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#decoders-instance-method" class="signature"><strong>#decoders</strong></a>
+        
+          <div class="summary"><p>Print a list of decoder plugins, followed by their supported suffixes and MIME types.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#delete%28songpos%3AInt32%7CMPD%3A%3ARange%29-instance-method" class="signature"><strong>#delete</strong>(songpos : Int32 | MPD::Range)</a>
+        
+          <div class="summary"><p>Deletes a song from the playlist.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#deleteid%28songid%3AInt32%29-instance-method" class="signature"><strong>#deleteid</strong>(songid : Int32)</a>
+        
+          <div class="summary"><p>Deletes the song <code>singid</code> from the playlist.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#disconnect-instance-method" class="signature"><strong>#disconnect</strong></a>
+        
+          <div class="summary"><p>Disconnect from the MPD daemon.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#find%28filter%3AString%7CMPD%3A%3AFilter%2C%2A%2Csort%3AString%7CNil%3Dnil%2Cwindow%3AMPD%3A%3ARange%7CNil%3Dnil%29-instance-method" class="signature"><strong>#find</strong>(filter : String | MPD::Filter, *, sort : String | Nil = <span class="n">nil</span>, window : MPD::Range | Nil = <span class="n">nil</span>)</a>
+        
+          <div class="summary"><p>Search the database for songs matching <code>filter</code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#find%28%2A%2Csort%3AString%7CNil%3Dnil%2Cwindow%3AMPD%3A%3ARange%7CNil%3Dnil%2C%26%3AMPD%3A%3AFilter-%3E%29-instance-method" class="signature"><strong>#find</strong>(*, sort : String | Nil = <span class="n">nil</span>, window : MPD::Range | Nil = <span class="n">nil</span>, & : MPD::Filter -> )</a>
+        
+          <div class="summary"><p>Search the database for songs matching <code>filter</code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#findadd%28filter%3AString%7CMPD%3A%3AFilter%2C%2A%2Csort%3AString%7CNil%3Dnil%2Cwindow%3AMPD%3A%3ARange%7CNil%3Dnil%2Cposition%3AInt32%7CString%7CNil%3Dnil%29-instance-method" class="signature"><strong>#findadd</strong>(filter : String | MPD::Filter, *, sort : String | Nil = <span class="n">nil</span>, window : MPD::Range | Nil = <span class="n">nil</span>, position : Int32 | String | Nil = <span class="n">nil</span>)</a>
+        
+          <div class="summary"><p>Search the database for songs matching <code>filter</code> and add them to the queue.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#findadd%28%2A%2Csort%3AString%7CNil%3Dnil%2Cwindow%3AMPD%3A%3ARange%7CNil%3Dnil%2Cposition%3AInt32%7CString%7CNil%3Dnil%2C%26%3AMPD%3A%3AFilter-%3E%29-instance-method" class="signature"><strong>#findadd</strong>(*, sort : String | Nil = <span class="n">nil</span>, window : MPD::Range | Nil = <span class="n">nil</span>, position : Int32 | String | Nil = <span class="n">nil</span>, & : MPD::Filter -> )</a>
+        
+          <div class="summary"><p>Search the database for songs matching <code>filter</code> and add them to the queue.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#getvol-instance-method" class="signature"><strong>#getvol</strong></a>
+        
+          <div class="summary"><p>Read the volume.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#host%3AString-instance-method" class="signature"><strong>#host</strong> : String</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#idle%28subsystems%3AArray%28String%29%7CNil%3Dnil%29-instance-method" class="signature"><strong>#idle</strong>(subsystems : Array(String) | Nil = <span class="n">nil</span>)</a>
+        
+          <div class="summary"><p>Waits until there is a noteworthy change in one or more of MPD’s subsystems.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#list%28type%3AString%2Cfilter%3AString%7CMPD%3A%3AFilter%7CNil%3Dnil%2C%2A%2Cgroup%3AString%7CNil%3Dnil%2Cwindow%3AMPD%3A%3ARange%7CNil%3Dnil%29-instance-method" class="signature"><strong>#list</strong>(type : String, filter : String | MPD::Filter | Nil = <span class="n">nil</span>, *, group : String | Nil = <span class="n">nil</span>, window : MPD::Range | Nil = <span class="n">nil</span>)</a>
+        
+          <div class="summary"><p>Lists unique tags values of the specified <code>type</code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#list%28type%3AString%2C%2A%2Cgroup%3AString%7CNil%3Dnil%2Cwindow%3AMPD%3A%3ARange%7CNil%3Dnil%2C%26%3AMPD%3A%3AFilter-%3E%29-instance-method" class="signature"><strong>#list</strong>(type : String, *, group : String | Nil = <span class="n">nil</span>, window : MPD::Range | Nil = <span class="n">nil</span>, & : MPD::Filter -> )</a>
+        
+          <div class="summary"><p>Lists unique tags values of the specified <code>type</code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#listall%28uri%3AString%7CNil%3Dnil%29-instance-method" class="signature"><strong>#listall</strong>(uri : String | Nil = <span class="n">nil</span>)</a>
+        
+          <div class="summary"><p>Lists all songs and directories in <code>uri</code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#listallinfo%28uri%3AString%7CNil%3Dnil%29-instance-method" class="signature"><strong>#listallinfo</strong>(uri : String | Nil = <span class="n">nil</span>)</a>
+        
+          <div class="summary"><p>Same as <code><a href="../MPD/Client.html#listall%28uri%3AString%7CNil%3Dnil%29-instance-method">#listall</a></code>, except it also returns metadata info in the same format as <code><a href="../MPD/Client.html#lsinfo%28uri%3AString%7CNil%3Dnil%29-instance-method">#lsinfo</a></code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#listfiles%28uri%3AString%7CNil%3Dnil%29-instance-method" class="signature"><strong>#listfiles</strong>(uri : String | Nil = <span class="n">nil</span>)</a>
+        
+          <div class="summary"><p>Lists the contents of the directory <code>URI</code>, including files are not recognized by <code><a href="../MPD.html">MPD</a></code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#listplaylist%28name%3AString%2Crange%3AMPD%3A%3ARange%7CNil%3Dnil%29-instance-method" class="signature"><strong>#listplaylist</strong>(name : String, range : MPD::Range | Nil = <span class="n">nil</span>)</a>
+        
+          <div class="summary"><p>Lists the songs in the playlist <code>name</code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#listplaylistinfo%28name%3AString%2Crange%3AMPD%3A%3ARange%7CNil%3Dnil%29-instance-method" class="signature"><strong>#listplaylistinfo</strong>(name : String, range : MPD::Range | Nil = <span class="n">nil</span>)</a>
+        
+          <div class="summary"><p>Lists the songs with metadata in the playlist.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#listplaylists-instance-method" class="signature"><strong>#listplaylists</strong></a>
+        
+          <div class="summary"><p>Prints a list of the playlist directory.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#load%28name%3AString%2Csongpos%3AInt32%7CMPD%3A%3ARange%7CNil%3Dnil%2Cposition%3AInt32%7CString%7CNil%3Dnil%29-instance-method" class="signature"><strong>#load</strong>(name : String, songpos : Int32 | MPD::Range | Nil = <span class="n">nil</span>, position : Int32 | String | Nil = <span class="n">nil</span>)</a>
+        
+          <div class="summary"><p>Loads the playlist <code>name</code> into the current queue.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#lsinfo%28uri%3AString%7CNil%3Dnil%29-instance-method" class="signature"><strong>#lsinfo</strong>(uri : String | Nil = <span class="n">nil</span>)</a>
+        
+          <div class="summary"><p>Lists the contents of the directory <code>uri</code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#move%28from%3AInt32%7CMPD%3A%3ARange%2Cto%3AInt32%29-instance-method" class="signature"><strong>#move</strong>(from : Int32 | MPD::Range, to : Int32)</a>
+        
+          <div class="summary"><p>Moves the song at <code>from</code> or range of songs at <code>from</code> to <code>to</code> in the playlist.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#moveid%28from%3AInt32%2Cto%3AInt32%7CString%29-instance-method" class="signature"><strong>#moveid</strong>(from : Int32, to : Int32 | String)</a>
+        
+          <div class="summary"><p>Moves the song with <code>from</code> (songid) to <code>to</code> (playlist index) in the playlist.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#next-instance-method" class="signature"><strong>#next</strong></a>
+        
+          <div class="summary"><p>Plays next song in the playlist.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#nextsong%3AObject%7CNil-instance-method" class="signature"><strong>#nextsong</strong> : Object | Nil</a>
+        
+          <div class="summary"><p>Show the currently queued (next) song.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#notcommands-instance-method" class="signature"><strong>#notcommands</strong></a>
+        
+          <div class="summary"><p>Shows which commands the current user does not have access to.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#on%28event%3AEvent%2C%26block%3AString-%3E_%29-instance-method" class="signature"><strong>#on</strong>(event : Event, &block : String -> _)</a>
+        
+          <div class="summary"><p>Register a callback for a specific event (e.g., :state, :song, etc.)</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#on_callback%28%26block%3AEvent%2CString-%3E_%29-instance-method" class="signature"><strong>#on_callback</strong>(&block : Event, String -> _)</a>
+        
+          <div class="summary"><p>Register a global callback for <em>any</em> event.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#outputs-instance-method" class="signature"><strong>#outputs</strong></a>
+        
+          <div class="summary"><p>Shows information about all outputs.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#pause%28state%3ABool%7CNil%3Dnil%29-instance-method" class="signature"><strong>#pause</strong>(state : Bool | Nil = <span class="n">nil</span>)</a>
+        
+          <div class="summary"><p>Pause or resume playback.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#play%28songpos%3AInt32%7CNil%3Dnil%29-instance-method" class="signature"><strong>#play</strong>(songpos : Int32 | Nil = <span class="n">nil</span>)</a>
+        
+          <div class="summary"><p>Begins playing the playlist at song number <code>songpos</code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#playid%28songnid%3AInt32%7CNil%3Dnil%29-instance-method" class="signature"><strong>#playid</strong>(songnid : Int32 | Nil = <span class="n">nil</span>)</a>
+        
+          <div class="summary"><p>Begins playing the playlist at song <code>songid</code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#playlistadd%28name%3AString%2Curi%3AString%2Cposition%3AInt32%7CString%7CNil%3Dnil%29-instance-method" class="signature"><strong>#playlistadd</strong>(name : String, uri : String, position : Int32 | String | Nil = <span class="n">nil</span>)</a>
+        
+          <div class="summary"><p>Adds <code>uri</code> to the playlist <code>name</code>.m3u.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#playlistclear%28name%3AString%29-instance-method" class="signature"><strong>#playlistclear</strong>(name : String)</a>
+        
+          <div class="summary"><p>Clears the playlist <code>name</code>.m3u.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#playlistdelete%28name%3AString%2Csongpos%3AInt32%7CMPD%3A%3ARange%29-instance-method" class="signature"><strong>#playlistdelete</strong>(name : String, songpos : Int32 | MPD::Range)</a>
+        
+          <div class="summary"><p>Deletes <code>songpos</code> from the playlist <code>name</code>.m3u.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#playlistfind%28filter%3AString%7CMPD%3A%3AFilter%2C%2A%2Csort%3AString%7CNil%3Dnil%2Cwindow%3AMPD%3A%3ARange%7CNil%3Dnil%29-instance-method" class="signature"><strong>#playlistfind</strong>(filter : String | MPD::Filter, *, sort : String | Nil = <span class="n">nil</span>, window : MPD::Range | Nil = <span class="n">nil</span>)</a>
+        
+          <div class="summary"><p>Search the queue for songs matching <code>filter</code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#playlistfind%28%2A%2Csort%3AString%7CNil%3Dnil%2Cwindow%3AMPD%3A%3ARange%7CNil%3Dnil%2C%26%3AMPD%3A%3AFilter-%3E%29-instance-method" class="signature"><strong>#playlistfind</strong>(*, sort : String | Nil = <span class="n">nil</span>, window : MPD::Range | Nil = <span class="n">nil</span>, & : MPD::Filter -> )</a>
+        
+          <div class="summary"><p>:ditto</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#playlistid%28songid%3AInt32%7CNil%3Dnil%29-instance-method" class="signature"><strong>#playlistid</strong>(songid : Int32 | Nil = <span class="n">nil</span>)</a>
+        
+          <div class="summary"><p>Displays a list of songs in the playlist.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#playlistinfo%28songpos%3AInt32%7CMPD%3A%3ARange%7CNil%3Dnil%29-instance-method" class="signature"><strong>#playlistinfo</strong>(songpos : Int32 | MPD::Range | Nil = <span class="n">nil</span>)</a>
+        
+          <div class="summary"><p>Displays a list of all songs in the playlist,</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#playlistlength%28name%3AString%29-instance-method" class="signature"><strong>#playlistlength</strong>(name : String)</a>
+        
+          <div class="summary"><p>Count the number of songs and their total playtime (seconds) in the playlist.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#playlistmove%28name%3AString%2Cfrom%3AInt32%7CMPD%3A%3ARange%2Cto%3AInt32%29-instance-method" class="signature"><strong>#playlistmove</strong>(name : String, from : Int32 | MPD::Range, to : Int32)</a>
+        
+          <div class="summary"><p>Moves the song at position <code>from</code> in the playlist <code>name</code>.m3u to the position <code>to</code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#playlistsearch%28filter%3AString%7CMPD%3A%3AFilter%2C%2A%2Csort%3AString%7CNil%3Dnil%2Cwindow%3AMPD%3A%3ARange%7CNil%3Dnil%29-instance-method" class="signature"><strong>#playlistsearch</strong>(filter : String | MPD::Filter, *, sort : String | Nil = <span class="n">nil</span>, window : MPD::Range | Nil = <span class="n">nil</span>)</a>
+        
+          <div class="summary"><p>Search the queue for songs matching <code>filter</code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#playlistsearch%28%2A%2Csort%3AString%7CNil%3Dnil%2Cwindow%3AMPD%3A%3ARange%7CNil%3Dnil%2C%26%3AMPD%3A%3AFilter-%3E%29-instance-method" class="signature"><strong>#playlistsearch</strong>(*, sort : String | Nil = <span class="n">nil</span>, window : MPD::Range | Nil = <span class="n">nil</span>, & : MPD::Filter -> )</a>
+        
+          <div class="summary"><p>Search the queue for songs matching <code>filter</code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#port%3AInt32-instance-method" class="signature"><strong>#port</strong> : Int32</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#previous-instance-method" class="signature"><strong>#previous</strong></a>
+        
+          <div class="summary"><p>Plays previous song in the playlist.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#prio%28priority%3AInt32%2Crange%3AMPD%3A%3ARange%29-instance-method" class="signature"><strong>#prio</strong>(priority : Int32, range : MPD::Range)</a>
+        
+          <div class="summary"><p>Set the priority of the specified songs.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#prioid%28priority%3AInt32%2Csongid%3AInt32%29-instance-method" class="signature"><strong>#prioid</strong>(priority : Int32, songid : Int32)</a>
+        
+          <div class="summary"><p>Same as <code><a href="../MPD/Client.html#prio%28priority%3AInt32%2Crange%3AMPD%3A%3ARange%29-instance-method">#prio</a></code>, but address the songs with their id.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#protocol-instance-method" class="signature"><strong>#protocol</strong></a>
+        
+          <div class="summary"><p>Shows a list of enabled protocol features.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#protocol_all-instance-method" class="signature"><strong>#protocol_all</strong></a>
+        
+          <div class="summary"><p>Enables all protocol features.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#protocol_available-instance-method" class="signature"><strong>#protocol_available</strong></a>
+        
+          <div class="summary"><p>Lists all available protocol features.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#protocol_clear-instance-method" class="signature"><strong>#protocol_clear</strong></a>
+        
+          <div class="summary"><p>Disables all protocol features.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#protocol_disable%28feature%3AString%29-instance-method" class="signature"><strong>#protocol_disable</strong>(feature : String)</a>
+        
+          <div class="summary"><p>Disables a <code>feature</code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#protocol_enable%28feature%3AString%29-instance-method" class="signature"><strong>#protocol_enable</strong>(feature : String)</a>
+        
+          <div class="summary"><p>Enables a <code>feature</code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#random%28state%3ABool%29-instance-method" class="signature"><strong>#random</strong>(state : Bool)</a>
+        
+          <div class="summary"><p>Sets random state to <code>state</code>, <code>state</code> should be <code>false</code> or <code>true</code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#readmessages-instance-method" class="signature"><strong>#readmessages</strong></a>
+        
+          <div class="summary"><p>Reads messages for this client.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#readpicture%28uri%3AString%29-instance-method" class="signature"><strong>#readpicture</strong>(uri : String)</a>
+        
+          <div class="summary"><p>Locate a picture for the given song</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#reconnect-instance-method" class="signature"><strong>#reconnect</strong></a>
+        
+          <div class="summary"><p>Attempts to reconnect to the MPD daemon.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#rename%28name%3AString%2Cnew_name%3AString%29-instance-method" class="signature"><strong>#rename</strong>(name : String, new_name : String)</a>
+        
+          <div class="summary"><p>Renames the playlist <code>name</code>.m3u to <code>new_name</code>.m3u.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#repeat%28state%3ABool%29-instance-method" class="signature"><strong>#repeat</strong>(state : Bool)</a>
+        
+          <div class="summary"><p>Sets repeat state to <code>state</code>, <code>state</code> should be <code>false</code> or <code>true</code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#replay_gain_mode%28mode%3AString%29-instance-method" class="signature"><strong>#replay_gain_mode</strong>(mode : String)</a>
+        
+          <div class="summary"><p>Sets the replay gain mode.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#replay_gain_status-instance-method" class="signature"><strong>#replay_gain_status</strong></a>
+        
+          <div class="summary"><p>Prints replay gain options.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#rescan%28uri%3AString%7CNil%3Dnil%29-instance-method" class="signature"><strong>#rescan</strong>(uri : String | Nil = <span class="n">nil</span>)</a>
+        
+          <div class="summary"><p>Same as <code><a href="../MPD/Client.html#update%28uri%3AString%7CNil%3Dnil%29-instance-method">#update</a></code>, but also rescans unmodified files.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#rm%28name%3AString%29-instance-method" class="signature"><strong>#rm</strong>(name : String)</a>
+        
+          <div class="summary"><p>Removes the playlist <code>name</code>.m3u from the playlist directory.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#save%28name%3AString%2Cmode%3AString%7CNil%3Dnil%29-instance-method" class="signature"><strong>#save</strong>(name : String, mode : String | Nil = <span class="n">nil</span>)</a>
+        
+          <div class="summary"><p>Saves the current playlist to <code>name</code>.m3u in the playlist directory.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#search%28filter%3AString%7CMPD%3A%3AFilter%2C%2A%2Csort%3AString%7CNil%3Dnil%2Cwindow%3AMPD%3A%3ARange%7CNil%3Dnil%29-instance-method" class="signature"><strong>#search</strong>(filter : String | MPD::Filter, *, sort : String | Nil = <span class="n">nil</span>, window : MPD::Range | Nil = <span class="n">nil</span>)</a>
+        
+          <div class="summary"><p>Search the database for songs matching <code>filter</code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#search%28%2A%2Csort%3AString%7CNil%3Dnil%2Cwindow%3AMPD%3A%3ARange%7CNil%3Dnil%2C%26%3AMPD%3A%3AFilter-%3E%29-instance-method" class="signature"><strong>#search</strong>(*, sort : String | Nil = <span class="n">nil</span>, window : MPD::Range | Nil = <span class="n">nil</span>, & : MPD::Filter -> )</a>
+        
+          <div class="summary"><p>Search the database for songs matching <code>filter</code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#searchadd%28filter%3AString%7CMPD%3A%3AFilter%2C%2A%2Csort%3AString%7CNil%3Dnil%2Cwindow%3AMPD%3A%3ARange%7CNil%3Dnil%2Cposition%3AInt32%7CString%7CNil%3Dnil%29-instance-method" class="signature"><strong>#searchadd</strong>(filter : String | MPD::Filter, *, sort : String | Nil = <span class="n">nil</span>, window : MPD::Range | Nil = <span class="n">nil</span>, position : Int32 | String | Nil = <span class="n">nil</span>)</a>
+        
+          <div class="summary"><p>Search the database for songs matching <code>filter</code> and add them to the queue.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#searchadd%28%2A%2Csort%3AString%7CNil%3Dnil%2Cwindow%3AMPD%3A%3ARange%7CNil%3Dnil%2Cposition%3AInt32%7CString%7CNil%3Dnil%2C%26%3AMPD%3A%3AFilter-%3E%29-instance-method" class="signature"><strong>#searchadd</strong>(*, sort : String | Nil = <span class="n">nil</span>, window : MPD::Range | Nil = <span class="n">nil</span>, position : Int32 | String | Nil = <span class="n">nil</span>, & : MPD::Filter -> )</a>
+        
+          <div class="summary"><p>Search the database for songs matching <code>filter</code> and add them to the queue.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#searchaddpl%28name%3AString%2Cfilter%3AString%7CMPD%3A%3AFilter%2C%2A%2Csort%3AString%7CNil%3Dnil%2Cwindow%3AMPD%3A%3ARange%7CNil%3Dnil%2Cposition%3AInt32%7CString%7CNil%3Dnil%29-instance-method" class="signature"><strong>#searchaddpl</strong>(name : String, filter : String | MPD::Filter, *, sort : String | Nil = <span class="n">nil</span>, window : MPD::Range | Nil = <span class="n">nil</span>, position : Int32 | String | Nil = <span class="n">nil</span>)</a>
+        
+          <div class="summary"><p>Search the database for songs matching <code>filter</code> and add them to the queue.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#searchaddpl%28name%3AString%2C%2A%2Csort%3AString%7CNil%3Dnil%2Cwindow%3AMPD%3A%3ARange%7CNil%3Dnil%2Cposition%3AInt32%7CString%7CNil%3Dnil%2C%26%3AMPD%3A%3AFilter-%3E%29-instance-method" class="signature"><strong>#searchaddpl</strong>(name : String, *, sort : String | Nil = <span class="n">nil</span>, window : MPD::Range | Nil = <span class="n">nil</span>, position : Int32 | String | Nil = <span class="n">nil</span>, & : MPD::Filter -> )</a>
+        
+          <div class="summary"><p>Search the database for songs matching <code>filter</code> and add them to the queue.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#searchcount%28filter%3AString%7CMPD%3A%3AFilter%2C%2A%2Cgroup%3AString%7CNil%3Dnil%29-instance-method" class="signature"><strong>#searchcount</strong>(filter : String | MPD::Filter, *, group : String | Nil = <span class="n">nil</span>)</a>
+        
+          <div class="summary"><p>Count the number of songs and their total playtime in the database matching <code>filter</code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#searchcount%28%2A%2Cgroup%3AString%7CNil%3Dnil%2C%26%3AMPD%3A%3AFilter-%3E%29-instance-method" class="signature"><strong>#searchcount</strong>(*, group : String | Nil = <span class="n">nil</span>, & : MPD::Filter -> )</a>
+        
+          <div class="summary"><p>Count the number of songs and their total playtime in the database matching <code>filter</code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#searchplaylist%28name%3AString%2Cfilter%3AString%7CMPD%3A%3AFilter%2C%2A%2Cwindow%3AMPD%3A%3ARange%7CNil%3Dnil%29-instance-method" class="signature"><strong>#searchplaylist</strong>(name : String, filter : String | MPD::Filter, *, window : MPD::Range | Nil = <span class="n">nil</span>)</a>
+        
+          <div class="summary"><p>Search the playlist for songs matching <code>filter</code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#searchplaylist%28name%3AString%2C%2A%2Cwindow%3AMPD%3A%3ARange%7CNil%3Dnil%2C%26%3AMPD%3A%3AFilter-%3E%29-instance-method" class="signature"><strong>#searchplaylist</strong>(name : String, *, window : MPD::Range | Nil = <span class="n">nil</span>, & : MPD::Filter -> )</a>
+        
+          <div class="summary"><p>Search the playlist for songs matching <code>filter</code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#seek%28songid%3AInt32%2Ctime%3AInt32%29-instance-method" class="signature"><strong>#seek</strong>(songid : Int32, time : Int32)</a>
+        
+          <div class="summary"><p>Seeks to the position <code>time</code> (in seconds) of entry <code>songpos</code> in the playlist.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#seekcur%28time%3AString%7CInt32%29-instance-method" class="signature"><strong>#seekcur</strong>(time : String | Int32)</a>
+        
+          <div class="summary"><p>Seeks to the position <code>time</code> within the current song.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#seekid%28songid%3AInt32%2Ctime%3AString%7CInt32%29-instance-method" class="signature"><strong>#seekid</strong>(songid : Int32, time : String | Int32)</a>
+        
+          <div class="summary"><p>Seeks to the position <code>time</code> (in seconds) of song <code>songid</code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#sendmessage%28channel%3AString%2Cmessage%3AString%29-instance-method" class="signature"><strong>#sendmessage</strong>(channel : String, message : String)</a>
+        
+          <div class="summary"><p>Send a <code>message</code> to the specified <code>channel</code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#setvol%28vol%3AInt%29-instance-method" class="signature"><strong>#setvol</strong>(vol : Int)</a>
+        
+          <div class="summary"><p>Sets volume to <code>vol</code>, the range of volume is 0-100.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#shuffle%28range%3AMPD%3A%3ARange%7CNil%3Dnil%29-instance-method" class="signature"><strong>#shuffle</strong>(range : MPD::Range | Nil = <span class="n">nil</span>)</a>
+        
+          <div class="summary"><p>Shuffles the current playlist.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#single%28state%3ABool%7CString%29-instance-method" class="signature"><strong>#single</strong>(state : Bool | String)</a>
+        
+          <div class="summary"><p>Sets single state to <code>state</code>, <code>state</code> should be <code>false</code>, <code>true</code> or <code>&quot;oneshot&quot;</code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#stats-instance-method" class="signature"><strong>#stats</strong></a>
+        
+          <div class="summary"><p>Displays statistics.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#status-instance-method" class="signature"><strong>#status</strong></a>
+        
+          <div class="summary"><p>Reports the current status of the player and the volume level.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#sticker_dec%28type%3AString%2Curi%3AString%2Cname%3AString%2Cvalue%3AInt32%29-instance-method" class="signature"><strong>#sticker_dec</strong>(type : String, uri : String, name : String, value : Int32)</a>
+        
+          <div class="summary"><p>Adds a sticker value to the specified object.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#sticker_delete%28type%3AString%2Curi%3AString%2Cname%3AString%7CNil%3Dnil%29-instance-method" class="signature"><strong>#sticker_delete</strong>(type : String, uri : String, name : String | Nil = <span class="n">nil</span>)</a>
+        
+          <div class="summary"><p>Deletes a sticker value from the specified object.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#sticker_find%28type%3AString%2Curi%3AString%2Cname%3AString%2Cvalue%3AString%2Coperator%3AString%3D%22%3D%22%2C%2A%2Csort%3AString%7CNil%3Dnil%2Cwindow%3AMPD%3A%3ARange%7CNil%3Dnil%29-instance-method" class="signature"><strong>#sticker_find</strong>(type : String, uri : String, name : String, value : String, operator : String = <span class="s">&quot;=&quot;</span>, *, sort : String | Nil = <span class="n">nil</span>, window : MPD::Range | Nil = <span class="n">nil</span>)</a>
+        
+          <div class="summary"><p>Searches for stickers with the given value.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#sticker_find%28type%3AString%2Curi%3AString%2Cname%3AString%2C%2A%2Csort%3AString%7CNil%3Dnil%2Cwindow%3AMPD%3A%3ARange%7CNil%3Dnil%29-instance-method" class="signature"><strong>#sticker_find</strong>(type : String, uri : String, name : String, *, sort : String | Nil = <span class="n">nil</span>, window : MPD::Range | Nil = <span class="n">nil</span>)</a>
+        
+          <div class="summary"><p>Searches the sticker database for stickers with the specified <code>name</code>, below the specified directory (<code>uri</code>).</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#sticker_get%28type%3AString%2Curi%3AString%2Cname%3AString%29%3AString%7CNil-instance-method" class="signature"><strong>#sticker_get</strong>(type : String, uri : String, name : String) : String | Nil</a>
+        
+          <div class="summary"><p>Reads a sticker value for the specified object.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#sticker_inc%28type%3AString%2Curi%3AString%2Cname%3AString%2Cvalue%3AInt32%29-instance-method" class="signature"><strong>#sticker_inc</strong>(type : String, uri : String, name : String, value : Int32)</a>
+        
+          <div class="summary"><p>Adds a sticker value to the specified object.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#sticker_list%28type%3AString%2Curi%3AString%29%3AHash%28String%2CString%29%7CNil-instance-method" class="signature"><strong>#sticker_list</strong>(type : String, uri : String) : Hash(String, String) | Nil</a>
+        
+          <div class="summary"><p>Lists the stickers for the specified object.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#sticker_set%28type%3AString%2Curi%3AString%2Cname%3AString%2Cvalue%3AString%29-instance-method" class="signature"><strong>#sticker_set</strong>(type : String, uri : String, name : String, value : String)</a>
+        
+          <div class="summary"><p>Adds a sticker value to the specified object.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#stickernames-instance-method" class="signature"><strong>#stickernames</strong></a>
+        
+          <div class="summary"><p>Gets a list of uniq sticker names.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#stickernamestypes%28type%3AString%29-instance-method" class="signature"><strong>#stickernamestypes</strong>(type : String)</a>
+        
+          <div class="summary"><p>Gets a list of uniq sticker names and their types.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#stickertypes-instance-method" class="signature"><strong>#stickertypes</strong></a>
+        
+          <div class="summary"><p>Shows a list of available sticker types.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#stop-instance-method" class="signature"><strong>#stop</strong></a>
+        
+          <div class="summary"><p>Stops playing.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#subscribe%28name%3AString%29-instance-method" class="signature"><strong>#subscribe</strong>(name : String)</a>
+        
+          <div class="summary"><p>Subscribe to a channel <code>name</code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#supports%3F%28command%3AString%7CSymbol%29%3ABool-instance-method" class="signature"><strong>#supports?</strong>(command : String | Symbol) : Bool</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#tagtypes-instance-method" class="signature"><strong>#tagtypes</strong></a>
+        
+          <div class="summary"><p>Shows a list of available tag types.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#unsubscribe%28name%3AString%29-instance-method" class="signature"><strong>#unsubscribe</strong>(name : String)</a>
+        
+          <div class="summary"><p>Unsubscribe from a channel <code>name</code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#update%28uri%3AString%7CNil%3Dnil%29-instance-method" class="signature"><strong>#update</strong>(uri : String | Nil = <span class="n">nil</span>)</a>
+        
+          <div class="summary"><p>Updates the music database: find new files, remove deleted files, update modified files.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#urlhandlers-instance-method" class="signature"><strong>#urlhandlers</strong></a>
+        
+          <div class="summary"><p>Gets a list of available URL handlers.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#version%3AString%3F-instance-method" class="signature"><strong>#version</strong> : String?</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#volume%28change%3AInt%29-instance-method" class="signature"><strong>#volume</strong>(change : Int)</a>
+        
+          <div class="summary"><p>Changes volume by amount <code>change</code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#with_command_list%28%26%29-instance-method" class="signature"><strong>#with_command_list</strong>(&)</a>
+        
+      </li>
+    
+  </ul>
+
+
+
+  <div class="methods-inherited">
+    
+      
+
+
+      
+
+
+      
+
+
+      
+
+
+    
+      
+
+
+      
+
+
+      
+
+
+      
+
+
+    
+  </div>
+
+  
+  <h2>
+    <a id="constructor-detail" class="anchor" href="#constructor-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructor Detail
+  </h2>
+  
+    <div class="entry-detail" id="new(host:String=&quot;localhost&quot;,port:Int32=6600,*,with_callbacks:Bool=false,password:String|Nil=nil)-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(host : String = <span class="s">&quot;localhost&quot;</span>, port : Int32 = <span class="n">6600</span>, *, with_callbacks : Bool = <span class="n">false</span>, password : String | Nil = <span class="n">nil</span>)
+
+        <a class="method-permalink" href="#new%28host%3AString%3D%22localhost%22%2Cport%3AInt32%3D6600%2C%2A%2Cwith_callbacks%3ABool%3Dfalse%2Cpassword%3AString%7CNil%3Dnil%29-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Creates a new MPD client. Parses the <code><a href="../MPD/Client.html#host%3AString-instance-method">#host</a></code>, <code><a href="../MPD/Client.html#port%3AInt32-instance-method">#port</a></code>.</p>
+<p>This constructor will raise an exception if could not connect to MPD</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L62" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+  
+
+  
+
+  
+  <h2>
+    <a id="instance-method-detail" class="anchor" href="#instance-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="add(uri:String,position:Int32|String|Nil=nil)-instance-method">
+      <div class="signature">
+        
+        def <strong>add</strong>(uri : String, position : Int32 | String | Nil = <span class="n">nil</span>)
+
+        <a class="method-permalink" href="#add%28uri%3AString%2Cposition%3AInt32%7CString%7CNil%3Dnil%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Adds the file <code>uri</code> to the playlist (directories add recursively).</p>
+<p><code>uri</code> can also be a single file.</p>
+<p>The <code>position</code> parameter is the same as in <code><a href="../MPD/Client.html#addid%28uri%3AString%2Cposition%3AInt32%7CString%7CNil%3Dnil%29-instance-method">#addid</a></code>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L1147" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="addid(uri:String,position:Int32|String|Nil=nil)-instance-method">
+      <div class="signature">
+        
+        def <strong>addid</strong>(uri : String, position : Int32 | String | Nil = <span class="n">nil</span>)
+
+        <a class="method-permalink" href="#addid%28uri%3AString%2Cposition%3AInt32%7CString%7CNil%3Dnil%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Adds a song to the playlist (non-recursive) and returns the song id.
+<code>uri</code> is always a single file or URL.</p>
+<p>If the <code>position</code> is given, then the song is inserted at the specified position.
+If the parameter is string and starts with &quot;+&quot; or &quot;-&quot;, then it is relative to the current song;
+e.g. &quot;+0&quot; inserts right after the current song
+and &quot;-0&quot; inserts right before the current song (i.e. zero songs between the current song and the newly added song).</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L1161" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="albumart(uri:String)-instance-method">
+      <div class="signature">
+        
+        def <strong>albumart</strong>(uri : String)
+
+        <a class="method-permalink" href="#albumart%28uri%3AString%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Locate album art for the given song</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L1003" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="callbacks_timeout:Time::Span-instance-method">
+      <div class="signature">
+        
+        def <strong>callbacks_timeout</strong> : Time::Span
+
+        <a class="method-permalink" href="#callbacks_timeout%3ATime%3A%3ASpan-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L57" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="callbacks_timeout=(callbacks_timeout:Time::Span)-instance-method">
+      <div class="signature">
+        
+        def <strong>callbacks_timeout=</strong>(callbacks_timeout : Time::Span)
+
+        <a class="method-permalink" href="#callbacks_timeout%3D%28callbacks_timeout%3ATime%3A%3ASpan%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L57" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="channels-instance-method">
+      <div class="signature">
+        
+        def <strong>channels</strong>
+
+        <a class="method-permalink" href="#channels-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Obtain a list of all channels.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L380" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="clear-instance-method">
+      <div class="signature">
+        
+        def <strong>clear</strong>
+
+        <a class="method-permalink" href="#clear-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Clears the current playlist.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L1135" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="close-instance-method">
+      <div class="signature">
+        
+        def <strong>close</strong>
+
+        <a class="method-permalink" href="#close-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Closes the connection to MPD.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L274" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="command_list_end-instance-method">
+      <div class="signature">
+        
+        def <strong>command_list_end</strong>
+
+        <a class="method-permalink" href="#command_list_end-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L236" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="command_list_ok_begin-instance-method">
+      <div class="signature">
+        
+        def <strong>command_list_ok_begin</strong>
+
+        <a class="method-permalink" href="#command_list_ok_begin-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>https://mpd.readthedocs.io/en/latest/protocol.html#command-lists</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L230" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="commands-instance-method">
+      <div class="signature">
+        
+        def <strong>commands</strong>
+
+        <a class="method-permalink" href="#commands-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Shows which commands the current user has access to.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L346" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="config-instance-method">
+      <div class="signature">
+        
+        def <strong>config</strong>
+
+        <a class="method-permalink" href="#config-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Dumps configuration values that may be interesting for the client.</p>
+<p>This command is only permitted to <code>local</code> clients (connected via UNIX domain socket).</p>
+<p>The following response attributes are available:</p>
+<ul>
+<li><code>music_directory</code>: The absolute path of the music directory.</li>
+</ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L338" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="connect-instance-method">
+      <div class="signature">
+        
+        def <strong>connect</strong>
+
+        <a class="method-permalink" href="#connect-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Connect to the MPD daemon unless conected.</p>
+<p>Connect using the <code><a href="../MPD/Client.html#reconnect-instance-method">#reconnect</a></code> method.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L84" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="connected?-instance-method">
+      <div class="signature">
+        
+        def <strong>connected?</strong>
+
+        <a class="method-permalink" href="#connected%3F-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Check if the client is connected.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L186" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="consume(state:Bool|String)-instance-method">
+      <div class="signature">
+        
+        def <strong>consume</strong>(state : Bool | String)
+
+        <a class="method-permalink" href="#consume%28state%3ABool%7CString%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Sets consume state to <code>state</code>, <code>state</code> should be <code>false</code>, <code>true</code> or <code>&quot;oneshot&quot;</code>.</p>
+<p>When consume is activated, each song played is removed from playlist.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L1103" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="count(filter:String|MPD::Filter,*,group:String|Nil=nil)-instance-method">
+      <div class="signature">
+        
+        def <strong>count</strong>(filter : String | <a href="../MPD/Filter.html">MPD::Filter</a>, *, group : String | Nil = <span class="n">nil</span>)
+
+        <a class="method-permalink" href="#count%28filter%3AString%7CMPD%3A%3AFilter%2C%2A%2Cgroup%3AString%7CNil%3Dnil%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Count the number of songs and their total playtime in the database matching <code>filter</code>.</p>
+<pre><code class="language-crystal">mpd.count(<span class="s">&quot;(genre == &#39;Rock&#39;)&quot;</span>)
+<span class="o">=&gt;</span> {<span class="s">&quot;songs&quot;</span> <span class="o">=&gt;</span> <span class="s">&quot;11&quot;</span>, <span class="s">&quot;playtime&quot;</span> <span class="o">=&gt;</span> <span class="s">&quot;2496&quot;</span>}</code></pre>
+<p>The <code>group</code> keyword may be used to group the results by a tag.
+The first following example prints per-artist counts
+while the next prints the number of songs whose title matches &quot;Echoes&quot; grouped by artist:</p>
+<pre><code class="language-crystal">mpd.count(<span class="s">&quot;(genre != &#39;Pop&#39;)&quot;</span>, group: <span class="s">&quot;artist&quot;</span>)
+<span class="o">=&gt;</span> [{<span class="s">&quot;Artist&quot;</span> <span class="o">=&gt;</span> <span class="s">&quot;Artist 1&quot;</span>, <span class="s">&quot;songs&quot;</span> <span class="o">=&gt;</span> <span class="s">&quot;11&quot;</span>, <span class="s">&quot;playtime&quot;</span> <span class="o">=&gt;</span> <span class="s">&quot;2388&quot;</span>}, {<span class="s">&quot;Artist&quot;</span> <span class="o">=&gt;</span> <span class="s">&quot;Artist 2&quot;</span>, <span class="s">&quot;songs&quot;</span> <span class="o">=&gt;</span> <span class="s">&quot;12&quot;</span>, <span class="s">&quot;playtime&quot;</span> <span class="o">=&gt;</span> <span class="s">&quot;2762&quot;</span>}]</code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L1027" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="count(*,group:String|Nil=nil,&amp;:MPD::Filter-&gt;)-instance-method">
+      <div class="signature">
+        
+        def <strong>count</strong>(*, group : String | Nil = <span class="n">nil</span>, & : <a href="../MPD/Filter.html">MPD::Filter</a> -> )
+
+        <a class="method-permalink" href="#count%28%2A%2Cgroup%3AString%7CNil%3Dnil%2C%26%3AMPD%3A%3AFilter-%3E%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Count the number of songs and their total playtime in the database matching <code>filter</code>.</p>
+<pre><code class="language-crystal">mpd.count(<span class="s">&quot;(genre == &#39;Rock&#39;)&quot;</span>)
+<span class="o">=&gt;</span> {<span class="s">&quot;songs&quot;</span> <span class="o">=&gt;</span> <span class="s">&quot;11&quot;</span>, <span class="s">&quot;playtime&quot;</span> <span class="o">=&gt;</span> <span class="s">&quot;2496&quot;</span>}</code></pre>
+<p>The <code>group</code> keyword may be used to group the results by a tag.
+The first following example prints per-artist counts
+while the next prints the number of songs whose title matches &quot;Echoes&quot; grouped by artist:</p>
+<pre><code class="language-crystal">mpd.count(<span class="s">&quot;(genre != &#39;Pop&#39;)&quot;</span>, group: <span class="s">&quot;artist&quot;</span>)
+<span class="o">=&gt;</span> [{<span class="s">&quot;Artist&quot;</span> <span class="o">=&gt;</span> <span class="s">&quot;Artist 1&quot;</span>, <span class="s">&quot;songs&quot;</span> <span class="o">=&gt;</span> <span class="s">&quot;11&quot;</span>, <span class="s">&quot;playtime&quot;</span> <span class="o">=&gt;</span> <span class="s">&quot;2388&quot;</span>}, {<span class="s">&quot;Artist&quot;</span> <span class="o">=&gt;</span> <span class="s">&quot;Artist 2&quot;</span>, <span class="s">&quot;songs&quot;</span> <span class="o">=&gt;</span> <span class="s">&quot;12&quot;</span>, <span class="s">&quot;playtime&quot;</span> <span class="o">=&gt;</span> <span class="s">&quot;2762&quot;</span>}]</code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L1040" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="crop-instance-method">
+      <div class="signature">
+        
+        def <strong>crop</strong>
+
+        <a class="method-permalink" href="#crop-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Delete all playlist entries except the one currently playing</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L617" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="currentsong-instance-method">
+      <div class="signature">
+        
+        def <strong>currentsong</strong>
+
+        <a class="method-permalink" href="#currentsong-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Displays the song info of the current song (same song that is identified in <code><a href="../MPD/Client.html#status-instance-method">#status</a></code>).</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L444" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="decoders-instance-method">
+      <div class="signature">
+        
+        def <strong>decoders</strong>
+
+        <a class="method-permalink" href="#decoders-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Print a list of decoder plugins, followed by their supported suffixes and MIME types.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L417" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="delete(songpos:Int32|MPD::Range)-instance-method">
+      <div class="signature">
+        
+        def <strong>delete</strong>(songpos : Int32 | <a href="../MPD/Range.html">MPD::Range</a>)
+
+        <a class="method-permalink" href="#delete%28songpos%3AInt32%7CMPD%3A%3ARange%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Deletes a song from the playlist.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L601" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="deleteid(songid:Int32)-instance-method">
+      <div class="signature">
+        
+        def <strong>deleteid</strong>(songid : Int32)
+
+        <a class="method-permalink" href="#deleteid%28songid%3AInt32%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Deletes the song <code>singid</code> from the playlist.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L609" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="disconnect-instance-method">
+      <div class="signature">
+        
+        def <strong>disconnect</strong>
+
+        <a class="method-permalink" href="#disconnect-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Disconnect from the MPD daemon.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L105" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="find(filter:String|MPD::Filter,*,sort:String|Nil=nil,window:MPD::Range|Nil=nil)-instance-method">
+      <div class="signature">
+        
+        def <strong>find</strong>(filter : String | <a href="../MPD/Filter.html">MPD::Filter</a>, *, sort : String | Nil = <span class="n">nil</span>, window : <a href="../MPD/Range.html">MPD::Range</a> | Nil = <span class="n">nil</span>)
+
+        <a class="method-permalink" href="#find%28filter%3AString%7CMPD%3A%3AFilter%2C%2A%2Csort%3AString%7CNil%3Dnil%2Cwindow%3AMPD%3A%3ARange%7CNil%3Dnil%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Search the database for songs matching <code>filter</code>.</p>
+<p><code>sort</code> sorts the result by the specified tag.
+The sort is descending if the tag is prefixed with a minus (<code>-</code>).
+Without <code>sort</code>, the order is undefined.
+Only the first tag value will be used, if multiple of the same type exist.
+To sort by &quot;Artist&quot;, &quot;Album&quot; or &quot;AlbumArtist&quot;, you should specify &quot;ArtistSort&quot;, &quot;AlbumSort&quot; or &quot;AlbumArtistSort&quot; instead.
+These will automatically fall back to the former if &quot;*Sort&quot; doesn't exist.
+&quot;AlbumArtist&quot; falls back to just &quot;Artist&quot;.
+The type &quot;Last-Modified&quot; can sort by file modification time.</p>
+<p><code>window</code> can be used to query only a portion of the real response.
+The parameter is two zero-based record numbers; a start number and an end number.</p>
+<pre><code class="language-crystal">mpd.find(<span class="s">&quot;(genre != &#39;Pop&#39;)&quot;</span>, sort: <span class="s">&quot;-ArtistSort&quot;</span>, window: (<span class="n">5</span>..<span class="n">10</span>))
+mpd.find(<span class="s">&quot;(genre starts_with &#39;Indie&#39;)&quot;</span>)
+mpd.find(<span class="s">&quot;(genre starts_with_ci &#39;inDIE&#39;)&quot;</span>)
+mpd.find(<span class="s">&quot;(genre contains &#39;Rock&#39;)&quot;</span>)
+mpd.find(<span class="s">&quot;(genre contains_ci &#39;RocK&#39;)&quot;</span>)</code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L1189" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="find(*,sort:String|Nil=nil,window:MPD::Range|Nil=nil,&amp;:MPD::Filter-&gt;)-instance-method">
+      <div class="signature">
+        
+        def <strong>find</strong>(*, sort : String | Nil = <span class="n">nil</span>, window : <a href="../MPD/Range.html">MPD::Range</a> | Nil = <span class="n">nil</span>, & : <a href="../MPD/Filter.html">MPD::Filter</a> -> )
+
+        <a class="method-permalink" href="#find%28%2A%2Csort%3AString%7CNil%3Dnil%2Cwindow%3AMPD%3A%3ARange%7CNil%3Dnil%2C%26%3AMPD%3A%3AFilter-%3E%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Search the database for songs matching <code>filter</code>.</p>
+<p><code>sort</code> sorts the result by the specified tag.
+The sort is descending if the tag is prefixed with a minus (<code>-</code>).
+Without <code>sort</code>, the order is undefined.
+Only the first tag value will be used, if multiple of the same type exist.
+To sort by &quot;Artist&quot;, &quot;Album&quot; or &quot;AlbumArtist&quot;, you should specify &quot;ArtistSort&quot;, &quot;AlbumSort&quot; or &quot;AlbumArtistSort&quot; instead.
+These will automatically fall back to the former if &quot;*Sort&quot; doesn't exist.
+&quot;AlbumArtist&quot; falls back to just &quot;Artist&quot;.
+The type &quot;Last-Modified&quot; can sort by file modification time.</p>
+<p><code>window</code> can be used to query only a portion of the real response.
+The parameter is two zero-based record numbers; a start number and an end number.</p>
+<pre><code class="language-crystal">mpd.find(<span class="s">&quot;(genre != &#39;Pop&#39;)&quot;</span>, sort: <span class="s">&quot;-ArtistSort&quot;</span>, window: (<span class="n">5</span>..<span class="n">10</span>))
+mpd.find(<span class="s">&quot;(genre starts_with &#39;Indie&#39;)&quot;</span>)
+mpd.find(<span class="s">&quot;(genre starts_with_ci &#39;inDIE&#39;)&quot;</span>)
+mpd.find(<span class="s">&quot;(genre contains &#39;Rock&#39;)&quot;</span>)
+mpd.find(<span class="s">&quot;(genre contains_ci &#39;RocK&#39;)&quot;</span>)</code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L1202" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="findadd(filter:String|MPD::Filter,*,sort:String|Nil=nil,window:MPD::Range|Nil=nil,position:Int32|String|Nil=nil)-instance-method">
+      <div class="signature">
+        
+        def <strong>findadd</strong>(filter : String | <a href="../MPD/Filter.html">MPD::Filter</a>, *, sort : String | Nil = <span class="n">nil</span>, window : <a href="../MPD/Range.html">MPD::Range</a> | Nil = <span class="n">nil</span>, position : Int32 | String | Nil = <span class="n">nil</span>)
+
+        <a class="method-permalink" href="#findadd%28filter%3AString%7CMPD%3A%3AFilter%2C%2A%2Csort%3AString%7CNil%3Dnil%2Cwindow%3AMPD%3A%3ARange%7CNil%3Dnil%2Cposition%3AInt32%7CString%7CNil%3Dnil%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Search the database for songs matching <code>filter</code> and add them to the queue.</p>
+<p>Parameters have the same meaning as for <code><a href="../MPD/Client.html#find%28filter%3AString%7CMPD%3A%3AFilter%2C%2A%2Csort%3AString%7CNil%3Dnil%2Cwindow%3AMPD%3A%3ARange%7CNil%3Dnil%29-instance-method">#find</a></code> and <code><a href="../MPD/Client.html#searchadd%28filter%3AString%7CMPD%3A%3AFilter%2C%2A%2Csort%3AString%7CNil%3Dnil%2Cwindow%3AMPD%3A%3ARange%7CNil%3Dnil%2Cposition%3AInt32%7CString%7CNil%3Dnil%29-instance-method">#searchadd</a></code>.</p>
+<pre><code class="language-crystal">mpd.findadd(<span class="s">&quot;(genre == &#39;Alternative Rock&#39;)&quot;</span>)</code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L1245" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="findadd(*,sort:String|Nil=nil,window:MPD::Range|Nil=nil,position:Int32|String|Nil=nil,&amp;:MPD::Filter-&gt;)-instance-method">
+      <div class="signature">
+        
+        def <strong>findadd</strong>(*, sort : String | Nil = <span class="n">nil</span>, window : <a href="../MPD/Range.html">MPD::Range</a> | Nil = <span class="n">nil</span>, position : Int32 | String | Nil = <span class="n">nil</span>, & : <a href="../MPD/Filter.html">MPD::Filter</a> -> )
+
+        <a class="method-permalink" href="#findadd%28%2A%2Csort%3AString%7CNil%3Dnil%2Cwindow%3AMPD%3A%3ARange%7CNil%3Dnil%2Cposition%3AInt32%7CString%7CNil%3Dnil%2C%26%3AMPD%3A%3AFilter-%3E%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Search the database for songs matching <code>filter</code> and add them to the queue.</p>
+<p>Parameters have the same meaning as for <code><a href="../MPD/Client.html#find%28filter%3AString%7CMPD%3A%3AFilter%2C%2A%2Csort%3AString%7CNil%3Dnil%2Cwindow%3AMPD%3A%3ARange%7CNil%3Dnil%29-instance-method">#find</a></code> and <code><a href="../MPD/Client.html#searchadd%28filter%3AString%7CMPD%3A%3AFilter%2C%2A%2Csort%3AString%7CNil%3Dnil%2Cwindow%3AMPD%3A%3ARange%7CNil%3Dnil%2Cposition%3AInt32%7CString%7CNil%3Dnil%29-instance-method">#searchadd</a></code>.</p>
+<pre><code class="language-crystal">mpd.findadd(<span class="s">&quot;(genre == &#39;Alternative Rock&#39;)&quot;</span>)</code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L1259" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="getvol-instance-method">
+      <div class="signature">
+        
+        def <strong>getvol</strong>
+
+        <a class="method-permalink" href="#getvol-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Read the volume.
+The result is a <code>{&quot;volume&quot; =&gt; &quot;100&quot;}</code> like in <code><a href="../MPD/Client.html#status-instance-method">#status</a></code>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L1080" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="host:String-instance-method">
+      <div class="signature">
+        
+        def <strong>host</strong> : String
+
+        <a class="method-permalink" href="#host%3AString-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L56" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="idle(subsystems:Array(String)|Nil=nil)-instance-method">
+      <div class="signature">
+        
+        def <strong>idle</strong>(subsystems : Array(String) | Nil = <span class="n">nil</span>)
+
+        <a class="method-permalink" href="#idle%28subsystems%3AArray%28String%29%7CNil%3Dnil%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Waits until there is a noteworthy change in one or more of MPD’s subsystems.</p>
+<p>As soon as there is one, it lists all changed systems, where subsystem is one of the following:</p>
+<ul>
+<li><code>database</code> - the song database has been modified after update.</li>
+<li><code><a href="../MPD/Client.html#update%28uri%3AString%7CNil%3Dnil%29-instance-method">#update</a></code> - a database update has started or finished. If the database was modified during the update, the database event is also emitted.</li>
+<li><code>stored_playlist</code> - a stored playlist has been modified, renamed, created or deleted</li>
+<li><code>playlist</code> - the queue (i.e. the current playlist) has been modified</li>
+<li><code>player</code> - the player has been started, stopped or seeked or tags of the currently playing song have changed (e.g. received from stream)</li>
+<li><code>mixer</code> - the volume has changed</li>
+<li><code>output</code> - an audio output has been added, removed or modified (e.g. renamed, enabled or disabled)</li>
+<li><code>options</code> - options like repeat, random, crossfade, replay gain</li>
+<li><code>partition</code> - a partition was added, removed or changed</li>
+<li><code>sticker</code> - the sticker database has been modified</li>
+<li><code>subscription</code> - a client has subscribed or unsubscribed to a channel</li>
+<li><code>message</code> - a message was received on a channel this client is subscribed to; this event is only emitted when the client’s message queue is empty</li>
+<li><code>neighbor</code> - a neighbor was found or lost</li>
+<li><code>mount</code> - the mount list has changed</li>
+</ul>
+<p>If the optional <code>subsystems</code> argument is used,
+MPD will only send notifications when something changed in one of the specified subsytems.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L472" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="list(type:String,filter:String|MPD::Filter|Nil=nil,*,group:String|Nil=nil,window:MPD::Range|Nil=nil)-instance-method">
+      <div class="signature">
+        
+        def <strong>list</strong>(type : String, filter : String | <a href="../MPD/Filter.html">MPD::Filter</a> | Nil = <span class="n">nil</span>, *, group : String | Nil = <span class="n">nil</span>, window : <a href="../MPD/Range.html">MPD::Range</a> | Nil = <span class="n">nil</span>)
+
+        <a class="method-permalink" href="#list%28type%3AString%2Cfilter%3AString%7CMPD%3A%3AFilter%7CNil%3Dnil%2C%2A%2Cgroup%3AString%7CNil%3Dnil%2Cwindow%3AMPD%3A%3ARange%7CNil%3Dnil%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Lists unique tags values of the specified <code>type</code>.</p>
+<p><code>type</code> can be any tag supported by MPD or file.
+<code>window</code> works like in <code><a href="../MPD/Client.html#find%28filter%3AString%7CMPD%3A%3AFilter%2C%2A%2Csort%3AString%7CNil%3Dnil%2Cwindow%3AMPD%3A%3ARange%7CNil%3Dnil%29-instance-method">#find</a></code>. In this command, it affects only the top-most tag type.
+<code>group</code> keyword may be used to group the results by tags.</p>
+<pre><code class="language-crystal">mpd.list(<span class="s">&quot;Artist&quot;</span>)</code></pre>
+<p>Additional arguments may specify a <code>filter</code>.
+The following example lists all file names by their respective artist and date:</p>
+<pre><code class="language-crystal">mpd.list(<span class="s">&quot;Artist&quot;</span>)
+mpd.list(<span class="s">&quot;filename&quot;</span>, <span class="s">&quot;((artist == &#39;Linkin Park&#39;) AND (date == &#39;2003&#39;))&quot;</span>)</code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L983" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="list(type:String,*,group:String|Nil=nil,window:MPD::Range|Nil=nil,&amp;:MPD::Filter-&gt;)-instance-method">
+      <div class="signature">
+        
+        def <strong>list</strong>(type : String, *, group : String | Nil = <span class="n">nil</span>, window : <a href="../MPD/Range.html">MPD::Range</a> | Nil = <span class="n">nil</span>, & : <a href="../MPD/Filter.html">MPD::Filter</a> -> )
+
+        <a class="method-permalink" href="#list%28type%3AString%2C%2A%2Cgroup%3AString%7CNil%3Dnil%2Cwindow%3AMPD%3A%3ARange%7CNil%3Dnil%2C%26%3AMPD%3A%3AFilter-%3E%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Lists unique tags values of the specified <code>type</code>.</p>
+<p><code>type</code> can be any tag supported by MPD or file.
+<code>window</code> works like in <code><a href="../MPD/Client.html#find%28filter%3AString%7CMPD%3A%3AFilter%2C%2A%2Csort%3AString%7CNil%3Dnil%2Cwindow%3AMPD%3A%3ARange%7CNil%3Dnil%29-instance-method">#find</a></code>. In this command, it affects only the top-most tag type.
+<code>group</code> keyword may be used to group the results by tags.</p>
+<pre><code class="language-crystal">mpd.list(<span class="s">&quot;Artist&quot;</span>)</code></pre>
+<p>Additional arguments may specify a <code>filter</code>.
+The following example lists all file names by their respective artist and date:</p>
+<pre><code class="language-crystal">mpd.list(<span class="s">&quot;Artist&quot;</span>)
+mpd.list(<span class="s">&quot;filename&quot;</span>, <span class="s">&quot;((artist == &#39;Linkin Park&#39;) AND (date == &#39;2003&#39;))&quot;</span>)</code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L996" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="listall(uri:String|Nil=nil)-instance-method">
+      <div class="signature">
+        
+        def <strong>listall</strong>(uri : String | Nil = <span class="n">nil</span>)
+
+        <a class="method-permalink" href="#listall%28uri%3AString%7CNil%3Dnil%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Lists all songs and directories in <code>uri</code>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L1295" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="listallinfo(uri:String|Nil=nil)-instance-method">
+      <div class="signature">
+        
+        def <strong>listallinfo</strong>(uri : String | Nil = <span class="n">nil</span>)
+
+        <a class="method-permalink" href="#listallinfo%28uri%3AString%7CNil%3Dnil%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Same as <code><a href="../MPD/Client.html#listall%28uri%3AString%7CNil%3Dnil%29-instance-method">#listall</a></code>, except it also returns metadata info in the same format as <code><a href="../MPD/Client.html#lsinfo%28uri%3AString%7CNil%3Dnil%29-instance-method">#lsinfo</a></code>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L1317" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="listfiles(uri:String|Nil=nil)-instance-method">
+      <div class="signature">
+        
+        def <strong>listfiles</strong>(uri : String | Nil = <span class="n">nil</span>)
+
+        <a class="method-permalink" href="#listfiles%28uri%3AString%7CNil%3Dnil%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Lists the contents of the directory <code>URI</code>, including files are not recognized by <code><a href="../MPD.html">MPD</a></code>.</p>
+<p><code>uri</code> can be a path relative to the music directory or an <code>uri</code> understood by one of the storage plugins.
+The response contains at least one line for each directory entry with the prefix <code>file: </code> or  <code>directory: </code>,
+and may be followed by file attributes such as <code>Last-Modified</code> and <code>size</code>.</p>
+<p>For example, <code>smb://SERVER</code> returns a list of all shares on the given SMB/CIFS server;
+<code>nfs://servername/path</code> obtains a directory listing from the NFS server.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L1332" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="listplaylist(name:String,range:MPD::Range|Nil=nil)-instance-method">
+      <div class="signature">
+        
+        def <strong>listplaylist</strong>(name : String, range : <a href="../MPD/Range.html">MPD::Range</a> | Nil = <span class="n">nil</span>)
+
+        <a class="method-permalink" href="#listplaylist%28name%3AString%2Crange%3AMPD%3A%3ARange%7CNil%3Dnil%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Lists the songs in the playlist <code>name</code>.</p>
+<p>Playlist plugins are supported.
+A <code>range</code> may be specified to list only a part of the playlist</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L787" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="listplaylistinfo(name:String,range:MPD::Range|Nil=nil)-instance-method">
+      <div class="signature">
+        
+        def <strong>listplaylistinfo</strong>(name : String, range : <a href="../MPD/Range.html">MPD::Range</a> | Nil = <span class="n">nil</span>)
+
+        <a class="method-permalink" href="#listplaylistinfo%28name%3AString%2Crange%3AMPD%3A%3ARange%7CNil%3Dnil%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Lists the songs with metadata in the playlist.</p>
+<p>Playlist plugins are supported.
+A <code>range</code> may be specified to list only a part of the playlist.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L803" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="listplaylists-instance-method">
+      <div class="signature">
+        
+        def <strong>listplaylists</strong>
+
+        <a class="method-permalink" href="#listplaylists-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Prints a list of the playlist directory.</p>
+<p>After each playlist name the server sends its last modification time
+as attribute <code>Last-Modified</code> in ISO 8601 format.
+To avoid problems due to clock differences between clients and the server,
+clients should not compare this value with their local clock.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L509" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="load(name:String,songpos:Int32|MPD::Range|Nil=nil,position:Int32|String|Nil=nil)-instance-method">
+      <div class="signature">
+        
+        def <strong>load</strong>(name : String, songpos : Int32 | <a href="../MPD/Range.html">MPD::Range</a> | Nil = <span class="n">nil</span>, position : Int32 | String | Nil = <span class="n">nil</span>)
+
+        <a class="method-permalink" href="#load%28name%3AString%2Csongpos%3AInt32%7CMPD%3A%3ARange%7CNil%3Dnil%2Cposition%3AInt32%7CString%7CNil%3Dnil%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Loads the playlist <code>name</code> into the current queue.</p>
+<p>Playlist plugins are supported.
+A range <code>songpos</code> may be specified to load only a part of the playlist.</p>
+<p>The <code>position</code> parameter specifies where the songs will be inserted into the queue;
+it can be relative as described in <code><a href="../MPD/Client.html#addid%28uri%3AString%2Cposition%3AInt32%7CString%7CNil%3Dnil%29-instance-method">#addid</a></code>.
+(This requires specifying the range as well;
+the special value 0: can be used if the whole playlist shall be loaded at a certain queue position.)</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L662" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="lsinfo(uri:String|Nil=nil)-instance-method">
+      <div class="signature">
+        
+        def <strong>lsinfo</strong>(uri : String | Nil = <span class="n">nil</span>)
+
+        <a class="method-permalink" href="#lsinfo%28uri%3AString%7CNil%3Dnil%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Lists the contents of the directory <code>uri</code>.</p>
+<p>When listing the root directory, this currently returns the list of stored playlists.
+This behavior is deprecated; use <code><a href="../MPD/Client.html#listplaylists-instance-method">#listplaylists</a></code> instead.</p>
+<p>Clients that are connected via UNIX domain socket may use this command
+to read the tags of an arbitrary local file (<code>uri</code> beginning with <code>file:///</code>).</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L1309" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="move(from:Int32|MPD::Range,to:Int32)-instance-method">
+      <div class="signature">
+        
+        def <strong>move</strong>(from : Int32 | <a href="../MPD/Range.html">MPD::Range</a>, to : Int32)
+
+        <a class="method-permalink" href="#move%28from%3AInt32%7CMPD%3A%3ARange%2Cto%3AInt32%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Moves the song at <code>from</code> or range of songs at <code>from</code> to <code>to</code> in the playlist.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L634" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="moveid(from:Int32,to:Int32|String)-instance-method">
+      <div class="signature">
+        
+        def <strong>moveid</strong>(from : Int32, to : Int32 | String)
+
+        <a class="method-permalink" href="#moveid%28from%3AInt32%2Cto%3AInt32%7CString%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Moves the song with <code>from</code> (songid) to <code>to</code> (playlist index) in the playlist.</p>
+<p>If <code>to</code> starts with &quot;+&quot; or &quot;-&quot;, then it is relative to the current song;
+e.g. &quot;+0&quot; moves to right after the current song
+and &quot;-0&quot; moves to right before the current song (i.e. zero songs between the current song and the moved song).</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L646" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="next-instance-method">
+      <div class="signature">
+        
+        def <strong>next</strong>
+
+        <a class="method-permalink" href="#next-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Plays next song in the playlist.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L943" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="nextsong:Object|Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>nextsong</strong> : <a href="../MPD/Object.html">Object</a> | Nil
+
+        <a class="method-permalink" href="#nextsong%3AObject%7CNil-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Show the currently queued (next) song.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L485" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="notcommands-instance-method">
+      <div class="signature">
+        
+        def <strong>notcommands</strong>
+
+        <a class="method-permalink" href="#notcommands-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Shows which commands the current user does not have access to.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L354" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="on(event:Event,&amp;block:String-&gt;_)-instance-method">
+      <div class="signature">
+        
+        def <strong>on</strong>(event : <a href="../MPD/Client/Event.html">Event</a>, &block : String -> _)
+
+        <a class="method-permalink" href="#on%28event%3AEvent%2C%26block%3AString-%3E_%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Register a callback for a specific event (e.g., :state, :song, etc.)</p>
+<pre><code class="language-crystal">mpd.on <span class="n">:state</span> <span class="k">do</span> <span class="o">|</span>state<span class="o">|</span>
+  puts <span class="s">&quot;State was change to </span><span class="i">#{</span>state<span class="i">}</span><span class="s">&quot;</span>
+<span class="k">end</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L125" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="on_callback(&amp;block:Event,String-&gt;_)-instance-method">
+      <div class="signature">
+        
+        def <strong>on_callback</strong>(&block : <a href="../MPD/Client/Event.html">Event</a>, String -> _)
+
+        <a class="method-permalink" href="#on_callback%28%26block%3AEvent%2CString-%3E_%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Register a global callback for <em>any</em> event. Useful for unified event handling.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L130" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="outputs-instance-method">
+      <div class="signature">
+        
+        def <strong>outputs</strong>
+
+        <a class="method-permalink" href="#outputs-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Shows information about all outputs.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L425" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="pause(state:Bool|Nil=nil)-instance-method">
+      <div class="signature">
+        
+        def <strong>pause</strong>(state : Bool | Nil = <span class="n">nil</span>)
+
+        <a class="method-permalink" href="#pause%28state%3ABool%7CNil%3Dnil%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Pause or resume playback.
+Pass <code>state</code> <code>true</code> to pause playback or <code>false</code> to resume playback.
+Without the parameter, the pause state is toggled.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L896" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="play(songpos:Int32|Nil=nil)-instance-method">
+      <div class="signature">
+        
+        def <strong>play</strong>(songpos : Int32 | Nil = <span class="n">nil</span>)
+
+        <a class="method-permalink" href="#play%28songpos%3AInt32%7CNil%3Dnil%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Begins playing the playlist at song number <code>songpos</code>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L886" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="playid(songnid:Int32|Nil=nil)-instance-method">
+      <div class="signature">
+        
+        def <strong>playid</strong>(songnid : Int32 | Nil = <span class="n">nil</span>)
+
+        <a class="method-permalink" href="#playid%28songnid%3AInt32%7CNil%3Dnil%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Begins playing the playlist at song <code>songid</code>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L959" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="playlistadd(name:String,uri:String,position:Int32|String|Nil=nil)-instance-method">
+      <div class="signature">
+        
+        def <strong>playlistadd</strong>(name : String, uri : String, position : Int32 | String | Nil = <span class="n">nil</span>)
+
+        <a class="method-permalink" href="#playlistadd%28name%3AString%2Curi%3AString%2Cposition%3AInt32%7CString%7CNil%3Dnil%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Adds <code>uri</code> to the playlist <code>name</code>.m3u.</p>
+<p><code>name</code>.m3u will be created if it does not exist.</p>
+<p>The <code>position</code> parameter specifies where the songs will be inserted into the playlist.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L840" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="playlistclear(name:String)-instance-method">
+      <div class="signature">
+        
+        def <strong>playlistclear</strong>(name : String)
+
+        <a class="method-permalink" href="#playlistclear%28name%3AString%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Clears the playlist <code>name</code>.m3u.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L691" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="playlistdelete(name:String,songpos:Int32|MPD::Range)-instance-method">
+      <div class="signature">
+        
+        def <strong>playlistdelete</strong>(name : String, songpos : Int32 | <a href="../MPD/Range.html">MPD::Range</a>)
+
+        <a class="method-permalink" href="#playlistdelete%28name%3AString%2Csongpos%3AInt32%7CMPD%3A%3ARange%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Deletes <code>songpos</code> from the playlist <code>name</code>.m3u.</p>
+<p>The <code>songpos</code> parameter can be a range.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L878" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="playlistfind(filter:String|MPD::Filter,*,sort:String|Nil=nil,window:MPD::Range|Nil=nil)-instance-method">
+      <div class="signature">
+        
+        def <strong>playlistfind</strong>(filter : String | <a href="../MPD/Filter.html">MPD::Filter</a>, *, sort : String | Nil = <span class="n">nil</span>, window : <a href="../MPD/Range.html">MPD::Range</a> | Nil = <span class="n">nil</span>)
+
+        <a class="method-permalink" href="#playlistfind%28filter%3AString%7CMPD%3A%3AFilter%2C%2A%2Csort%3AString%7CNil%3Dnil%2Cwindow%3AMPD%3A%3ARange%7CNil%3Dnil%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Search the queue for songs matching <code>filter</code>.</p>
+<p><code>sort</code> sorts the result by the specified tag.
+The sort is descending if the tag is prefixed with a minus ('-').
+Only the first tag value will be used, if multiple of the same type exist.
+To sort by &quot;Title&quot;, &quot;Artist&quot;, &quot;Album&quot;, &quot;AlbumArtist&quot; or &quot;Composer&quot;,
+you should specify &quot;TitleSort&quot;, &quot;ArtistSort&quot;, &quot;AlbumSort&quot;, &quot;AlbumArtistSort&quot; or &quot;ComposerSort&quot; instead.
+These will automatically fall back to the former if &quot;*Sort&quot; doesn’t exist.
+&quot;AlbumArtist&quot; falls back to just &quot;Artist&quot;.
+The type &quot;Last-Modified&quot; can sort by file modification time, and &quot;prio&quot; sorts by queue priority.</p>
+<p><code>window</code> can be used to query only a portion of the real response.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L579" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="playlistfind(*,sort:String|Nil=nil,window:MPD::Range|Nil=nil,&amp;:MPD::Filter-&gt;)-instance-method">
+      <div class="signature">
+        
+        def <strong>playlistfind</strong>(*, sort : String | Nil = <span class="n">nil</span>, window : <a href="../MPD/Range.html">MPD::Range</a> | Nil = <span class="n">nil</span>, & : <a href="../MPD/Filter.html">MPD::Filter</a> -> )
+
+        <a class="method-permalink" href="#playlistfind%28%2A%2Csort%3AString%7CNil%3Dnil%2Cwindow%3AMPD%3A%3ARange%7CNil%3Dnil%2C%26%3AMPD%3A%3AFilter-%3E%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>:ditto</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L592" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="playlistid(songid:Int32|Nil=nil)-instance-method">
+      <div class="signature">
+        
+        def <strong>playlistid</strong>(songid : Int32 | Nil = <span class="n">nil</span>)
+
+        <a class="method-permalink" href="#playlistid%28songid%3AInt32%7CNil%3Dnil%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Displays a list of songs in the playlist.</p>
+<p><code>songid</code> is optional and specifies a single song to display info for.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L725" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="playlistinfo(songpos:Int32|MPD::Range|Nil=nil)-instance-method">
+      <div class="signature">
+        
+        def <strong>playlistinfo</strong>(songpos : Int32 | <a href="../MPD/Range.html">MPD::Range</a> | Nil = <span class="n">nil</span>)
+
+        <a class="method-permalink" href="#playlistinfo%28songpos%3AInt32%7CMPD%3A%3ARange%7CNil%3Dnil%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Displays a list of all songs in the playlist,</p>
+<p>or if the optional argument is given, displays information only for
+the song <code>songpos</code> or the range of songs <code>START:END</code>.</p>
+<p>Range is done in by using <code><a href="../MPD/Range.html">MPD::Range</a></code>.</p>
+<p>Show info about the first three songs in the playlist:</p>
+<pre><code class="language-crystal">mpd.playlistinfo
+mpd.playlistinfo(<span class="n">1</span>..<span class="n">3</span>)
+mpd.playlistinfo(..<span class="n">3</span>)
+mpd.playlistinfo(<span class="n">10</span>..)</code></pre>
+<p>With negative range end MPD will assumes the biggest possible number then</p>
+<pre><code class="language-crystal">mpd.playlistinfo(<span class="n">10</span>..<span class="n">-1</span>)</code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L537" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="playlistlength(name:String)-instance-method">
+      <div class="signature">
+        
+        def <strong>playlistlength</strong>(name : String)
+
+        <a class="method-permalink" href="#playlistlength%28name%3AString%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Count the number of songs and their total playtime (seconds) in the playlist.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L699" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="playlistmove(name:String,from:Int32|MPD::Range,to:Int32)-instance-method">
+      <div class="signature">
+        
+        def <strong>playlistmove</strong>(name : String, from : Int32 | <a href="../MPD/Range.html">MPD::Range</a>, to : Int32)
+
+        <a class="method-permalink" href="#playlistmove%28name%3AString%2Cfrom%3AInt32%7CMPD%3A%3ARange%2Cto%3AInt32%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Moves the song at position <code>from</code> in the playlist <code>name</code>.m3u to the position <code>to</code>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L848" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="playlistsearch(filter:String|MPD::Filter,*,sort:String|Nil=nil,window:MPD::Range|Nil=nil)-instance-method">
+      <div class="signature">
+        
+        def <strong>playlistsearch</strong>(filter : String | <a href="../MPD/Filter.html">MPD::Filter</a>, *, sort : String | Nil = <span class="n">nil</span>, window : <a href="../MPD/Range.html">MPD::Range</a> | Nil = <span class="n">nil</span>)
+
+        <a class="method-permalink" href="#playlistsearch%28filter%3AString%7CMPD%3A%3AFilter%2C%2A%2Csort%3AString%7CNil%3Dnil%2Cwindow%3AMPD%3A%3ARange%7CNil%3Dnil%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Search the queue for songs matching <code>filter</code>.
+Parameters have the same meaning as for <code><a href="../MPD/Client.html#find%28filter%3AString%7CMPD%3A%3AFilter%2C%2A%2Csort%3AString%7CNil%3Dnil%2Cwindow%3AMPD%3A%3ARange%7CNil%3Dnil%29-instance-method">#find</a></code>, except that search is not case sensitive.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L546" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="playlistsearch(*,sort:String|Nil=nil,window:MPD::Range|Nil=nil,&amp;:MPD::Filter-&gt;)-instance-method">
+      <div class="signature">
+        
+        def <strong>playlistsearch</strong>(*, sort : String | Nil = <span class="n">nil</span>, window : <a href="../MPD/Range.html">MPD::Range</a> | Nil = <span class="n">nil</span>, & : <a href="../MPD/Filter.html">MPD::Filter</a> -> )
+
+        <a class="method-permalink" href="#playlistsearch%28%2A%2Csort%3AString%7CNil%3Dnil%2Cwindow%3AMPD%3A%3ARange%7CNil%3Dnil%2C%26%3AMPD%3A%3AFilter-%3E%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Search the queue for songs matching <code>filter</code>.
+Parameters have the same meaning as for <code><a href="../MPD/Client.html#find%28filter%3AString%7CMPD%3A%3AFilter%2C%2A%2Csort%3AString%7CNil%3Dnil%2Cwindow%3AMPD%3A%3ARange%7CNil%3Dnil%29-instance-method">#find</a></code>, except that search is not case sensitive.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L559" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="port:Int32-instance-method">
+      <div class="signature">
+        
+        def <strong>port</strong> : Int32
+
+        <a class="method-permalink" href="#port%3AInt32-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L56" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="previous-instance-method">
+      <div class="signature">
+        
+        def <strong>previous</strong>
+
+        <a class="method-permalink" href="#previous-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Plays previous song in the playlist.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L951" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="prio(priority:Int32,range:MPD::Range)-instance-method">
+      <div class="signature">
+        
+        def <strong>prio</strong>(priority : Int32, range : <a href="../MPD/Range.html">MPD::Range</a>)
+
+        <a class="method-permalink" href="#prio%28priority%3AInt32%2Crange%3AMPD%3A%3ARange%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Set the priority of the specified songs.</p>
+<p>A higher priority means that it will be played first when “random” mode is enabled.</p>
+<p>A <code>priority</code> is an integer between 0 and 255. The default priority of new songs is 0.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L860" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="prioid(priority:Int32,songid:Int32)-instance-method">
+      <div class="signature">
+        
+        def <strong>prioid</strong>(priority : Int32, songid : Int32)
+
+        <a class="method-permalink" href="#prioid%28priority%3AInt32%2Csongid%3AInt32%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Same as <code><a href="../MPD/Client.html#prio%28priority%3AInt32%2Crange%3AMPD%3A%3ARange%29-instance-method">#prio</a></code>, but address the songs with their id.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L868" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="protocol-instance-method">
+      <div class="signature">
+        
+        def <strong>protocol</strong>
+
+        <a class="method-permalink" href="#protocol-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Shows a list of enabled protocol features.</p>
+<p>Available features:</p>
+<p>&quot;hide_playlists_in_root&quot;: disables the listing of stored playlists for the <code><a href="../MPD/Client.html#lsinfo%28uri%3AString%7CNil%3Dnil%29-instance-method">#lsinfo</a></code>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L1387" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="protocol_all-instance-method">
+      <div class="signature">
+        
+        def <strong>protocol_all</strong>
+
+        <a class="method-permalink" href="#protocol_all-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Enables all protocol features.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L1427" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="protocol_available-instance-method">
+      <div class="signature">
+        
+        def <strong>protocol_available</strong>
+
+        <a class="method-permalink" href="#protocol_available-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Lists all available protocol features.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L1395" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="protocol_clear-instance-method">
+      <div class="signature">
+        
+        def <strong>protocol_clear</strong>
+
+        <a class="method-permalink" href="#protocol_clear-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Disables all protocol features.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L1419" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="protocol_disable(feature:String)-instance-method">
+      <div class="signature">
+        
+        def <strong>protocol_disable</strong>(feature : String)
+
+        <a class="method-permalink" href="#protocol_disable%28feature%3AString%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Disables a <code>feature</code>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L1411" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="protocol_enable(feature:String)-instance-method">
+      <div class="signature">
+        
+        def <strong>protocol_enable</strong>(feature : String)
+
+        <a class="method-permalink" href="#protocol_enable%28feature%3AString%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Enables a <code>feature</code>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L1403" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="random(state:Bool)-instance-method">
+      <div class="signature">
+        
+        def <strong>random</strong>(state : Bool)
+
+        <a class="method-permalink" href="#random%28state%3ABool%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Sets random state to <code>state</code>, <code>state</code> should be <code>false</code> or <code>true</code>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L1047" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="readmessages-instance-method">
+      <div class="signature">
+        
+        def <strong>readmessages</strong>
+
+        <a class="method-permalink" href="#readmessages-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Reads messages for this client. The response is a list of <code>channel:</code> and <code>message:</code> lines.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L1367" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="readpicture(uri:String)-instance-method">
+      <div class="signature">
+        
+        def <strong>readpicture</strong>(uri : String)
+
+        <a class="method-permalink" href="#readpicture%28uri%3AString%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Locate a picture for the given song</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L1008" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="reconnect-instance-method">
+      <div class="signature">
+        
+        def <strong>reconnect</strong>
+
+        <a class="method-permalink" href="#reconnect-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Attempts to reconnect to the MPD daemon.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L89" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rename(name:String,new_name:String)-instance-method">
+      <div class="signature">
+        
+        def <strong>rename</strong>(name : String, new_name : String)
+
+        <a class="method-permalink" href="#rename%28name%3AString%2Cnew_name%3AString%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Renames the playlist <code>name</code>.m3u to <code>new_name</code>.m3u.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L715" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="repeat(state:Bool)-instance-method">
+      <div class="signature">
+        
+        def <strong>repeat</strong>(state : Bool)
+
+        <a class="method-permalink" href="#repeat%28state%3ABool%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Sets repeat state to <code>state</code>, <code>state</code> should be <code>false</code> or <code>true</code>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L1055" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="replay_gain_mode(mode:String)-instance-method">
+      <div class="signature">
+        
+        def <strong>replay_gain_mode</strong>(mode : String)
+
+        <a class="method-permalink" href="#replay_gain_mode%28mode%3AString%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Sets the replay gain mode.</p>
+<p>One of <code>off</code>, <code>track</code>, <code>album</code>, <code>auto</code>.
+Changing the mode during playback may take several seconds, because the new settings does not affect the buffered data.
+This command triggers the options idle event.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L1117" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="replay_gain_status-instance-method">
+      <div class="signature">
+        
+        def <strong>replay_gain_status</strong>
+
+        <a class="method-permalink" href="#replay_gain_status-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Prints replay gain options.</p>
+<p>Currently, only the variable <code><a href="../MPD/Client.html#replay_gain_mode%28mode%3AString%29-instance-method">#replay_gain_mode</a></code> is returned.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L1127" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rescan(uri:String|Nil=nil)-instance-method">
+      <div class="signature">
+        
+        def <strong>rescan</strong>(uri : String | Nil = <span class="n">nil</span>)
+
+        <a class="method-permalink" href="#rescan%28uri%3AString%7CNil%3Dnil%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Same as <code><a href="../MPD/Client.html#update%28uri%3AString%7CNil%3Dnil%29-instance-method">#update</a></code>, but also rescans unmodified files.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L496" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rm(name:String)-instance-method">
+      <div class="signature">
+        
+        def <strong>rm</strong>(name : String)
+
+        <a class="method-permalink" href="#rm%28name%3AString%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Removes the playlist <code>name</code>.m3u from the playlist directory.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L707" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="save(name:String,mode:String|Nil=nil)-instance-method">
+      <div class="signature">
+        
+        def <strong>save</strong>(name : String, mode : String | Nil = <span class="n">nil</span>)
+
+        <a class="method-permalink" href="#save%28name%3AString%2Cmode%3AString%7CNil%3Dnil%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Saves the current playlist to <code>name</code>.m3u in the playlist directory.</p>
+<p><code>mode</code> is optional argument. One of &quot;create&quot;, &quot;append&quot;, or &quot;replace&quot;.</p>
+<ul>
+<li>&quot;create&quot;: The default. Create a new playlist. Fail if a playlist with name <code>name</code> already exists.</li>
+<li>&quot;append&quot;, &quot;replace&quot;: Append or replace an existing playlist. Fail if a playlist with name <code>name</code> doesn't already exist.</li>
+</ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L683" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="search(filter:String|MPD::Filter,*,sort:String|Nil=nil,window:MPD::Range|Nil=nil)-instance-method">
+      <div class="signature">
+        
+        def <strong>search</strong>(filter : String | <a href="../MPD/Filter.html">MPD::Filter</a>, *, sort : String | Nil = <span class="n">nil</span>, window : <a href="../MPD/Range.html">MPD::Range</a> | Nil = <span class="n">nil</span>)
+
+        <a class="method-permalink" href="#search%28filter%3AString%7CMPD%3A%3AFilter%2C%2A%2Csort%3AString%7CNil%3Dnil%2Cwindow%3AMPD%3A%3ARange%7CNil%3Dnil%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Search the database for songs matching <code>filter</code>.</p>
+<p>Parameters have the same meaning as for <code><a href="../MPD/Client.html#find%28filter%3AString%7CMPD%3A%3AFilter%2C%2A%2Csort%3AString%7CNil%3Dnil%2Cwindow%3AMPD%3A%3ARange%7CNil%3Dnil%29-instance-method">#find</a></code>, except that search is not case sensitive.</p>
+<pre><code class="language-crystal">mpd.search(<span class="s">&quot;(any =~ &#39;crystal&#39;)&quot;</span>)</code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L1217" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="search(*,sort:String|Nil=nil,window:MPD::Range|Nil=nil,&amp;:MPD::Filter-&gt;)-instance-method">
+      <div class="signature">
+        
+        def <strong>search</strong>(*, sort : String | Nil = <span class="n">nil</span>, window : <a href="../MPD/Range.html">MPD::Range</a> | Nil = <span class="n">nil</span>, & : <a href="../MPD/Filter.html">MPD::Filter</a> -> )
+
+        <a class="method-permalink" href="#search%28%2A%2Csort%3AString%7CNil%3Dnil%2Cwindow%3AMPD%3A%3ARange%7CNil%3Dnil%2C%26%3AMPD%3A%3AFilter-%3E%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Search the database for songs matching <code>filter</code>.</p>
+<p>Parameters have the same meaning as for <code><a href="../MPD/Client.html#find%28filter%3AString%7CMPD%3A%3AFilter%2C%2A%2Csort%3AString%7CNil%3Dnil%2Cwindow%3AMPD%3A%3ARange%7CNil%3Dnil%29-instance-method">#find</a></code>, except that search is not case sensitive.</p>
+<pre><code class="language-crystal">mpd.search(<span class="s">&quot;(any =~ &#39;crystal&#39;)&quot;</span>)</code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L1230" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="searchadd(filter:String|MPD::Filter,*,sort:String|Nil=nil,window:MPD::Range|Nil=nil,position:Int32|String|Nil=nil)-instance-method">
+      <div class="signature">
+        
+        def <strong>searchadd</strong>(filter : String | <a href="../MPD/Filter.html">MPD::Filter</a>, *, sort : String | Nil = <span class="n">nil</span>, window : <a href="../MPD/Range.html">MPD::Range</a> | Nil = <span class="n">nil</span>, position : Int32 | String | Nil = <span class="n">nil</span>)
+
+        <a class="method-permalink" href="#searchadd%28filter%3AString%7CMPD%3A%3AFilter%2C%2A%2Csort%3AString%7CNil%3Dnil%2Cwindow%3AMPD%3A%3ARange%7CNil%3Dnil%2Cposition%3AInt32%7CString%7CNil%3Dnil%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Search the database for songs matching <code>filter</code> and add them to the queue.</p>
+<p>Parameters have the same meaning as for <code><a href="../MPD/Client.html#search%28filter%3AString%7CMPD%3A%3AFilter%2C%2A%2Csort%3AString%7CNil%3Dnil%2Cwindow%3AMPD%3A%3ARange%7CNil%3Dnil%29-instance-method">#search</a></code>.</p>
+<p>The <code>position</code> parameter specifies where the songs will be inserted.
+It can be relative to the current song as in <code><a href="../MPD/Client.html#addid%28uri%3AString%2Cposition%3AInt32%7CString%7CNil%3Dnil%29-instance-method">#addid</a></code>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L1274" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="searchadd(*,sort:String|Nil=nil,window:MPD::Range|Nil=nil,position:Int32|String|Nil=nil,&amp;:MPD::Filter-&gt;)-instance-method">
+      <div class="signature">
+        
+        def <strong>searchadd</strong>(*, sort : String | Nil = <span class="n">nil</span>, window : <a href="../MPD/Range.html">MPD::Range</a> | Nil = <span class="n">nil</span>, position : Int32 | String | Nil = <span class="n">nil</span>, & : <a href="../MPD/Filter.html">MPD::Filter</a> -> )
+
+        <a class="method-permalink" href="#searchadd%28%2A%2Csort%3AString%7CNil%3Dnil%2Cwindow%3AMPD%3A%3ARange%7CNil%3Dnil%2Cposition%3AInt32%7CString%7CNil%3Dnil%2C%26%3AMPD%3A%3AFilter-%3E%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Search the database for songs matching <code>filter</code> and add them to the queue.</p>
+<p>Parameters have the same meaning as for <code><a href="../MPD/Client.html#search%28filter%3AString%7CMPD%3A%3AFilter%2C%2A%2Csort%3AString%7CNil%3Dnil%2Cwindow%3AMPD%3A%3ARange%7CNil%3Dnil%29-instance-method">#search</a></code>.</p>
+<p>The <code>position</code> parameter specifies where the songs will be inserted.
+It can be relative to the current song as in <code><a href="../MPD/Client.html#addid%28uri%3AString%2Cposition%3AInt32%7CString%7CNil%3Dnil%29-instance-method">#addid</a></code>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L1288" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="searchaddpl(name:String,filter:String|MPD::Filter,*,sort:String|Nil=nil,window:MPD::Range|Nil=nil,position:Int32|String|Nil=nil)-instance-method">
+      <div class="signature">
+        
+        def <strong>searchaddpl</strong>(name : String, filter : String | <a href="../MPD/Filter.html">MPD::Filter</a>, *, sort : String | Nil = <span class="n">nil</span>, window : <a href="../MPD/Range.html">MPD::Range</a> | Nil = <span class="n">nil</span>, position : Int32 | String | Nil = <span class="n">nil</span>)
+
+        <a class="method-permalink" href="#searchaddpl%28name%3AString%2Cfilter%3AString%7CMPD%3A%3AFilter%2C%2A%2Csort%3AString%7CNil%3Dnil%2Cwindow%3AMPD%3A%3ARange%7CNil%3Dnil%2Cposition%3AInt32%7CString%7CNil%3Dnil%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Search the database for songs matching <code>filter</code> and add them to the queue.</p>
+<p>If a playlist by that <code>name</code> doesn't exist it is created.</p>
+<p>Parameters have the same meaning as for <code><a href="../MPD/Client.html#search%28filter%3AString%7CMPD%3A%3AFilter%2C%2A%2Csort%3AString%7CNil%3Dnil%2Cwindow%3AMPD%3A%3ARange%7CNil%3Dnil%29-instance-method">#search</a></code>.</p>
+<p>The <code>position</code> parameter specifies where the songs will be inserted.
+It can be relative to the current song as in <code><a href="../MPD/Client.html#addid%28uri%3AString%2Cposition%3AInt32%7CString%7CNil%3Dnil%29-instance-method">#addid</a></code>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L740" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="searchaddpl(name:String,*,sort:String|Nil=nil,window:MPD::Range|Nil=nil,position:Int32|String|Nil=nil,&amp;:MPD::Filter-&gt;)-instance-method">
+      <div class="signature">
+        
+        def <strong>searchaddpl</strong>(name : String, *, sort : String | Nil = <span class="n">nil</span>, window : <a href="../MPD/Range.html">MPD::Range</a> | Nil = <span class="n">nil</span>, position : Int32 | String | Nil = <span class="n">nil</span>, & : <a href="../MPD/Filter.html">MPD::Filter</a> -> )
+
+        <a class="method-permalink" href="#searchaddpl%28name%3AString%2C%2A%2Csort%3AString%7CNil%3Dnil%2Cwindow%3AMPD%3A%3ARange%7CNil%3Dnil%2Cposition%3AInt32%7CString%7CNil%3Dnil%2C%26%3AMPD%3A%3AFilter-%3E%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Search the database for songs matching <code>filter</code> and add them to the queue.</p>
+<p>If a playlist by that <code>name</code> doesn't exist it is created.</p>
+<p>Parameters have the same meaning as for <code><a href="../MPD/Client.html#search%28filter%3AString%7CMPD%3A%3AFilter%2C%2A%2Csort%3AString%7CNil%3Dnil%2Cwindow%3AMPD%3A%3ARange%7CNil%3Dnil%29-instance-method">#search</a></code>.</p>
+<p>The <code>position</code> parameter specifies where the songs will be inserted.
+It can be relative to the current song as in <code><a href="../MPD/Client.html#addid%28uri%3AString%2Cposition%3AInt32%7CString%7CNil%3Dnil%29-instance-method">#addid</a></code>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L754" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="searchcount(filter:String|MPD::Filter,*,group:String|Nil=nil)-instance-method">
+      <div class="signature">
+        
+        def <strong>searchcount</strong>(filter : String | <a href="../MPD/Filter.html">MPD::Filter</a>, *, group : String | Nil = <span class="n">nil</span>)
+
+        <a class="method-permalink" href="#searchcount%28filter%3AString%7CMPD%3A%3AFilter%2C%2A%2Cgroup%3AString%7CNil%3Dnil%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Count the number of songs and their total playtime in the database matching <code>filter</code>.
+Parameters have the same meaning as for <code><a href="../MPD/Client.html#count%28filter%3AString%7CMPD%3A%3AFilter%2C%2A%2Cgroup%3AString%7CNil%3Dnil%29-instance-method">#count</a></code> except the search is not case sensitive.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L764" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="searchcount(*,group:String|Nil=nil,&amp;:MPD::Filter-&gt;)-instance-method">
+      <div class="signature">
+        
+        def <strong>searchcount</strong>(*, group : String | Nil = <span class="n">nil</span>, & : <a href="../MPD/Filter.html">MPD::Filter</a> -> )
+
+        <a class="method-permalink" href="#searchcount%28%2A%2Cgroup%3AString%7CNil%3Dnil%2C%26%3AMPD%3A%3AFilter-%3E%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Count the number of songs and their total playtime in the database matching <code>filter</code>.
+Parameters have the same meaning as for <code><a href="../MPD/Client.html#count%28filter%3AString%7CMPD%3A%3AFilter%2C%2A%2Cgroup%3AString%7CNil%3Dnil%29-instance-method">#count</a></code> except the search is not case sensitive.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L777" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="searchplaylist(name:String,filter:String|MPD::Filter,*,window:MPD::Range|Nil=nil)-instance-method">
+      <div class="signature">
+        
+        def <strong>searchplaylist</strong>(name : String, filter : String | <a href="../MPD/Filter.html">MPD::Filter</a>, *, window : <a href="../MPD/Range.html">MPD::Range</a> | Nil = <span class="n">nil</span>)
+
+        <a class="method-permalink" href="#searchplaylist%28name%3AString%2Cfilter%3AString%7CMPD%3A%3AFilter%2C%2A%2Cwindow%3AMPD%3A%3ARange%7CNil%3Dnil%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Search the playlist for songs matching <code>filter</code>.
+A range may be specified to list only a part of the playlist.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L817" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="searchplaylist(name:String,*,window:MPD::Range|Nil=nil,&amp;:MPD::Filter-&gt;)-instance-method">
+      <div class="signature">
+        
+        def <strong>searchplaylist</strong>(name : String, *, window : <a href="../MPD/Range.html">MPD::Range</a> | Nil = <span class="n">nil</span>, & : <a href="../MPD/Filter.html">MPD::Filter</a> -> )
+
+        <a class="method-permalink" href="#searchplaylist%28name%3AString%2C%2A%2Cwindow%3AMPD%3A%3ARange%7CNil%3Dnil%2C%26%3AMPD%3A%3AFilter-%3E%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Search the playlist for songs matching <code>filter</code>.
+A range may be specified to list only a part of the playlist.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L829" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="seek(songid:Int32,time:Int32)-instance-method">
+      <div class="signature">
+        
+        def <strong>seek</strong>(songid : Int32, time : Int32)
+
+        <a class="method-permalink" href="#seek%28songid%3AInt32%2Ctime%3AInt32%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Seeks to the position <code>time</code> (in seconds) of entry <code>songpos</code> in the playlist.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L935" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="seekcur(time:String|Int32)-instance-method">
+      <div class="signature">
+        
+        def <strong>seekcur</strong>(time : String | Int32)
+
+        <a class="method-permalink" href="#seekcur%28time%3AString%7CInt32%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Seeks to the position <code>time</code> within the current song.</p>
+<p>If prefixed by <code>+</code> or <code>-</code>, then the time is relative to the current playing position.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L919" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="seekid(songid:Int32,time:String|Int32)-instance-method">
+      <div class="signature">
+        
+        def <strong>seekid</strong>(songid : Int32, time : String | Int32)
+
+        <a class="method-permalink" href="#seekid%28songid%3AInt32%2Ctime%3AString%7CInt32%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Seeks to the position <code>time</code> (in seconds) of song <code>songid</code>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L927" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="sendmessage(channel:String,message:String)-instance-method">
+      <div class="signature">
+        
+        def <strong>sendmessage</strong>(channel : String, message : String)
+
+        <a class="method-permalink" href="#sendmessage%28channel%3AString%2Cmessage%3AString%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Send a <code>message</code> to the specified <code>channel</code>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L1359" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="setvol(vol:Int)-instance-method">
+      <div class="signature">
+        
+        def <strong>setvol</strong>(vol : Int)
+
+        <a class="method-permalink" href="#setvol%28vol%3AInt%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Sets volume to <code>vol</code>, the range of volume is 0-100.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L1071" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="shuffle(range:MPD::Range|Nil=nil)-instance-method">
+      <div class="signature">
+        
+        def <strong>shuffle</strong>(range : <a href="../MPD/Range.html">MPD::Range</a> | Nil = <span class="n">nil</span>)
+
+        <a class="method-permalink" href="#shuffle%28range%3AMPD%3A%3ARange%7CNil%3Dnil%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Shuffles the current playlist. <code>range</code> is optional and specifies a range of songs.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L670" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="single(state:Bool|String)-instance-method">
+      <div class="signature">
+        
+        def <strong>single</strong>(state : Bool | String)
+
+        <a class="method-permalink" href="#single%28state%3ABool%7CString%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Sets single state to <code>state</code>, <code>state</code> should be <code>false</code>, <code>true</code> or <code>&quot;oneshot&quot;</code>.</p>
+<p>When single is activated, playback is stopped after current song,
+or song is repeated if the <code><a href="../MPD/Client.html#repeat%28state%3ABool%29-instance-method">#repeat</a></code> mode is enabled.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L1091" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="stats-instance-method">
+      <div class="signature">
+        
+        def <strong>stats</strong>
+
+        <a class="method-permalink" href="#stats-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Displays statistics.</p>
+<p>Response:</p>
+<ul>
+<li><code>artists</code>: number of artists</li>
+<li><code>songs</code>: number of albums</li>
+<li><code>uptime</code>: daemon uptime in seconds</li>
+<li><code>db_playtime</code>: sum of all song times in the db</li>
+<li><code>db_update</code>: last db update in UNIX time</li>
+<li><code>playtime</code>: time length of music played</li>
+</ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L324" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="status-instance-method">
+      <div class="signature">
+        
+        def <strong>status</strong>
+
+        <a class="method-permalink" href="#status-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Reports the current status of the player and the volume level.</p>
+<p>Response:</p>
+<ul>
+<li><code>partition</code>: the name of the current partition</li>
+<li><code><a href="../MPD/Client.html#volume%28change%3AInt%29-instance-method">#volume</a></code>: 0-100</li>
+<li><code><a href="../MPD/Client.html#repeat%28state%3ABool%29-instance-method">#repeat</a></code>: 0 or 1</li>
+<li><code><a href="../MPD/Client.html#random%28state%3ABool%29-instance-method">#random</a></code>: 0 or 1</li>
+<li><code><a href="../MPD/Client.html#single%28state%3ABool%7CString%29-instance-method">#single</a></code>: 0 or 1</li>
+<li><code><a href="../MPD/Client.html#consume%28state%3ABool%7CString%29-instance-method">#consume</a></code>: 0 or 1</li>
+<li><code>playlist</code>: 31-bit unsigned integer, the playlist version number</li>
+<li><code><a href="../MPD/Client.html#playlistlength%28name%3AString%29-instance-method">#playlistlength</a></code>: integer, the length of the playlist</li>
+<li><code>state</code>: play, stop, or pause</li>
+<li><code>song</code>: playlist song number of the current song stopped on or playing</li>
+<li><code>songid</code>: playlist songid of the current song stopped on or playing</li>
+<li><code><a href="../MPD/Client.html#nextsong%3AObject%7CNil-instance-method">#nextsong</a></code>: playlist song number of the next song to be played</li>
+<li><code>nextsongid</code>: playlist songid of the next song to be played</li>
+<li><code>time</code>: total time elapsed (of current playing/paused song)</li>
+<li><code>elapsed</code>: Total time elapsed within the current song, but with higher resolution</li>
+<li><code>duration</code>: Duration of the current song in seconds</li>
+<li><code>bitrate</code>: instantaneous bitrate in kbps</li>
+<li><code>xfade</code>: crossfade in seconds</li>
+<li><code>mixrampdb</code>: mixramp threshold in dB</li>
+<li><code>mixrampdelay</code>: mixrampdelay in seconds</li>
+<li><code>audio</code>: sampleRate:bits:channels</li>
+<li><code>samplerate:bits:channels</code></li>
+<li><code>updating_db</code>: job id</li>
+<li><code>error</code>: if there is an error, returns message here</li>
+<li><code>lastloadedplaylist</code>: last loaded stored playlist</li>
+</ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L308" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="sticker_dec(type:String,uri:String,name:String,value:Int32)-instance-method">
+      <div class="signature">
+        
+        def <strong>sticker_dec</strong>(type : String, uri : String, name : String, value : Int32)
+
+        <a class="method-permalink" href="#sticker_dec%28type%3AString%2Curi%3AString%2Cname%3AString%2Cvalue%3AInt32%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Adds a sticker value to the specified object.
+If a sticker item with that name already exists, it is decremented by supplied value.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L1464" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="sticker_delete(type:String,uri:String,name:String|Nil=nil)-instance-method">
+      <div class="signature">
+        
+        def <strong>sticker_delete</strong>(type : String, uri : String, name : String | Nil = <span class="n">nil</span>)
+
+        <a class="method-permalink" href="#sticker_delete%28type%3AString%2Curi%3AString%2Cname%3AString%7CNil%3Dnil%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Deletes a sticker value from the specified object.</p>
+<p>If you do not specify a sticker name, all sticker values are deleted.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L1474" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="sticker_find(type:String,uri:String,name:String,value:String,operator:String=&quot;=&quot;,*,sort:String|Nil=nil,window:MPD::Range|Nil=nil)-instance-method">
+      <div class="signature">
+        
+        def <strong>sticker_find</strong>(type : String, uri : String, name : String, value : String, operator : String = <span class="s">&quot;=&quot;</span>, *, sort : String | Nil = <span class="n">nil</span>, window : <a href="../MPD/Range.html">MPD::Range</a> | Nil = <span class="n">nil</span>)
+
+        <a class="method-permalink" href="#sticker_find%28type%3AString%2Curi%3AString%2Cname%3AString%2Cvalue%3AString%2Coperator%3AString%3D%22%3D%22%2C%2A%2Csort%3AString%7CNil%3Dnil%2Cwindow%3AMPD%3A%3ARange%7CNil%3Dnil%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Searches for stickers with the given value.</p>
+<p>Other supported operators are: &quot;&lt;&quot;, &quot;&gt;&quot;, &quot;contains&quot;, &quot;starts_with&quot; for strings
+and &quot;eq&quot;, &quot;lt&quot;, &quot;gt&quot; to cast the value to an integer.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L1519" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="sticker_find(type:String,uri:String,name:String,*,sort:String|Nil=nil,window:MPD::Range|Nil=nil)-instance-method">
+      <div class="signature">
+        
+        def <strong>sticker_find</strong>(type : String, uri : String, name : String, *, sort : String | Nil = <span class="n">nil</span>, window : <a href="../MPD/Range.html">MPD::Range</a> | Nil = <span class="n">nil</span>)
+
+        <a class="method-permalink" href="#sticker_find%28type%3AString%2Curi%3AString%2Cname%3AString%2C%2A%2Csort%3AString%7CNil%3Dnil%2Cwindow%3AMPD%3A%3ARange%7CNil%3Dnil%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Searches the sticker database for stickers with the specified <code>name</code>, below the specified directory (<code>uri</code>).
+For each matching song, it prints the URI and that one sticker’s value.</p>
+<p><code>sort</code> sorts the result by &quot;uri&quot;, &quot;value&quot; or &quot;value_int&quot; (casts the sticker value to an integer).</p>
+<p>Returns:</p>
+<pre><code class="language-crystal">client.sticker_find(<span class="s">&quot;song&quot;</span>, <span class="s">&quot;path/to/folder&quot;</span>, <span class="s">&quot;name1&quot;</span>)
+<span class="c"># =&gt; [{&quot;file&quot; =&gt; &quot;path/to/folder/file1.ogg&quot;, &quot;sticker&quot; =&gt; &quot;name1=value1&quot;}, ...]</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L1502" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="sticker_get(type:String,uri:String,name:String):String|Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>sticker_get</strong>(type : String, uri : String, name : String) : String | Nil
+
+        <a class="method-permalink" href="#sticker_get%28type%3AString%2Curi%3AString%2Cname%3AString%29%3AString%7CNil-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Reads a sticker value for the specified object.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L1435" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="sticker_inc(type:String,uri:String,name:String,value:Int32)-instance-method">
+      <div class="signature">
+        
+        def <strong>sticker_inc</strong>(type : String, uri : String, name : String, value : Int32)
+
+        <a class="method-permalink" href="#sticker_inc%28type%3AString%2Curi%3AString%2Cname%3AString%2Cvalue%3AInt32%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Adds a sticker value to the specified object.
+If a sticker item with that name already exists, it is incremented by supplied value.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L1455" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="sticker_list(type:String,uri:String):Hash(String,String)|Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>sticker_list</strong>(type : String, uri : String) : Hash(String, String) | Nil
+
+        <a class="method-permalink" href="#sticker_list%28type%3AString%2Curi%3AString%29%3AHash%28String%2CString%29%7CNil-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Lists the stickers for the specified object.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L1482" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="sticker_set(type:String,uri:String,name:String,value:String)-instance-method">
+      <div class="signature">
+        
+        def <strong>sticker_set</strong>(type : String, uri : String, name : String, value : String)
+
+        <a class="method-permalink" href="#sticker_set%28type%3AString%2Curi%3AString%2Cname%3AString%2Cvalue%3AString%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Adds a sticker value to the specified object.
+If a sticker item with that name already exists, it is replaced.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L1446" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="stickernames-instance-method">
+      <div class="signature">
+        
+        def <strong>stickernames</strong>
+
+        <a class="method-permalink" href="#stickernames-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Gets a list of uniq sticker names.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L1533" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="stickernamestypes(type:String)-instance-method">
+      <div class="signature">
+        
+        def <strong>stickernamestypes</strong>(type : String)
+
+        <a class="method-permalink" href="#stickernamestypes%28type%3AString%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Gets a list of uniq sticker names and their types.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L1549" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="stickertypes-instance-method">
+      <div class="signature">
+        
+        def <strong>stickertypes</strong>
+
+        <a class="method-permalink" href="#stickertypes-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Shows a list of available sticker types.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L1541" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="stop-instance-method">
+      <div class="signature">
+        
+        def <strong>stop</strong>
+
+        <a class="method-permalink" href="#stop-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Stops playing.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L909" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="subscribe(name:String)-instance-method">
+      <div class="signature">
+        
+        def <strong>subscribe</strong>(name : String)
+
+        <a class="method-permalink" href="#subscribe%28name%3AString%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Subscribe to a channel <code>name</code>.</p>
+<p>The channel is created if it does not exist already.
+The <code>name</code> may consist of alphanumeric ASCII characters plus underscore, dash, dot and colon.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L1343" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="supports?(command:String|Symbol):Bool-instance-method">
+      <div class="signature">
+        
+        def <strong>supports?</strong>(command : String | Symbol) : Bool
+
+        <a class="method-permalink" href="#supports%3F%28command%3AString%7CSymbol%29%3ABool-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L114" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="tagtypes-instance-method">
+      <div class="signature">
+        
+        def <strong>tagtypes</strong>
+
+        <a class="method-permalink" href="#tagtypes-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Shows a list of available tag types.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L1375" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="unsubscribe(name:String)-instance-method">
+      <div class="signature">
+        
+        def <strong>unsubscribe</strong>(name : String)
+
+        <a class="method-permalink" href="#unsubscribe%28name%3AString%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Unsubscribe from a channel <code>name</code>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L1351" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="update(uri:String|Nil=nil)-instance-method">
+      <div class="signature">
+        
+        def <strong>update</strong>(uri : String | Nil = <span class="n">nil</span>)
+
+        <a class="method-permalink" href="#update%28uri%3AString%7CNil%3Dnil%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Updates the music database: find new files, remove deleted files, update modified files.</p>
+<p><code>uri</code> is a particular directory or song/file to update.
+If you do not specify it, everything is updated.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L436" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="urlhandlers-instance-method">
+      <div class="signature">
+        
+        def <strong>urlhandlers</strong>
+
+        <a class="method-permalink" href="#urlhandlers-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Gets a list of available URL handlers.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L409" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="version:String?-instance-method">
+      <div class="signature">
+        
+        def <strong>version</strong> : String?
+
+        <a class="method-permalink" href="#version%3AString%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L56" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="volume(change:Int)-instance-method">
+      <div class="signature">
+        
+        def <strong>volume</strong>(change : Int)
+
+        <a class="method-permalink" href="#volume%28change%3AInt%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Changes volume by amount <code>change</code>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L1063" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="with_command_list(&amp;)-instance-method">
+      <div class="signature">
+        
+        def <strong>with_command_list</strong>(&)
+
+        <a class="method-permalink" href="#with_command_list%28%26%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mamantoha/crystal_mpd/blob/57062c228923ae01e71998fd52885b96f9fa0aa7/src/crystal_mpd/client.cr#L244" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+
+</div>
+
+</body>
+</html>
