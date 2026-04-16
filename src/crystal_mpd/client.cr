@@ -221,8 +221,9 @@ module MPD
         end
       end
     rescue ex : IO::Error
-      Log.error { ex.message }
+      Log.warn { "#{ex.message}; reconnecting" }
 
+      disconnect
       reconnect
     end
 
@@ -1581,7 +1582,10 @@ module MPD
 
         socket.puts(line)
       end
-    rescue RuntimeError
+    rescue ex : IO::Error | RuntimeError
+      Log.warn { "#{ex.message}; reconnecting and retrying command" }
+
+      disconnect
       reconnect
 
       @socket.try &.puts(line)
