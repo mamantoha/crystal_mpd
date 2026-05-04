@@ -425,8 +425,9 @@ If you're using `MPD::Client` and would like to have your application added to t
 
 - [cryMPD](https://github.com/mamantoha/cryMPD) - control MPD audio playing in the browser
 - [webview-mpd-player](https://github.com/mamantoha/webview-mpd-player) - a lightweight MPD client built with Crystal and Webview
-- [mpd-libui](https://github.com/mamantoha/mpd-libui) - a desktop MPD client written in Crystal using the UIng (libui-ng) GUI library
+- [mpd-qt6](https://github.com/mamantoha/mpd-qt6) - a desktop MPD client written in Crystal using Qt6 bindings
 - [mpd-gtk4](https://github.com/mamantoha/mpd-gtk4) - a desktop MPD client written in Crystal using GTK4 bindings
+- [mpd-libui](https://github.com/mamantoha/mpd-libui) - a desktop MPD client written in Crystal using the UIng (libui-ng) GUI library
 
 ## Contributing
 
