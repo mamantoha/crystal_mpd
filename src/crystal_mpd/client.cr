@@ -131,6 +131,33 @@ module MPD
       @on_any_callbacks << block
     end
 
+    # Register a callback for MPD idle subsystem changes.
+    #
+    # This starts a background fiber that repeatedly calls `#idle` and yields
+    # the changed subsystem names to the block.
+    #
+    # MPD's `idle` command blocks the connection while it waits for changes, so
+    # use a dedicated client for idle listeners when the application also needs
+    # to send regular commands.
+    #
+    # ```
+    # listener = MPD::Client.new
+    #
+    # listener.on_idle(["player", "playlist"]) do |events|
+    #   puts events
+    # end
+    # ```
+    def on_idle(subsystems : Array(String)? = nil, &block : Array(String) -> _) : Fiber
+      fiber = spawn do
+        loop do
+          block.call(idle(subsystems) || [] of String)
+        end
+      end
+
+      Fiber.yield
+      fiber
+    end
+
     # Emit event: calls both per-event and global callbacks
     private def emit(event : Event, arg : String)
       # Call specific event listeners

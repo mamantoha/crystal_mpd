@@ -343,6 +343,35 @@ client.on_callback do |event, value|
 end
 ```
 
+### Idle callbacks
+
+MPD also supports the `idle` command for subsystem-level notifications such as
+`player`, `playlist`, `stored_playlist`, `database`, and `mixer`.
+
+`#on_idle` starts a background fiber that repeatedly waits for idle events and
+passes the changed subsystem names to your callback.
+
+```crystal
+idle_client = MPD::Client.new
+
+idle_client.on_idle(["player", "playlist", "stored_playlist"]) do |events|
+  if events.includes?("stored_playlist")
+    puts "Stored playlists changed"
+  end
+
+  if events.includes?("player")
+    puts "Playback state changed"
+  end
+end
+
+# Keep the program running
+loop { sleep 1.second }
+```
+
+The MPD `idle` command blocks the connection while it waits for changes. For GUI
+apps and other programs that need to send commands while listening, create a
+dedicated `MPD::Client` for `#on_idle`.
+
 ### Binary responses
 
 Some commands can return binary data.
