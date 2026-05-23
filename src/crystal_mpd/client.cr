@@ -421,7 +421,7 @@ module MPD
     def readmessages
       synchronize do
         write_command("readmessages")
-        execute("fetch_list")
+        execute("fetch_messages")
       end
     end
 
@@ -1361,41 +1361,6 @@ module MPD
       synchronize do
         write_command("listfiles", uri)
         execute("fetch_database")
-      end
-    end
-
-    # Subscribe to a channel `name`.
-    #
-    # The channel is created if it does not exist already.
-    # The `name` may consist of alphanumeric ASCII characters plus underscore, dash, dot and colon.
-    def subscribe(name : String)
-      synchronize do
-        write_command("subscribe", name)
-        execute("fetch_nothing")
-      end
-    end
-
-    # Unsubscribe from a channel `name`.
-    def unsubscribe(name : String)
-      synchronize do
-        write_command("unsubscribe", name)
-        execute("fetch_nothing")
-      end
-    end
-
-    # Send a `message` to the specified `channel`.
-    def sendmessage(channel : String, message : String)
-      synchronize do
-        write_command("sendmessage", channel, message)
-        execute("fetch_nothing")
-      end
-    end
-
-    # Reads messages for this client. The response is a list of `channel:` and `message:` lines.
-    def readmessages
-      synchronize do
-        write_command("readmessages")
-        execute("fetch_messages")
       end
     end
 
