@@ -200,7 +200,7 @@ module MPD
 
     # Extracts a hash of Event => value from MPD status response
     private def events_with_values(mpd_status : Hash(String, String)) : Hash(Event, String?)
-      acc = {} of Event => String | Nil
+      acc = {} of Event => String?
 
       Event.each do |member, _value|
         acc[member] = mpd_status[member.to_s.downcase]?
@@ -562,7 +562,7 @@ module MPD
     # ```
     # mpd.playlistinfo(10..-1)
     # ```
-    def playlistinfo(songpos : Int32 | MPD::Range | Nil = nil)
+    def playlistinfo(songpos : Int32 | MPD::Range? = nil)
       synchronize do
         write_command("playlistinfo", songpos)
         execute("fetch_songs")
@@ -687,7 +687,7 @@ module MPD
     # it can be relative as described in `addid`.
     # (This requires specifying the range as well;
     # the special value 0: can be used if the whole playlist shall be loaded at a certain queue position.)
-    def load(name : String, songpos : Int32 | MPD::Range | Nil = nil, position : Int32 | String | Nil = nil)
+    def load(name : String, songpos : Int32 | MPD::Range? = nil, position : Int32 | String? = nil)
       synchronize do
         write_command("load", name, songpos, position)
         execute("fetch_nothing")
@@ -695,7 +695,7 @@ module MPD
     end
 
     # Shuffles the current playlist. `range` is optional and specifies a range of songs.
-    def shuffle(range : MPD::Range | Nil = nil)
+    def shuffle(range : MPD::Range? = nil)
       synchronize do
         write_command("shuffle", range)
         execute("fetch_nothing")
@@ -765,7 +765,7 @@ module MPD
     #
     # The `position` parameter specifies where the songs will be inserted.
     # It can be relative to the current song as in `addid`.
-    def searchaddpl(name : String, filter : String | MPD::Filter, *, sort : String? = nil, window : MPD::Range? = nil, position : Int32 | String | Nil = nil)
+    def searchaddpl(name : String, filter : String | MPD::Filter, *, sort : String? = nil, window : MPD::Range? = nil, position : Int32 | String? = nil)
       synchronize do
         hash = {} of String => String | MPD::Range
 
@@ -779,7 +779,7 @@ module MPD
     end
 
     # :ditto:
-    def searchaddpl(name : String, *, sort : String? = nil, window : MPD::Range? = nil, position : Int32 | String | Nil = nil, & : MPD::Filter ->)
+    def searchaddpl(name : String, *, sort : String? = nil, window : MPD::Range? = nil, position : Int32 | String? = nil, & : MPD::Filter ->)
       filter = MPD::Filter.new
       yield filter
       sort ||= filter.sort
@@ -865,7 +865,7 @@ module MPD
     # `name`.m3u will be created if it does not exist.
     #
     # The `position` parameter specifies where the songs will be inserted into the playlist.
-    def playlistadd(name : String, uri : String, position : Int32 | String | Nil = nil)
+    def playlistadd(name : String, uri : String, position : Int32 | String? = nil)
       synchronize do
         write_command("playlistadd", name, uri, position)
         execute("fetch_nothing")
@@ -1008,7 +1008,7 @@ module MPD
     # mpd.list("Artist")
     # mpd.list("filename", "((artist == 'Linkin Park') AND (date == '2003'))")
     # ```
-    def list(type : String, filter : String | MPD::Filter | Nil = nil, *, group : String? = nil, window : MPD::Range? = nil)
+    def list(type : String, filter : String | MPD::Filter? = nil, *, group : String? = nil, window : MPD::Range? = nil)
       synchronize do
         hash = {} of String => String | MPD::Range
 
@@ -1172,7 +1172,7 @@ module MPD
     # `uri` can also be a single file.
     #
     # The `position` parameter is the same as in `addid`.
-    def add(uri : String, position : Int32 | String | Nil = nil)
+    def add(uri : String, position : Int32 | String? = nil)
       synchronize do
         write_command("add", uri, position)
         execute("fetch_nothing")
@@ -1186,7 +1186,7 @@ module MPD
     # If the parameter is string and starts with "+" or "-", then it is relative to the current song;
     # e.g. "+0" inserts right after the current song
     # and "-0" inserts right before the current song (i.e. zero songs between the current song and the newly added song).
-    def addid(uri : String, position : Int32 | String | Nil = nil)
+    def addid(uri : String, position : Int32 | String? = nil)
       synchronize do
         write_command("addid", uri, position)
         execute("fetch_object")
@@ -1270,7 +1270,7 @@ module MPD
     # ```
     # mpd.findadd("(genre == 'Alternative Rock')")
     # ```
-    def findadd(filter : String | MPD::Filter, *, sort : String? = nil, window : MPD::Range? = nil, position : Int32 | String | Nil = nil)
+    def findadd(filter : String | MPD::Filter, *, sort : String? = nil, window : MPD::Range? = nil, position : Int32 | String? = nil)
       synchronize do
         hash = {} of String => String | MPD::Range
 
@@ -1284,7 +1284,7 @@ module MPD
     end
 
     # :ditto:
-    def findadd(*, sort : String? = nil, window : MPD::Range? = nil, position : Int32 | String | Nil = nil, & : MPD::Filter ->)
+    def findadd(*, sort : String? = nil, window : MPD::Range? = nil, position : Int32 | String? = nil, & : MPD::Filter ->)
       filter = MPD::Filter.new
       yield filter
       sort ||= filter.sort
@@ -1299,7 +1299,7 @@ module MPD
     #
     # The `position` parameter specifies where the songs will be inserted.
     # It can be relative to the current song as in `#addid`.
-    def searchadd(filter : String | MPD::Filter, *, sort : String? = nil, window : MPD::Range? = nil, position : Int32 | String | Nil = nil)
+    def searchadd(filter : String | MPD::Filter, *, sort : String? = nil, window : MPD::Range? = nil, position : Int32 | String? = nil)
       synchronize do
         hash = {} of String => String | MPD::Range
 
@@ -1313,7 +1313,7 @@ module MPD
     end
 
     # :ditto:
-    def searchadd(*, sort : String? = nil, window : MPD::Range? = nil, position : Int32 | String | Nil = nil, & : MPD::Filter ->)
+    def searchadd(*, sort : String? = nil, window : MPD::Range? = nil, position : Int32 | String? = nil, & : MPD::Filter ->)
       filter = MPD::Filter.new
       yield filter
       searchadd(filter.to_s, sort: sort, window: window, position: position)
