@@ -9,14 +9,16 @@ Concurrent [Music Player Daemon](https://www.musicpd.org/) client written entire
 
 ## Main features
 
-- Filtering DSL
-- Range support
-- Callbacks
-- Command lists support
-- Binary responses
-- Client to client communicate
-- Logging
-- Handle exceptions
+- High-level wrapper for common MPD commands
+- Filtering DSL for search/find commands
+- Crystal range support for playlist and database commands
+- Command list helpers
+- Status polling callbacks with per-event and global handlers
+- Idle callbacks for MPD subsystem changes
+- Binary response support for album art and embedded pictures
+- Stored playlist, sticker, output, and protocol commands
+- Client-to-client messaging through MPD channels
+- Logging and reconnect handling for IO errors
 
 ## Installation
 
