@@ -457,6 +457,30 @@ module MPD
       end
     end
 
+    # Turns an output on.
+    def enableoutput(outputid : Int32 | String)
+      synchronize do
+        write_command("enableoutput", outputid)
+        execute("fetch_nothing")
+      end
+    end
+
+    # Turns an output off.
+    def disableoutput(outputid : Int32 | String)
+      synchronize do
+        write_command("disableoutput", outputid)
+        execute("fetch_nothing")
+      end
+    end
+
+    # Toggles an output on or off.
+    def toggleoutput(outputid : Int32 | String)
+      synchronize do
+        write_command("toggleoutput", outputid)
+        execute("fetch_nothing")
+      end
+    end
+
     # Updates the music database: find new files, remove deleted files, update modified files.
     #
     # `uri` is a particular directory or song/file to update.
