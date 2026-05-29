@@ -15,6 +15,7 @@ Concurrent [Music Player Daemon](https://www.musicpd.org/) client written entire
 - Command list helpers
 - Status polling callbacks with per-event and global handlers
 - Idle callbacks for MPD subsystem changes
+- Optional supervised reconnects for callback and idle listeners
 - Binary response support for album art and embedded pictures
 - Stored playlist, sticker, output, and protocol commands
 - Client-to-client messaging through MPD channels
@@ -308,7 +309,7 @@ end
 loop { sleep 1.second }
 ```
 
-The above will connect to the server like normal, but this time it will create a new thread
+The above will connect to the server like normal, but this time it will create a new fiber
 that loops until you issue an exit. This loop checks the server, then sleeps for 2 seconds, then loops.
 
 In addition to registering individual event listeners using `#on`, the MPD client also supports a global callback listener using `#on_callback`.
@@ -345,6 +346,35 @@ client.on_callback do |event, value|
 end
 ```
 
+#### Reconnect handling
+
+By default, callback and idle listener fibers stop when the MPD connection is lost.
+Long-running clients can opt into supervised reconnects:
+
+```crystal
+client = MPD::Client.new(
+  with_callbacks: true,
+  reconnect_policy: MPD::Client::ReconnectPolicy::Forever
+)
+client.reconnect_interval = 2.seconds
+
+client.on_connection_error do |error|
+  puts "MPD unavailable: #{error.message}"
+end
+
+client.on_disconnect do |_error|
+  puts "MPD disconnected"
+end
+
+client.on_reconnect do
+  puts "MPD reconnected"
+end
+```
+
+Use `ReconnectPolicy::Never` when a script should stop after a connection error.
+Use `ReconnectPolicy::Forever` for GUI clients, daemons, or other long-running
+programs that should survive MPD restarts.
+
 ### Idle callbacks
 
 MPD also supports the `idle` command for subsystem-level notifications such as
@@ -354,7 +384,9 @@ MPD also supports the `idle` command for subsystem-level notifications such as
 passes the changed subsystem names to your callback.
 
 ```crystal
-idle_client = MPD::Client.new
+idle_client = MPD::Client.new(
+  reconnect_policy: MPD::Client::ReconnectPolicy::Forever
+)
 
 idle_client.on_idle(["player", "playlist", "stored_playlist"]) do |events|
   if events.includes?("stored_playlist")
@@ -373,6 +405,15 @@ loop { sleep 1.second }
 The MPD `idle` command blocks the connection while it waits for changes. For GUI
 apps and other programs that need to send commands while listening, create a
 dedicated `MPD::Client` for `#on_idle`.
+
+`#on_idle` uses the client's reconnect policy by default. You can also override
+it for a specific listener:
+
+```crystal
+idle_client.on_idle(["output"], reconnect_policy: MPD::Client::ReconnectPolicy::Never) do |events|
+  puts events
+end
+```
 
 ### Binary responses
 
