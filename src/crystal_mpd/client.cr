@@ -53,8 +53,17 @@ module MPD
       Lastloadedplaylist
     end
 
+    enum ReconnectPolicy
+      Never
+      Forever
+    end
+
     getter host, port, version
     property callbacks_timeout : Time::Span = 1.second
+    property reconnect_interval : Time::Span = 1.second
+    property reconnect_policy : ReconnectPolicy
+    @callback_fiber : Fiber?
+    @closed : Bool = false
 
     # Creates a new MPD client. Parses the `host`, `port`.
     #
@@ -64,6 +73,7 @@ module MPD
       @port : Int32 = 6600,
       *,
       @with_callbacks = false,
+      @reconnect_policy : ReconnectPolicy = ReconnectPolicy::Never,
       @password : String? = nil,
     )
       @command_list = CommandList.new
@@ -74,6 +84,10 @@ module MPD
 
       # Stores global "any event" callbacks like `on_callback { |event, state| ... }`
       @on_any_callbacks = [] of Proc(Event, String, Nil)
+
+      @on_connection_error_callbacks = [] of Proc(Exception, Nil)
+      @on_disconnect_callbacks = [] of Proc(Exception, Nil)
+      @on_reconnect_callbacks = [] of Proc(Nil)
 
       connect
     end
@@ -87,6 +101,7 @@ module MPD
 
     # Attempts to reconnect to the MPD daemon.
     def reconnect
+      @closed = false
       @socket =
         if host.starts_with?('/')
           UNIXSocket.new(host)
@@ -103,6 +118,11 @@ module MPD
 
     # Disconnect from the MPD daemon.
     def disconnect
+      @closed = true
+      close_socket
+    end
+
+    private def close_socket
       @socket.try &.close
       reset
     end
@@ -131,6 +151,21 @@ module MPD
       @on_any_callbacks << block
     end
 
+    # Register a callback for connection failures raised by callback or idle fibers.
+    def on_connection_error(&block : Exception -> _)
+      @on_connection_error_callbacks << block
+    end
+
+    # Register a callback for a lost connection detected by callback or idle fibers.
+    def on_disconnect(&block : Exception -> _)
+      @on_disconnect_callbacks << block
+    end
+
+    # Register a callback for a successful reconnect after a connection failure.
+    def on_reconnect(&block : -> _)
+      @on_reconnect_callbacks << block
+    end
+
     # Register a callback for MPD idle subsystem changes.
     #
     # This starts a background fiber that repeatedly calls `#idle` and yields
@@ -147,10 +182,26 @@ module MPD
     #   puts events
     # end
     # ```
-    def on_idle(subsystems : Array(String)? = nil, &block : Array(String) -> _) : Fiber
+    def on_idle(subsystems : Array(String)? = nil, reconnect_policy : ReconnectPolicy = @reconnect_policy, &block : Array(String) -> _) : Fiber
       fiber = spawn do
+        disconnected = false
+
         loop do
-          block.call(idle(subsystems) || [] of String)
+          begin
+            block.call(idle(subsystems) || [] of String)
+          rescue ex
+            emit_connection_error(ex)
+            emit_disconnect(ex) unless disconnected
+            disconnected = true
+            close_socket
+
+            break if @closed || reconnect_policy.never?
+
+            if wait_for_reconnect
+              emit_reconnect
+              disconnected = false
+            end
+          end
         end
       end
 
@@ -169,33 +220,97 @@ module MPD
       @on_any_callbacks.each(&.call(event, arg))
     end
 
+    private def emit_connection_error(error : Exception)
+      @on_connection_error_callbacks.each(&.call(error))
+    end
+
+    private def emit_disconnect(error : Exception)
+      @on_disconnect_callbacks.each(&.call(error))
+    end
+
+    private def emit_reconnect
+      @on_reconnect_callbacks.each(&.call)
+    end
+
     # Background fiber to poll MPD status and detect changes
     private def callback_thread
-      spawn do
-        old_status = {} of Event => String
+      return if @callback_fiber.try { |fiber| !fiber.dead? }
 
-        status.try do |mpd_status|
-          old_status = events_with_values(mpd_status)
+      @callback_fiber = spawn do
+        old_status = {} of Event => String
+        disconnected = false
+
+        loop do
+          begin
+            status.try do |mpd_status|
+              old_status = events_with_values(mpd_status)
+            end
+
+            break
+          rescue ex
+            emit_connection_error(ex)
+            emit_disconnect(ex) unless disconnected
+            disconnected = true
+            close_socket
+
+            break if @closed || @reconnect_policy.never?
+
+            if wait_for_reconnect
+              emit_reconnect
+              disconnected = false
+            end
+          end
         end
 
         loop do
-          sleep @callbacks_timeout
+          begin
+            sleep @callbacks_timeout
 
-          status.try do |mpd_status|
-            new_status = events_with_values(mpd_status)
+            status.try do |mpd_status|
+              new_status = events_with_values(mpd_status)
 
-            new_status.each do |key, val|
-              next if val.nil? || val == old_status[key]?
+              new_status.each do |key, val|
+                next if val.nil? || val == old_status[key]?
 
-              emit(key, val)
+                emit(key, val)
+              end
+
+              old_status = new_status
             end
+          rescue ex
+            emit_connection_error(ex)
+            emit_disconnect(ex) unless disconnected
+            disconnected = true
+            close_socket
 
-            old_status = new_status
+            break if @closed || @reconnect_policy.never?
+
+            if wait_for_reconnect
+              emit_reconnect
+              disconnected = false
+              old_status = events_with_values(status || {} of String => String)
+            end
           end
         end
       end
 
       Fiber.yield
+    end
+
+    private def wait_for_reconnect : Bool
+      loop do
+        return false if @closed
+
+        sleep @reconnect_interval
+
+        begin
+          reconnect
+          return true
+        rescue ex
+          emit_connection_error(ex)
+          close_socket
+        end
+      end
     end
 
     # Extracts a hash of Event => value from MPD status response
@@ -250,7 +365,7 @@ module MPD
     rescue ex : IO::Error
       Log.warn { "#{ex.message}; reconnecting" }
 
-      disconnect
+      close_socket
       reconnect
     end
 
