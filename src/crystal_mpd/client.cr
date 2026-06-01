@@ -187,6 +187,8 @@ module MPD
         disconnected = false
 
         loop do
+          break if @closed
+
           begin
             block.call(idle(subsystems) || [] of String)
           rescue ex
@@ -241,6 +243,8 @@ module MPD
         disconnected = false
 
         loop do
+          break if @closed
+
           begin
             status.try do |mpd_status|
               old_status = events_with_values(mpd_status)
@@ -263,6 +267,8 @@ module MPD
         end
 
         loop do
+          break if @closed
+
           begin
             sleep @callbacks_timeout
 
