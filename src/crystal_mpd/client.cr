@@ -362,11 +362,9 @@ module MPD
 
     private def synchronize(&)
       @mutex.synchronize do
-        begin
-          yield
-        ensure
-          @socket.try &.flush
-        end
+        yield
+      ensure
+        @socket.try &.flush
       end
     rescue ex : IO::Error
       Log.warn { "#{ex.message}; reconnecting" }
